@@ -1,0 +1,31 @@
+# DEPENDENCIAS DE LA API R4 CONECTA
+# ==================================
+# Este archivo lista todas las bibliotecas de Python que necesita la aplicación
+
+# Framework web principal
+fastapi>=0.104.0
+
+# Servidor web ASGI para FastAPI
+uvicorn[standard]>=0.24.0
+
+# Conector asíncrono para MySQL
+aiomysql>=0.2.0
+
+# Para cargar variables de entorno desde archivo .env
+python-dotenv>=1.0.0
+
+# Validación de datos y esquemas
+pydantic>=2.0.0
+
+# Para requests HTTP asíncronos (BCV API)
+httpx>=0.25.0
+
+# Para manejo de fechas
+python-dateutil>=2.8.0
+
+# INSTALACIÓN:
+# pip install -r requirements.txt
+
+# VERSIONES ESPECÍFICAS PARA PRODUCCIÓN:
+# Se pueden especificar versiones exactas para mayor estabilidad
+# Ejemplo: fastapi==0.104.1 en lugar de fastapi>=0.104.0
