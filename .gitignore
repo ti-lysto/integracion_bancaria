@@ -1,0 +1,99 @@
+# Ignora todo en el raíz
+/*
+
+# No ignores este .gitignore
+!.gitignore
+
+# No ignores la carpeta app y su contenido
+!/app/
+!/app/**
+
+# Python bytecode y cachés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Extensiones C
+*.so
+
+# Entornos virtuales
+.venv/
+venv/
+ENV/
+env/
+.venv*/
+venv*/
+
+# Paquetería / build
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+wheels/
+share/python-wheels/
+*.whl
+pip-wheel-metadata/
+
+# Herramientas
+.tox/
+.nox/
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.pyre/
+.ruff_cache/
+.pyright/
+
+# Cobertura
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+# Configuración/secretos
+.env
+.env.*
+!.env.example
+*.local
+
+# IDEs/editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*.code-workspace
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.temp
+~$*
+
+# Cache varias
+.cache/
+
+# Docker (archivos locales opcionales)
+docker-compose.override.yml
+
+# Nota: mantenemos archivos .sql (no ignorar) como Script_Api_R4Conecta.sql
+
+# R4 CONECTA V3.0.pdf
+# Script_Api_R4Conecta.sql
+# ejemplo_implementacion_banco.py
+# test_multi_banco.py
+
+# git remote set-url origin https://github.com/ti-lysto/integracion_bancaria.git
+# git push -u origin main
