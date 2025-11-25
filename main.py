@@ -30,6 +30,7 @@ from controllers.endpoints import router
 from core.config import validate_config, setup_logging
 # Importamos controladores y configuraciones
 from routers.bancos import router as bancos_router
+from db.connector import close_connection_pool
 
 
 # CREACIÓN DE LA APLICACIÓN PRINCIPAL
@@ -85,24 +86,24 @@ app = FastAPI(
 
 # CONFIGURAR LOGGING Y VALIDAR CONFIGURACIÓN
 # ==========================================
-print("Hola Mundo de main.py")
-# setup_logging()
+#print("Hola Mundo de main.py")
+setup_logging()
 
-# try:
-#     validate_config()
-# except ValueError as e:
-#     print(f"Error de configuración: {e}")
-#     exit(1)
-# except Exception as e:
-#     print(f"Error inesperado en configuración: {e}")
-#     exit(1)
+try:
+    validate_config()
+except ValueError as e:
+    print(f"Error de configuración: {e}")
+    exit(1)
+except Exception as e:
+    print(f"Error inesperado en configuración: {e}")
+    exit(1)
 
-# # REGISTRO DE RUTAS/ENDPOINTS
-# # ===========================
-# # Registrar todos los endpoints R4
-# app.include_router(router, tags=["R4 Conecta"])
-# # Registrar router genérico para múltiples bancos (usa el mismo modelo R4 por ahora)
-# app.include_router(bancos_router, tags=["Bancos"])
+# REGISTRO DE RUTAS/ENDPOINTS
+# ===========================
+# Registrar todos los endpoints R4
+app.include_router(router, tags=["R4 Conecta"])
+# Registrar router genérico para múltiples bancos (usa el mismo modelo R4 por ahora)
+app.include_router(bancos_router, tags=["Bancos"])
 
 
 # ENDPOINTS REGISTRADOS VÍA ROUTER
@@ -113,6 +114,10 @@ print("Hola Mundo de main.py")
 
 # INFORMACIÓN ADICIONAL SOBRE ESTE ARCHIVO
 # ========================================
+@app.on_event("shutdown")
+async def on_shutdown():
+    await close_connection_pool()
+
 """
 PUNTOS IMPORTANTES SOBRE main.py:
 

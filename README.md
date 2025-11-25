@@ -81,20 +81,18 @@ API REST en Python/FastAPI para integrarse con el protocolo bancario R4 Conecta 
 ### Paso 1: Preparar el Entorno
 
 ```bash
-# 1. Clonar el repositorio
-git clone <url-del-repositorio>
-cd R4Conecta
 
-# 2. Crear entorno virtual de Python
+
+# Crear entorno virtual de Python
 python -m venv venv
 
-# 3. Activar el entorno virtual
+# Activar el entorno virtual
 # En Linux/Mac:
 source venv/bin/activate
 # En Windows:
 venv\Scripts\activate
 
-# 4. Instalar dependencias
+# Instalar dependencias
 pip install -r requirements.txt
 ```
 
@@ -102,29 +100,7 @@ pip install -r requirements.txt
 
 ```sql
 -- Crear base de datos
-CREATE DATABASE r4conecta CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- Crear usuario (opcional)
-CREATE USER 'r4user'@'localhost' IDENTIFIED BY 'tu_password_seguro';
-GRANT ALL PRIVILEGES ON r4conecta.* TO 'r4user'@'localhost';
-FLUSH PRIVILEGES;
-
--- Crear procedimiento almacenado básico
-DELIMITER //
-CREATE PROCEDURE sp_guardar_transaccion_r4(
-    IN p_tipo_operacion VARCHAR(50),
-    IN p_datos JSON,
-    OUT p_resultado VARCHAR(100),
-    OUT p_codigo INT
-)
-BEGIN
-    -- Insertar transacción
-    INSERT INTO transacciones_r4 (tipo_operacion, datos, fecha_creacion)
-    VALUES (p_tipo_operacion, p_datos, NOW());
-    
-    SET p_resultado = 'Transacción guardada exitosamente';
-    SET p_codigo = 0;
-END //
+-- Ejecutar el archivo Script_Api_R4Conecta.sql
 DELIMITER ;
 ```
 
@@ -143,87 +119,34 @@ nano .env
 ### Archivo .env (Variables de Entorno)
 
 ```env
-# === CONFIGURACIÓN DE BASE DE DATOS ===
-# Dirección del servidor de base de datos
-DB_HOST=localhost
+R4_MERCHANT_ID="id proporcionado por el banco"
+DEBUG = True
 
-# Puerto de la base de datos (3306 es el estándar para MySQL)
-DB_PORT=3306
+# =====================================================
+# CONFIGURACIÓN DE BASE DE DATOS
+# =====================================================
 
-# Usuario de la base de datos
-DB_USER=r4user
+# Host de la base de datos (donde está instalado MySQL)
+DB_HOST = "localhost"
 
-# Contraseña del usuario de la base de datos
-DB_PASSWORD=tu_password_muy_seguro
+# Puerto de MySQL (por defecto 3306)
+DB_PORT = 3306
 
 # Nombre de la base de datos
-DB_NAME=r4conecta
+DB_NAME = "LystoLocal" 
 
-# === CONFIGURACIÓN DEL POOL DE CONEXIONES ===
-# Número mínimo de conexiones siempre abiertas
-DB_POOL_MIN_SIZE=1
+# Usuario de MySQL
+DB_USER = "root"
 
-# Número máximo de conexiones simultáneas
-DB_POOL_MAX_SIZE=10
-
-# === CREDENCIALES R4 CONECTA ===
-# ID de tu comercio (proporcionado por el banco)
-COMMERCE_ID=tu_commerce_id_del_banco
-
-# Clave secreta para HMAC (proporcionada por el banco)
-COMMERCE_SECRET=tu_clave_secreta_super_segura
-
-# === CONFIGURACIÓN DEL SERVIDOR ===
-# IP donde escuchará el servidor (0.0.0.0 = todas las interfaces)
-SERVER_HOST=0.0.0.0
-
-# Puerto donde escuchará el servidor
-SERVER_PORT=8000
-
-# Modo debug (False en producción)
-DEBUG=False
-
-# === CONFIGURACIÓN DE LOGS ===
-# Nivel de logging (DEBUG, INFO, WARNING, ERROR)
-LOG_LEVEL=INFO
-
-# Formato de logs (json para producción, text para desarrollo)
-LOG_FORMAT=json
+# Contraseña de MySQL
+DB_PASSWORD = "root"
+BANCO_IPS_PERMITIDAS = [
+        "45.175.213.98",
+        "200.74.203.91", 
+        "204.199.249.3"
+    ]
 ```
 
-### Estructura de Base de Datos Recomendada
-
-```sql
--- Tabla principal para todas las transacciones
-CREATE TABLE transacciones_r4 (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    tipo_operacion VARCHAR(50) NOT NULL,
-    datos JSON NOT NULL,
-    estado ENUM('pendiente', 'procesado', 'error') DEFAULT 'pendiente',
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-    -- Índices para mejor rendimiento
-    INDEX idx_tipo_operacion (tipo_operacion),
-    INDEX idx_estado (estado),
-    INDEX idx_fecha_creacion (fecha_creacion)
-);
-
--- Tabla para auditoría de requests HTTP
-CREATE TABLE auditoria_requests (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    endpoint VARCHAR(100) NOT NULL,
-    metodo VARCHAR(10) NOT NULL,
-    headers JSON,
-    body JSON,
-    response_code INT,
-    ip_origen VARCHAR(45),
-    fecha_request TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    INDEX idx_endpoint (endpoint),
-    INDEX idx_fecha_request (fecha_request)
-);
-```
 
 ## Uso
 
@@ -232,10 +155,11 @@ CREATE TABLE auditoria_requests (
 ```bash
 # Si estás parado en la carpeta raiz del repo (que contiene la carpeta app/):
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 app.application:application #Azure
 
 # Si estás dentro de la carpeta app/ (como /R4Conecta/app):
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
-
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 application:application #Azure
 # Producción (lanzando desde la raíz del repo)
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
 # Producción (lanzando dentro de app/)
@@ -942,13 +866,9 @@ crontab -e
 - **Desarrollador**: Alicson Rubio
 - **Email**: [alirubio@lysto.app]
 - **Documentación**: Este README.md
-- **Logs**: `/var/log/r4conecta/`
+- **Logs**: `/app/log/r4_conecta.log`
 
-### Para Emergencias en Producción
-1. **Verificar logs**: `tail -f /var/log/r4conecta/app.log`
-2. **Reiniciar servicio**: `sudo systemctl restart r4conecta`
-3. **Verificar estado**: `sudo systemctl status r4conecta`
-4. **Contactar soporte**: [número-emergencia]
+
 
 ---
 

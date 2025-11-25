@@ -8,6 +8,9 @@ fastapi>=0.104.0
 # Servidor web ASGI para FastAPI
 uvicorn[standard]>=0.24.0
 
+# Servidor WSGI para despliegue en producción en azure
+gunicorn==21.2.0
+
 # Conector asíncrono para MySQL
 aiomysql>=0.2.0
 

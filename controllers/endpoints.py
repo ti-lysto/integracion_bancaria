@@ -990,7 +990,8 @@ async def health_check():
             "message": "API R4 Conecta funcionando correctamente",
             "version": "1.0",
             "timestamp": datetime.now().isoformat(),
-            "endpoints_count": {"Conectado": db_ok}
+            "endpoints_count": len(router.routes),
+            "Conectado": db_ok
         }
     except Exception as err:
         logger.exception(f"Error en health_check: {err}")

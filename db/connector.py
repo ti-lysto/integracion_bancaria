@@ -165,11 +165,9 @@ async def close_connection_pool():
         if _connection_pool is not None:
             logger.info("Cerrando pool de conexiones...")
             
-            # Cerrar el pool de forma segura
-            await _connection_pool.close()
-            
-            # Esperar a que todas las conexiones se cierren
-            #await _connection_pool.wait_closed()
+            # Cerrar el pool de forma segura (API aiomysql)
+            _connection_pool.close()
+            await _connection_pool.wait_closed()
             
             # Limpiar la variable global
             _connection_pool = None
@@ -204,20 +202,13 @@ async def ejecutar_sp_generico(
             * 'filas_afectadas': Número de filas afectadas
         """
         own_conn=False
-        #connection = None
+        pool = None
         cursor = None
         try:
             if connection is None:
                 own_conn = True
                 pool = await get_connection_pool()
                 connection = await pool.acquire()
-            cursor = await connection.cursor()
-            
-            # Obtener configuración de BD
-            db_config = get_database_config()
-            
-            # Conectar a la base de datos
-            connection = await aiomysql.connect(**db_config)
             cursor = await connection.cursor()
             
             # Preparar parámetros para callproc
@@ -295,17 +286,15 @@ async def ejecutar_sp_generico(
         finally:
             if cursor:
                 try:
-                    if own_conn:
-                        close_connection_pool()
-                    #connection.close()
-                    #await close_connection_pool()
+                    await cursor.close()
                 except Exception:
                     pass
             if own_conn and connection:
                 try:
-                    close_connection_pool()
-                    #connection.close()
-                    #await close_connection_pool()
+                    if pool is not None:
+                        pool.release(connection)
+                    else:
+                        connection.close()
                 except Exception:
                     pass
 

@@ -33,3 +33,235 @@
 2025-11-21 16:50:12,516 - db.connector - INFO - Conexión a base de datos exitosa
 2025-11-21 16:50:12,610 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-21
 2025-11-21 16:50:12,735 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: REFr4123456 ya procesada, Código: 0
+2025-11-24 15:36:31,175 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-24 15:36:31,175 - core.config - INFO - Nivel de logging: INFO
+2025-11-24 15:36:31,175 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-24 15:37:21,360 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-24 15:37:21,360 - core.config - INFO - Nivel de logging: INFO
+2025-11-24 15:37:21,360 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:17:57,735 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:17:57,735 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:17:57,735 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:17:57,816 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:17:57,816 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:17:57,816 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:17:57,816 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:19:08,158 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:19:08,158 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:19:08,160 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:19:08,162 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:19:08,227 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:19:08,343 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: REFr4123456 ya procesada, Código: 0
+2025-11-25 10:21:50,854 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:50,854 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:50,854 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:50,879 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:50,879 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:50,879 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:50,894 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:50,894 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:50,895 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:50,915 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:50,916 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:50,916 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:50,916 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:21:50,954 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:50,954 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:50,954 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:50,954 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:21:50,961 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:50,961 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:50,962 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:50,962 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:21:50,963 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:50,964 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:50,964 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:51,027 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:21:51,027 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:21:51,027 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:21:51,027 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:21:58,898 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:21:58,898 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:21:58,901 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:21:58,901 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:21:58,964 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:21:59,054 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:21:59,057 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:21:59,061 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: REFr4123456 ya procesada, Código: 0
+2025-11-25 10:22:57,416 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:22:57,417 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:24:08,160 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:24:08,161 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:24:13,376 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:24:13,377 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:24:33,925 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:24:33,928 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:24:33,932 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456808 ya procesada, Código: 0
+2025-11-25 10:24:42,851 - core.auth - ERROR - HMAC inválido para MBbcv
+2025-11-25 10:24:42,851 - core.auth - ERROR - Data string: 2025-11-21USD
+2025-11-25 10:24:42,851 - core.auth - ERROR - Firma recibida: 99ed23f64503879664cb19f026d930df91358f8d80aaba30314396f223d0f843
+2025-11-25 10:25:18,992 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-25 10:25:19,013 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:25:22,406 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-25 10:25:22,406 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:25:27,978 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456808 ya procesada, Código: 0
+2025-11-25 10:31:57,217 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,217 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,217 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,280 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,280 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,280 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,280 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:31:57,305 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,306 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,306 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,364 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,364 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,364 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,364 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:31:57,411 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,411 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,411 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,468 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,468 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,468 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,468 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:31:57,487 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,487 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,487 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,543 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:31:57,543 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:31:57,543 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:31:57,543 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:32:10,630 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:32:10,633 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:32:10,636 - db.connector - INFO - Cerrando pool de conexiones...
+2025-11-25 10:36:32,990 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:32,990 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:32,990 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,042 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:33,043 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:33,043 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,051 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:33,051 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:33,051 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,052 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:36:33,105 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:33,105 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:33,106 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,106 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:36:33,138 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:33,138 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:33,138 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,158 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:33,158 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:33,158 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,197 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:33,197 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:33,197 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,197 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:36:33,219 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:36:33,219 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:36:33,219 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:36:33,219 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:36:37,303 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:36:37,303 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:36:37,306 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:36:37,307 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:36:39,939 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:36:39,939 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:36:39,944 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:36:39,944 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:36:55,683 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-25 10:36:55,701 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:36:58,447 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-25 10:36:58,467 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:37:02,753 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456808 ya procesada, Código: 0
+2025-11-25 10:38:26,876 - db.connector - INFO - Cerrando pool de conexiones...
+2025-11-25 10:38:26,876 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-11-25 10:38:26,889 - db.connector - INFO - Cerrando pool de conexiones...
+2025-11-25 10:38:26,890 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-11-25 10:38:29,113 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,113 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,113 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,177 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,177 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,177 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,177 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:38:29,207 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,207 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,207 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,260 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,260 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,260 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,265 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,265 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,265 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,265 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:38:29,282 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,282 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,282 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,315 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,315 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,315 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,316 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:38:29,341 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:38:29,341 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:38:29,341 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:38:29,341 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:38:34,647 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-25 10:38:34,666 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:38:36,713 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-25 10:38:36,733 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-25
+2025-11-25 10:38:41,334 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:38:41,334 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:38:41,336 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:38:41,336 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:38:44,345 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:38:44,348 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:38:44,350 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456808 ya procesada, Código: 0
+2025-11-25 10:38:52,633 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456808 ya procesada, Código: 0
+2025-11-25 10:38:58,995 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:38:58,998 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:38:59,011 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456809 guardada exitosamente, Código: 1
+2025-11-25 10:39:02,731 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456809 ya procesada, Código: 0
+2025-11-25 10:39:29,690 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:39:29,690 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 10:40:54,244 - db.connector - INFO - Cerrando pool de conexiones...
+2025-11-25 10:40:54,245 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-11-25 10:40:54,253 - db.connector - INFO - Cerrando pool de conexiones...
+2025-11-25 10:40:54,253 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-11-25 10:40:54,313 - db.connector - INFO - Cerrando pool de conexiones...
+2025-11-25 10:40:54,313 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-11-25 10:40:56,781 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:56,781 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:56,782 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:56,832 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:56,832 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:56,832 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:56,841 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:56,841 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:56,841 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:56,841 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:40:56,893 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:56,894 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:56,894 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:56,894 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:40:56,950 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:56,951 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:56,951 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:56,977 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:56,977 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:56,977 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:57,005 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:57,005 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:57,005 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:57,006 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:40:57,034 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 10:40:57,034 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 10:40:57,034 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 10:40:57,034 - core.config - INFO - Configuración validada correctamente
+2025-11-25 10:41:15,319 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 10:41:15,319 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-25 10:41:15,321 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-11-25 10:41:15,322 - db.connector - INFO - Conexión a base de datos exitosa
