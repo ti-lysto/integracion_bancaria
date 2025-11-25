@@ -62,5 +62,6 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'integracion-bancaria'
-          slot-name: 'Production'
+          #slot-name: 'Production'
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EDD80596650A4BF68AE59C7FC9A1E175 }}
