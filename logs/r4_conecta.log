@@ -265,3 +265,21 @@
 2025-11-25 10:41:15,319 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
 2025-11-25 10:41:15,321 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
 2025-11-25 10:41:15,322 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 11:22:31,991 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-25 11:22:31,991 - db.connector - INFO - Conexión a base de datos exitosa
+2025-11-25 13:06:05,050 - db.connector - INFO - Cerrando pool de conexiones...
+2025-11-25 13:06:05,050 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-11-25 13:06:31,619 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 13:06:31,619 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 13:06:31,619 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 13:06:31,656 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 13:06:31,656 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 13:06:31,656 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 13:06:31,673 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 13:06:31,673 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 13:06:31,673 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 13:06:31,673 - core.config - INFO - Configuración validada correctamente
+2025-11-25 13:06:31,709 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-25 13:06:31,709 - core.config - INFO - Nivel de logging: INFO
+2025-11-25 13:06:31,709 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-25 13:06:31,709 - core.config - INFO - Configuración validada correctamente
