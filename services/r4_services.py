@@ -66,7 +66,7 @@ class R4Services:
             # CONSULTA AL BANCO SEGÚN ESPECIFICACIÓN R4
             try:
                 # URL del banco según documento R4 V3.0
-                banco_url = "https://r4conecta.mibanco.com.ve/MBbcv"
+                banco_url = f"{Config.R4_BANCO_URL}/MBbcv"
                 
                 # Headers según especificación
                 #from app.core.security import r4_security
@@ -90,6 +90,13 @@ class R4Services:
                     "Fechavalor": fecha_valor
                 }
                 
+                # Log para debugging
+                logger.info(f"Enviando al banco: URL={banco_url}")
+                logger.info(f"HMAC Data: {hmac_data}")
+                logger.info(f"HMAC Signature: {hmac_signature}")
+                logger.info(f"Headers: {headers}")
+                logger.info(f"Payload: {payload}")
+
                 # Realizar consulta al banco
                 async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(banco_url, json=payload, headers=headers)

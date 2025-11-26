@@ -185,7 +185,7 @@ r4_authentication = R4Authentication()
     
 async def ip_whitelist_middleware(request: Request):
     """" Middleware para validar IPs permitidas en R4 endpoints."""
-    client_ip = request.client.host
+    client_ip = request.headers.get("X-Forwarded-For", request.headers.get("X-Real-IP", request.client.host if request.client else "unknown"))
     if client_ip not in get_r4_config().get("allowed_ips", []):
         logger.warning(f"Intento de acceso desde IP no autorizada: {client_ip}")
         raise HTTPException(status_code=401, detail=f"IP {client_ip} no autorizada. Solo se permiten conexiones desde los servidores del banco.")

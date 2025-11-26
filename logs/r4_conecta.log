@@ -283,3 +283,156 @@
 2025-11-25 13:06:31,709 - core.config - INFO - Nivel de logging: INFO
 2025-11-25 13:06:31,709 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
 2025-11-25 13:06:31,709 - core.config - INFO - Configuración validada correctamente
+2025-11-26 13:36:48,305 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,318 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,318 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,387 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,394 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,394 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,415 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,418 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,418 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,427 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,430 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,430 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,697 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,708 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,708 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,708 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,708 - core.config - INFO - Configuración validada correctamente
+2025-11-26 13:36:48,710 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,710 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,710 - core.config - INFO - Configuración validada correctamente
+2025-11-26 13:36:48,723 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,724 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,724 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,724 - core.config - INFO - Configuración validada correctamente
+2025-11-26 13:36:48,733 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 13:36:48,734 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 13:36:48,738 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 13:36:48,738 - core.config - INFO - Configuración validada correctamente
+2025-11-26 13:43:42,699 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-26 13:43:42,699 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-26 13:43:42,703 - db.connector - ERROR - Error creando pool de conexiones: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 13:43:42,703 - db.connector - ERROR - Configuración: host=localhost, port=3306, user=root, db=LystoLocal
+2025-11-26 13:43:42,704 - db.connector - ERROR - Error probando conexión: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 13:43:42,704 - controllers.endpoints - ERROR - Fallo en verificación de conexión a BD (SELECT 1)
+2025-11-26 14:26:20,757 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-26 14:26:20,758 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-26 14:26:20,762 - db.connector - ERROR - Error creando pool de conexiones: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 14:26:20,762 - db.connector - ERROR - Configuración: host=localhost, port=3306, user=root, db=LystoLocal
+2025-11-26 14:26:20,762 - db.connector - ERROR - Error probando conexión: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 14:26:20,762 - controllers.endpoints - ERROR - Fallo en verificación de conexión a BD (SELECT 1)
+2025-11-26 14:44:11,023 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-26 14:44:11,023 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-26 14:44:11,024 - db.connector - ERROR - Error creando pool de conexiones: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 14:44:11,025 - db.connector - ERROR - Configuración: host=localhost, port=3306, user=root, db=LystoLocal
+2025-11-26 14:44:11,025 - db.connector - ERROR - Error probando conexión: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 14:44:11,025 - controllers.endpoints - ERROR - Fallo en verificación de conexión a BD (SELECT 1)
+2025-11-26 14:44:11,092 - db.connector - INFO - Probando conexión a la base de datos...
+2025-11-26 14:44:11,092 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-11-26 14:44:11,093 - db.connector - ERROR - Error creando pool de conexiones: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 14:44:11,093 - db.connector - ERROR - Configuración: host=localhost, port=3306, user=root, db=LystoLocal
+2025-11-26 14:44:11,093 - db.connector - ERROR - Error probando conexión: (2003, "Can't connect to MySQL server on 'localhost'")
+2025-11-26 14:44:11,093 - controllers.endpoints - ERROR - Fallo en verificación de conexión a BD (SELECT 1)
+2025-11-26 14:44:24,044 - core.auth - ERROR - Header Authorization faltante para MBbcv
+2025-11-26 14:50:52,626 - core.auth - ERROR - Header Authorization faltante para MBbcv
+2025-11-26 14:55:18,222 - core.auth - ERROR - HMAC inválido para MBbcv
+2025-11-26 14:55:18,222 - core.auth - ERROR - Data string: 2025-11-26USD
+2025-11-26 14:55:18,222 - core.auth - ERROR - Firma recibida: 451fbadbacf5aa22b295d91845269c30af599accebe068857efb80a34db44de6
+2025-11-26 14:56:29,584 - core.auth - ERROR - HMAC inválido para MBbcv
+2025-11-26 14:56:29,585 - core.auth - ERROR - Data string: 2025-11-26USD
+2025-11-26 14:56:29,585 - core.auth - ERROR - Firma recibida: 451fbadbacf5aa22b295d91845269c30af599accebe068857efb80a34db44de6
+2025-11-26 15:03:44,969 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-26 15:05:35,514 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:35,514 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:35,514 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:35,627 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:35,638 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:35,638 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:35,813 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:35,826 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:35,826 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:35,849 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:35,849 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:35,849 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:35,849 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:05:35,875 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:35,878 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:35,878 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:35,948 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:35,953 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:35,953 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:35,953 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:05:36,139 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:36,139 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:36,139 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:36,139 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:05:36,171 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:05:36,173 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:05:36,173 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:05:36,173 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:05:53,281 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-26 15:05:53,281 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 51.103.216.233
+2025-11-26 15:06:11,468 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-26 15:06:11,468 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 51.103.216.233
+2025-11-26 15:09:29,393 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:29,406 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:29,406 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:29,551 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:29,552 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:29,552 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:29,630 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:29,630 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:29,630 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:29,676 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:29,677 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:29,677 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:29,726 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:29,726 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:29,726 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:29,726 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:09:29,861 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:29,875 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:29,875 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:29,875 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:09:29,964 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:29,964 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:29,964 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:29,964 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:09:29,992 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:09:30,002 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:09:30,002 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:09:30,002 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:09:43,434 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-26 15:09:43,473 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-26
+2025-11-26 15:18:28,733 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:28,746 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:28,746 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:28,897 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:28,910 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:28,910 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:28,933 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:28,938 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:28,938 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:29,002 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:29,005 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:29,005 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:29,076 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:29,078 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:29,078 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:29,082 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:18:29,232 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:29,232 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:29,232 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:29,233 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:18:29,261 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:29,266 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:29,266 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:29,266 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:18:29,340 - core.config - INFO - Sistema de logging configurado correctamente
+2025-11-26 15:18:29,346 - core.config - INFO - Nivel de logging: INFO
+2025-11-26 15:18:29,350 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-11-26 15:18:29,350 - core.config - INFO - Configuración validada correctamente
+2025-11-26 15:18:30,307 - core.auth - INFO - HMAC válido para MBbcv
+2025-11-26 15:18:30,327 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-11-26

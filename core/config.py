@@ -76,7 +76,7 @@ class Config:
     API_HOST = "0.0.0.0"
     
     # Modo debug (True para desarrollo, False para producción)
-    DEBUG = os.getenv("DEBUG", "False") #True
+    DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes") #True
     
     # =====================================================
     # CONFIGURACIÓN DE SEGURIDAD R4
@@ -92,6 +92,9 @@ class Config:
     # esta clave en el código fuente.
     #R4_SECRET_KEY = os.getenv("R4_SECRET_KEY", "clave_secreta")
     R4_SECRET_KEY = R4_MERCHANT_ID#os.getenv("R4_MERCHANT_ID", "id_comercio")
+    
+    # URL base del banco R4
+    R4_BANCO_URL = os.getenv("R4_BANCO_URL", "https://r4conecta.mibanco.com.ve")
     
 
 
