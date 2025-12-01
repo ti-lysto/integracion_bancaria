@@ -135,8 +135,9 @@ def verificar_hmac_r4(data_string: str, signature_received: str, secret_key: str
 def validar_uuid(token: str) -> bool:
     """Validar que el token sea un UUID válido (para R4consulta y R4notifica)"""
     try:
-        uuid.UUID(token)
-        return True
+        #if (uuid.UUID(token)) or (token == get_r4_config().get("uuid")):        
+        if (token == get_r4_config().get("uuid")):
+            return True
     except ValueError:
         return False
 

@@ -450,3 +450,94 @@
 2025-12-01 09:57:35,838 - core.config - INFO - Nivel de logging: INFO
 2025-12-01 09:57:35,838 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
 2025-12-01 09:57:35,838 - core.config - INFO - Configuración validada correctamente
+2025-12-01 10:16:21,987 - db.connector - INFO - Probando conexión a la base de datos...
+2025-12-01 10:16:21,987 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-01 10:16:21,990 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-01 10:16:21,992 - db.connector - INFO - Conexión a base de datos exitosa
+2025-12-01 10:20:07,007 - core.auth - ERROR - Token UUID inválido para R4consulta: <UUID>
+2025-12-01 10:21:14,037 - core.auth - ERROR - Token UUID inválido para R4consulta: 3de9fd1b3cb65dc564b8cfef3286ca6eb293d27f6923286e79f5978780b4d4d5
+2025-12-01 10:21:47,768 - core.auth - ERROR - Token UUID inválido para R4consulta: 3de9fd1b3cb65dc564b8cfef3286ca6eb293d27f6923286e79f5978780b4d4d5
+2025-12-01 10:45:08,979 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-01 10:45:08,980 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-01 10:45:09,452 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:45:09,452 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:45:09,452 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:45:09,511 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:45:09,512 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:45:09,512 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:45:09,512 - core.config - INFO - Configuración validada correctamente
+2025-12-01 10:45:17,840 - core.auth - ERROR - Token UUID inválido para R4consulta: 3de9fd1b3cb65dc564b8cfef3286ca6eb293d27f6923286e79f5978780b4d4d5
+2025-12-01 10:47:13,686 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:47:13,686 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:47:13,686 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:47:13,740 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:47:13,740 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:47:13,740 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:47:13,740 - core.config - INFO - Configuración validada correctamente
+2025-12-01 10:48:25,434 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:48:25,434 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:48:25,434 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:48:25,488 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:48:25,488 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:48:25,488 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:48:25,488 - core.config - INFO - Configuración validada correctamente
+2025-12-01 10:48:31,003 - core.auth - ERROR - Token UUID inválido para R4consulta: 3de9fd1b3cb65dc564b8cfef3286ca6eb293d27f6923286e79f5978780b4d4d5
+2025-12-01 10:51:09,211 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:51:09,211 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:51:09,211 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:51:09,268 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:51:09,268 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:51:09,268 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:51:09,268 - core.config - INFO - Configuración validada correctamente
+2025-12-01 10:51:15,244 - core.auth - ERROR - Token UUID inválido para R4consulta: 3de9fd1b3cb65dc564b8cfef3286ca6eb293d27f6923286e79f5978780b4d4d5
+2025-12-01 10:57:16,491 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:57:16,492 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:57:16,492 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:57:16,544 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 10:57:16,544 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 10:57:16,544 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 10:57:16,544 - core.config - INFO - Configuración validada correctamente
+2025-12-01 10:57:46,462 - core.auth - ERROR - Token UUID inválido para R4consulta: 3de9fd1b3cb65dc564b8cfef3286ca6eb293d27f6923286e79f5978780b4d4d5
+2025-12-01 11:00:43,413 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:00:43,414 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:00:43,414 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:00:43,465 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:00:43,465 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:00:43,465 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:00:43,465 - core.config - INFO - Configuración validada correctamente
+2025-12-01 11:04:51,817 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:04:51,818 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:04:51,818 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:04:51,875 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:04:51,875 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:04:51,875 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:04:51,875 - core.config - INFO - Configuración validada correctamente
+2025-12-01 11:21:28,268 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-01 11:21:28,277 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-01 11:21:28,312 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456809 ya procesada, Código: 0
+2025-12-01 11:21:35,980 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456810 guardada exitosamente, Código: 1
+2025-12-01 11:21:37,860 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456810 ya procesada, Código: 0
+2025-12-01 11:22:10,159 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-01 11:22:10,159 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-01 11:22:10,694 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:22:10,694 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:22:10,694 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:22:10,757 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:22:10,757 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:22:10,757 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:22:10,757 - core.config - INFO - Configuración validada correctamente
+2025-12-01 11:22:12,400 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:22:12,400 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:22:12,400 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:22:12,466 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:22:12,466 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:22:12,466 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:22:12,466 - core.config - INFO - Configuración validada correctamente
+2025-12-01 11:22:25,630 - core.auth - ERROR - Token UUID inválido para R4consulta: 3de9fd1b3cb65dc564b8cfef3286ca6eb293d27f6923286e79f5978780b4d4d5
+2025-12-01 11:22:35,241 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:22:35,241 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:22:35,241 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:22:35,292 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-01 11:22:35,292 - core.config - INFO - Nivel de logging: INFO
+2025-12-01 11:22:35,292 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-01 11:22:35,292 - core.config - INFO - Configuración validada correctamente
