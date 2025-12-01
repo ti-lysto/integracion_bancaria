@@ -356,6 +356,11 @@ async def require_headers(
     authorization: Optional[str] = Header(None),
     commerce: Optional[str] = Header(None)
 ):
+    config = get_r4_config()
+    uuid_env = config.get("uuid")
+    if authorization != uuid_env:
+        raise HTTPException(status_code=401, detail="UUID inválido")
+    
     """
     Validación para R4consulta y R4notifica según especificación:
     - Authorization: UUID válido

@@ -117,6 +117,9 @@ class Config:
     # Archivo donde guardar logs
     LOG_FILE = "logs/r4_conecta.log"
 
+    # UUID para identificación única
+    UUID = os.getenv("UUID", "uuid_por_defecto")
+
 def get_database_config() -> Dict[str, Any]:
     """
     OBTENER CONFIGURACIÓN DE BASE DE DATOS
@@ -174,7 +177,8 @@ def get_r4_config() -> Dict[str, Any]:
         "merchant_id": Config.R4_MERCHANT_ID,
         "secret_key": Config.R4_SECRET_KEY,
         "timeout": Config.REQUEST_TIMEOUT,
-        "allowed_ips": Config.BANCO_IPS_PERMITIDAS
+        "allowed_ips": Config.BANCO_IPS_PERMITIDAS,
+        "uuid": Config.UUID
     }
 
 def setup_logging():
