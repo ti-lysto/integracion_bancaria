@@ -43,6 +43,7 @@ import uuid
 import logging
 from db.connector import test_connection
 
+
 # CONFIGURACIÓN DEL ROUTER
 # ========================
 # Esto es como el "organizador" de todas nuestras rutas/URLs
@@ -166,7 +167,12 @@ async def r4consulta(payload: R4ConsultaRequest = Body(...), _auth=Depends(auth.
             payload.TelefonoComercio
         )
         
-        # Devolvemos la respuesta
+        # Devolvemos la respuesta      
+        #quiero escribir en el logger si esta en modo debug= true
+        #from core.config import get_r4_config  # Importar la función para obtener la configuración
+        from core.config import Config
+        if Config.DEBUG:
+             logger.info(f"Consulta cliente {payload.IdCliente} - Resultado: {resultado}")
         return R4ConsultaResponse(**resultado)
         
     except Exception as e:
@@ -218,6 +224,7 @@ async def r4notifica(payload: R4NotificaRequest = Body(...), _auth=Depends(auth.
         # Devolvemos si aceptamos o no el abono
         #print(resultado)
         if  resultado.get('abono') is None: 
+
             raise HTTPException(status_code=500, detail=f"Error interno: respuesta inválida del servicio {resultado.get('mensaje')}")
         # if resultado.get('abono') == False: 
         #     #raise HTTPException(status_code=409, detail=f"Notificación rechazada: {resultado.get('mensaje')}")

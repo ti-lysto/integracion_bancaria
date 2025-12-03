@@ -166,8 +166,10 @@ class R4Services:
             # el fujo es: en esta etapa existe una intencion de pago
             # y se asume que el cliente es valido para continuar.
             # es decir, aceptamos todos las inteinciones de pago.
+            from core.config import Config
             cliente_valido = True
-            
+            if Config.DEBUG:
+                logger.info(f"Consulta cliente {id_cliente} - Valido: {cliente_valido}")
             return {"status": cliente_valido}
         except Exception as e:
             logger.error(f"Error en consulta cliente: {str(e)}")

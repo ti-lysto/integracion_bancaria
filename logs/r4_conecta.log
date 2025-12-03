@@ -541,3 +541,613 @@
 2025-12-01 11:22:35,292 - core.config - INFO - Nivel de logging: INFO
 2025-12-01 11:22:35,292 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
 2025-12-01 11:22:35,292 - core.config - INFO - Configuración validada correctamente
+2025-12-03 09:50:45,596 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 09:50:45,596 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 09:50:45,596 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 09:50:45,663 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 09:50:45,664 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 09:50:45,664 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 09:50:45,664 - core.config - INFO - Configuración validada correctamente
+2025-12-03 09:58:21,418 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-03 09:58:21,439 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-03 09:58:21,465 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456810 ya procesada, Código: 0
+2025-12-03 10:05:36,146 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-03 10:05:36,146 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-03 10:05:36,700 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:05:36,700 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:05:36,700 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:05:36,767 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:05:36,767 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:05:36,767 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:05:36,768 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:05:39,279 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:05:39,279 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:05:39,279 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:05:39,343 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:05:39,344 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:05:39,344 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:05:39,344 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:05:44,154 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:05:44,155 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:05:44,155 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:05:44,236 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:05:44,236 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:05:44,236 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:05:44,236 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:06:05,634 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:05,635 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:05,635 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:05,696 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:05,697 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:05,697 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:05,697 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:06:08,269 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:08,270 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:08,270 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:08,351 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:08,351 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:08,352 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:08,352 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:06:09,695 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:09,695 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:09,695 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:09,759 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:09,759 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:09,759 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:09,760 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:06:12,582 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:12,583 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:12,583 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:12,646 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:06:12,646 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:06:12,646 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:06:12,646 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:06:33,075 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-03 10:06:33,078 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-03 10:06:33,080 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: PM123456810 ya procesada, Código: 0
+2025-12-03 10:06:45,506 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:06:45,506 - controllers.endpoints - INFO - Consulta cliente 13536734 - Resultado: {'status': True}
+2025-12-03 10:07:21,039 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-03 10:07:21,040 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-03 10:07:21,553 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:07:21,554 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:07:21,554 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:07:21,621 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:07:21,622 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:07:21,622 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:07:21,622 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:07:43,619 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:07:43,621 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:07:43,621 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:07:43,716 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:07:43,717 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:07:43,717 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:07:43,717 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:07:59,680 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:07:59,680 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:07:59,680 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:07:59,746 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:07:59,746 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:07:59,746 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:07:59,746 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:08:35,834 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:35,834 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:35,835 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:35,898 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:35,898 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:35,898 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:35,898 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:08:40,313 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:40,313 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:40,313 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:40,377 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:40,377 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:40,377 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:40,377 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:08:44,081 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:44,081 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:44,081 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:44,172 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:44,173 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:44,173 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:44,173 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:08:45,627 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:45,628 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:45,628 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:45,702 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:45,703 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:45,703 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:45,703 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:08:47,452 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:47,452 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:47,452 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:47,513 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:47,513 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:47,513 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:47,513 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:08:49,721 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:49,721 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:49,721 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:49,781 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:49,781 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:49,781 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:49,781 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:08:58,738 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:58,738 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:58,738 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:58,798 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:08:58,798 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:08:58,798 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:08:58,798 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:09:09,073 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:09,073 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:09,073 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:09,135 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:09,135 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:09,135 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:09,135 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:09:22,796 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:22,797 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:22,797 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:22,860 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:22,860 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:22,860 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:22,860 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:09:27,584 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:27,585 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:27,585 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:27,664 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:27,665 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:27,665 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:27,665 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:09:30,807 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:30,807 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:30,807 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:30,865 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:30,865 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:30,865 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:30,866 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:09:33,303 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:33,303 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:33,303 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:33,369 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:09:33,369 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:09:33,369 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:09:33,369 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:10:33,565 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:33,566 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:33,566 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:33,628 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:33,628 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:33,628 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:33,628 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:10:37,097 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:37,098 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:37,098 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:37,160 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:37,160 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:37,160 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:37,160 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:10:40,657 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:40,657 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:40,658 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:40,764 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:40,764 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:40,764 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:40,764 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:10:51,869 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:51,869 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:51,869 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:51,941 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:51,941 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:51,941 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:51,941 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:10:54,634 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:54,634 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:54,634 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:54,694 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:54,694 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:54,694 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:54,694 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:10:57,308 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:57,308 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:57,308 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:57,366 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:10:57,367 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:10:57,367 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:10:57,367 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:11:17,703 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:17,703 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:17,703 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:17,768 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:17,768 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:17,768 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:17,768 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:11:27,689 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:27,689 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:27,689 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:27,748 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:27,749 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:27,749 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:27,749 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:11:30,651 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:30,652 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:30,652 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:30,715 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:30,715 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:30,715 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:30,715 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:11:37,238 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:37,238 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:37,238 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:37,305 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:11:37,305 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:11:37,305 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:11:37,305 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:11:50,377 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:12:11,086 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:11,086 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:11,086 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:11,148 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:11,148 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:11,148 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:11,148 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:12:24,119 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:24,119 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:24,119 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:24,181 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:24,181 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:24,181 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:24,181 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:12:35,339 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:35,339 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:35,339 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:35,400 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:35,401 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:35,401 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:35,401 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:12:41,761 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:41,761 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:41,761 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:41,846 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:41,847 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:41,847 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:41,847 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:12:49,998 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:49,998 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:49,998 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:50,064 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:12:50,064 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:12:50,064 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:12:50,064 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:13:02,682 - services.r4_services - ERROR - Error en consulta cliente: 'dict' object has no attribute 'DEBUG'
+2025-12-03 10:14:25,772 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:25,772 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:25,773 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:25,833 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:25,833 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:25,833 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:25,833 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:14:30,289 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:30,290 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:30,290 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:30,354 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:30,354 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:30,354 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:30,354 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:14:31,373 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:31,373 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:31,373 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:31,435 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:31,435 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:31,435 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:31,435 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:14:33,617 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:33,617 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:33,617 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:33,676 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:14:33,677 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:14:33,677 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:14:33,677 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:14:37,913 - services.r4_services - ERROR - Error en consulta cliente: 'dict' object has no attribute 'DEBUG'
+2025-12-03 10:15:03,049 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:03,049 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:03,049 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:03,114 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:03,114 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:03,114 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:03,114 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:15:14,017 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:14,017 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:14,017 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:14,079 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:14,079 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:14,079 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:14,079 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:15:25,230 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:25,230 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:25,230 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:25,286 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:25,286 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:25,286 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:25,286 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:15:36,111 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:36,111 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:36,111 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:36,172 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:36,172 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:36,173 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:36,173 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:15:41,982 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:41,982 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:41,982 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:42,047 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:15:42,047 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:15:42,047 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:15:42,047 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:16:21,568 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:21,568 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:21,568 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:21,648 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:21,648 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:21,649 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:21,649 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:16:35,133 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:35,134 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:35,134 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:35,195 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:35,196 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:35,196 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:35,196 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:16:42,230 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:42,230 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:42,230 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:42,289 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:42,290 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:42,290 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:42,290 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:16:44,694 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:44,694 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:44,694 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:44,756 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:44,756 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:44,756 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:44,756 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:16:49,299 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:49,300 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:49,300 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:49,388 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:49,389 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:49,389 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:16:49,390 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:16:59,989 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:16:59,989 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:16:59,989 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:00,052 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:00,052 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:00,052 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:00,052 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:03,517 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:03,517 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:03,518 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:03,580 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:03,580 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:03,580 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:03,580 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:09,326 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:09,326 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:09,326 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:09,408 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:09,408 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:09,409 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:09,409 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:13,735 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:13,735 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:13,736 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:13,797 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:13,797 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:13,797 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:13,797 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:19,276 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:19,276 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:19,276 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:19,337 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:19,337 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:19,337 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:19,337 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:21,327 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:21,327 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:21,327 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:21,386 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:21,386 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:21,386 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:21,386 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:25,333 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:25,334 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:25,334 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:25,437 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:25,438 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:25,439 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:25,439 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:26,841 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:26,841 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:26,842 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:26,921 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:26,922 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:26,922 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:26,923 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:28,475 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:28,475 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:28,475 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:28,537 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:28,537 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:28,537 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:28,537 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:32,198 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:32,198 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:32,198 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:32,266 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:32,266 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:32,266 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:32,266 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:35,784 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:35,784 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:35,784 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:35,848 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:35,848 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:35,848 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:35,848 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:38,001 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:38,001 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:38,002 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:38,068 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:38,068 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:38,068 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:38,068 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:17:57,705 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:57,705 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:57,705 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:57,769 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:17:57,769 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:17:57,769 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:17:57,769 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:18:16,190 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:19:26,663 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:26,664 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:26,664 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:26,794 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:26,794 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:26,794 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:26,794 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:19:34,229 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:34,230 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:34,230 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:34,293 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:34,293 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:34,293 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:34,294 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:19:52,828 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:52,828 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:52,828 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:52,895 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:52,895 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:52,895 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:52,895 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:19:55,527 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:55,527 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:55,527 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:55,592 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:19:55,592 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:19:55,592 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:19:55,592 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:20:01,268 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:25:20,517 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:25:20,517 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:25:20,517 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:25:20,581 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:25:20,581 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:25:20,581 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:25:20,581 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:25:46,605 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:26:51,284 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:26:51,284 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:26:51,284 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:26:51,343 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:26:51,343 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:26:51,344 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:26:51,344 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:26:57,529 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:28:18,350 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:28:18,350 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:28:18,350 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:28:18,414 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:28:18,414 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:28:18,414 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:28:18,414 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:28:32,305 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:28:32,305 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:28:32,305 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:28:32,368 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:28:32,368 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:28:32,368 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:28:32,368 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:29:00,430 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:00,431 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:00,431 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:00,497 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:00,497 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:00,497 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:00,498 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:29:07,046 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:07,047 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:07,047 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:07,109 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:07,109 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:07,109 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:07,109 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:29:20,150 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:20,150 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:20,150 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:20,215 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:20,215 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:20,215 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:20,215 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:29:27,674 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:27,675 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:27,675 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:27,751 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:27,751 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:27,751 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:27,751 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:29:28,129 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:29:45,201 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:45,201 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:45,201 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:45,264 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:45,264 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:45,264 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:45,264 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:29:48,164 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:48,164 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:48,164 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:48,230 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:29:48,230 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:29:48,230 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:29:48,230 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:29:52,890 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:30:06,675 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:30:06,676 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:30:06,676 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:30:06,739 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:30:06,739 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:30:06,739 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:30:06,739 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:30:14,825 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:30:14,826 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:30:14,826 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:30:14,891 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:30:14,892 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:30:14,892 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:30:14,892 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:30:20,426 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:30:20,427 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:30:20,427 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:30:20,505 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:30:20,505 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:30:20,505 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:30:20,505 - core.config - INFO - Configuración validada correctamente
+2025-12-03 10:30:22,256 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:30:22,256 - controllers.endpoints - INFO - Consulta cliente 13536734 - Resultado: {'status': True}
+2025-12-03 10:30:29,513 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:30:29,514 - controllers.endpoints - INFO - Consulta cliente 13536734 - Resultado: {'status': True}
+2025-12-03 10:30:30,437 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:30:30,437 - controllers.endpoints - INFO - Consulta cliente 13536734 - Resultado: {'status': True}
+2025-12-03 10:30:31,181 - services.r4_services - INFO - Consulta cliente 13536734 - Valido: True
+2025-12-03 10:30:31,182 - controllers.endpoints - INFO - Consulta cliente 13536734 - Resultado: {'status': True}
+2025-12-03 10:33:04,800 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:33:04,800 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:33:04,800 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:33:04,853 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 10:33:04,853 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 10:33:04,853 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 10:33:04,853 - core.config - INFO - Configuración validada correctamente
