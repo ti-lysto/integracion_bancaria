@@ -1151,3 +1151,318 @@
 2025-12-03 10:33:04,853 - core.config - INFO - Nivel de logging: INFO
 2025-12-03 10:33:04,853 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
 2025-12-03 10:33:04,853 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:03:39,069 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,079 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,082 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,091 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,094 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,094 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,211 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,218 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,222 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,328 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,342 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,343 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,414 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,414 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,414 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,414 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:03:39,426 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,426 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,426 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,426 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:03:39,536 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,536 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,536 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,536 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:03:39,658 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:03:39,658 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:03:39,658 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:03:39,658 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:08:25,229 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,238 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,242 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,252 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,266 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,266 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,416 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,430 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,430 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,505 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,522 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,522 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,570 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,574 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,574 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,574 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:08:25,610 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,614 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,614 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,614 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:08:25,784 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,786 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,786 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,786 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:08:25,850 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-03 15:08:25,850 - core.config - INFO - Nivel de logging: INFO
+2025-12-03 15:08:25,850 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-03 15:08:25,851 - core.config - INFO - Configuración validada correctamente
+2025-12-03 15:09:24,378 - services.r4_services - INFO - Consulta cliente V12345678 - Valido: True
+2025-12-03 15:09:24,379 - controllers.endpoints - INFO - Consulta cliente V12345678 - Resultado: {'status': True}
+2025-12-03 15:09:46,401 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.153.21.9
+2025-12-04 14:32:44,482 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:44,483 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:44,484 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:44,635 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:44,642 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:44,654 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:44,840 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:44,845 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:44,846 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:44,855 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:44,856 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:44,856 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:44,856 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:32:44,929 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:44,934 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:44,936 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:44,996 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:44,997 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:44,997 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:44,998 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:32:45,164 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:45,166 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:45,170 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:45,170 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:32:45,214 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:32:45,218 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:32:45,218 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:32:45,218 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:33:40,155 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,162 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,163 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,248 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,252 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,253 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,389 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,406 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,406 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,422 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,426 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,426 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,498 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,498 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,498 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,499 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:33:40,571 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,572 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,574 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,574 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:33:40,745 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,746 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,746 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,746 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:33:40,750 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 14:33:40,750 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 14:33:40,750 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 14:33:40,753 - core.config - INFO - Configuración validada correctamente
+2025-12-04 14:36:15,114 - services.r4_services - INFO - Consulta cliente V12345678 - Valido: True
+2025-12-04 14:36:15,114 - controllers.endpoints - INFO - Consulta cliente V12345678 - Resultado: {'status': True}
+2025-12-04 19:03:26,361 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:26,834 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:27,146 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:27,460 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:27,714 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:28,053 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:28,335 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:28,642 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:28,945 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:29,233 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:29,520 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:29,784 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:30,051 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:30,334 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:30,616 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:30,926 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:31,212 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:31,492 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:31,756 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:32,046 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:32,333 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:32,589 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:32,902 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:33,208 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:33,544 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:03:33,797 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:24,142 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:24,642 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:24,944 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:25,229 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:25,526 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:25,799 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:26,103 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:26,415 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:26,672 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:26,939 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:27,211 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:27,527 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:27,810 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:28,087 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:28,351 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:28,638 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:28,909 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:29,196 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:29,517 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:29,794 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:30,072 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:30,337 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:30,629 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:30,921 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:31,221 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:30:31,503 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.6.60.35
+2025-12-04 19:31:18,605 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:18,611 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:18,612 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:18,715 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:18,720 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:18,721 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:18,811 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:18,822 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:18,822 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:18,914 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:18,916 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:18,917 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:18,982 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:18,982 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:18,983 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:18,983 - core.config - INFO - Configuración validada correctamente
+2025-12-04 19:31:19,108 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:19,110 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:19,110 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:19,114 - core.config - INFO - Configuración validada correctamente
+2025-12-04 19:31:19,194 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:19,198 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:19,199 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:19,199 - core.config - INFO - Configuración validada correctamente
+2025-12-04 19:31:19,294 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-04 19:31:19,294 - core.config - INFO - Nivel de logging: INFO
+2025-12-04 19:31:19,294 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-04 19:31:19,295 - core.config - INFO - Configuración validada correctamente
+2025-12-04 19:32:23,368 - services.r4_services - INFO - Consulta cliente 16969468 - Valido: True
+2025-12-04 19:32:23,369 - controllers.endpoints - INFO - Consulta cliente 16969468 - Resultado: {'status': True}
+2025-12-04 19:32:23,794 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-04 19:32:23,815 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-04 19:32:23,821 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:23,822 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:24,137 - services.r4_services - INFO - Consulta cliente 16315501 - Valido: True
+2025-12-04 19:32:24,137 - controllers.endpoints - INFO - Consulta cliente 16315501 - Resultado: {'status': True}
+2025-12-04 19:32:24,441 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-04 19:32:24,451 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-04 19:32:24,459 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:24,459 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:24,755 - services.r4_services - INFO - Consulta cliente 10755001 - Valido: True
+2025-12-04 19:32:24,756 - controllers.endpoints - INFO - Consulta cliente 10755001 - Resultado: {'status': True}
+2025-12-04 19:32:25,012 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-04 19:32:25,026 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-04 19:32:25,033 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:25,034 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:25,298 - services.r4_services - INFO - Consulta cliente 16512104 - Valido: True
+2025-12-04 19:32:25,299 - controllers.endpoints - INFO - Consulta cliente 16512104 - Resultado: {'status': True}
+2025-12-04 19:32:25,592 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:25,592 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:25,878 - services.r4_services - INFO - Consulta cliente 13181240 - Valido: True
+2025-12-04 19:32:25,879 - controllers.endpoints - INFO - Consulta cliente 13181240 - Resultado: {'status': True}
+2025-12-04 19:32:26,183 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:26,184 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:26,459 - services.r4_services - INFO - Consulta cliente 17455123 - Valido: True
+2025-12-04 19:32:26,460 - controllers.endpoints - INFO - Consulta cliente 17455123 - Resultado: {'status': True}
+2025-12-04 19:32:26,739 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:26,740 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:27,020 - services.r4_services - INFO - Consulta cliente 10849409 - Valido: True
+2025-12-04 19:32:27,021 - controllers.endpoints - INFO - Consulta cliente 10849409 - Resultado: {'status': True}
+2025-12-04 19:32:27,289 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-04 19:32:27,301 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-04 19:32:27,307 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:27,308 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:27,584 - services.r4_services - INFO - Consulta cliente 10918116 - Valido: True
+2025-12-04 19:32:27,585 - controllers.endpoints - INFO - Consulta cliente 10918116 - Resultado: {'status': True}
+2025-12-04 19:32:27,896 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:27,898 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:28,172 - services.r4_services - INFO - Consulta cliente 10125434 - Valido: True
+2025-12-04 19:32:28,173 - controllers.endpoints - INFO - Consulta cliente 10125434 - Resultado: {'status': True}
+2025-12-04 19:32:28,448 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:28,448 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:28,737 - services.r4_services - INFO - Consulta cliente 6517372 - Valido: True
+2025-12-04 19:32:28,737 - controllers.endpoints - INFO - Consulta cliente 6517372 - Resultado: {'status': True}
+2025-12-04 19:32:29,030 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:29,031 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:29,329 - services.r4_services - INFO - Consulta cliente 6517372 - Valido: True
+2025-12-04 19:32:29,330 - controllers.endpoints - INFO - Consulta cliente 6517372 - Resultado: {'status': True}
+2025-12-04 19:32:29,589 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:29,590 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:29,860 - services.r4_services - INFO - Consulta cliente 29912340 - Valido: True
+2025-12-04 19:32:29,861 - controllers.endpoints - INFO - Consulta cliente 29912340 - Resultado: {'status': True}
+2025-12-04 19:32:30,130 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:30,130 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:32:30,444 - services.r4_services - INFO - Consulta cliente 18460659 - Valido: True
+2025-12-04 19:32:30,444 - controllers.endpoints - INFO - Consulta cliente 18460659 - Resultado: {'status': True}
+2025-12-04 19:32:30,731 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:32:30,732 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:36:33,503 - services.r4_services - INFO - Consulta cliente 410713348 - Valido: True
+2025-12-04 19:36:33,504 - controllers.endpoints - INFO - Consulta cliente 410713348 - Resultado: {'status': True}
+2025-12-04 19:37:26,726 - services.r4_services - INFO - Consulta cliente 410713348 - Valido: True
+2025-12-04 19:37:26,726 - controllers.endpoints - INFO - Consulta cliente 410713348 - Resultado: {'status': True}
+2025-12-04 19:37:26,972 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_IdComercio' at row 0")
+2025-12-04 19:37:26,972 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 19:37:44,442 - services.r4_services - INFO - Consulta cliente 410713348 - Valido: True
+2025-12-04 19:37:44,443 - controllers.endpoints - INFO - Consulta cliente 410713348 - Resultado: {'status': True}
+2025-12-04 20:10:51,984 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_BancoEmisor' at row 0")
+2025-12-04 20:10:51,985 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 20:12:07,778 - db.connector - ERROR - Error ejecutando SP sp_guardar_notificacion_r4: (1406, "Data too long for column 'p_BancoEmisor' at row 0")
+2025-12-04 20:12:07,779 - services.r4_services - INFO - SP Result - Mensaje: , Código: 0
+2025-12-04 20:12:15,350 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: 084848465353 guardada exitosamente, Código: 1
+2025-12-04 21:26:01,501 - services.r4_services - INFO - Consulta cliente 410713348 - Valido: True
+2025-12-04 21:26:01,502 - controllers.endpoints - INFO - Consulta cliente 410713348 - Resultado: {'status': True}
+2025-12-04 21:26:01,730 - services.r4_services - INFO - SP Result - Mensaje: Notificación num: 833854683598 guardada exitosamente, Código: 1
+2025-12-05 18:34:46,902 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-05 18:34:46,902 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-05 18:34:46,903 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-05 18:34:46,903 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-05 18:34:46,903 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-05 18:34:46,903 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-05 18:34:46,902 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-05 18:34:46,904 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-05 18:34:48,469 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:48,482 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:48,482 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:48,758 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:48,758 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:48,758 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:48,797 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:48,806 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:48,806 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:48,806 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:48,806 - core.config - INFO - Configuración validada correctamente
+2025-12-05 18:34:48,810 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:48,810 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:48,868 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:48,878 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:48,878 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:49,062 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:49,064 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:49,064 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:49,064 - core.config - INFO - Configuración validada correctamente
+2025-12-05 18:34:49,119 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:49,120 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:49,120 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:49,121 - core.config - INFO - Configuración validada correctamente
+2025-12-05 18:34:49,165 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-05 18:34:49,166 - core.config - INFO - Nivel de logging: INFO
+2025-12-05 18:34:49,174 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-05 18:34:49,174 - core.config - INFO - Configuración validada correctamente
+2025-12-09 23:59:50,466 - db.connector - INFO - Probando conexión a la base de datos...
+2025-12-09 23:59:50,467 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-09 23:59:50,481 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-09 23:59:50,483 - db.connector - INFO - Conexión a base de datos exitosa
+2025-12-10 00:00:05,792 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
