@@ -1,25 +1,4 @@
-"""
-CONFIGURACIÓN DE LA APLICACIÓN R4 CONECTA
-=========================================
 
-¿QUÉ ES ESTE ARCHIVO?
-- Contiene toda la configuración de la aplicación centralizada
-- No depende de archivos .env externos
-- Configuración de base de datos, seguridad, logs, etc.
-
-¿POR QUÉ ES IMPORTANTE?
-- Centraliza toda la configuración en un solo lugar
-- Elimina dependencias externas de configuración
-- Simplifica el manejo de configuraciones
-
-¿CÓMO SE USA?
-- Las otras partes de la aplicación importan configuraciones desde aquí
-- Todos los valores están definidos directamente en este archivo
-- Ejemplo: get_database_config() retorna la configuración de BD
-
-CREADO POR: Alicson Rubio
-FECHA: Noviembre 2025
-"""
 
 import logging
 import os

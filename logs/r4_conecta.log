@@ -1466,3 +1466,290 @@
 2025-12-09 23:59:50,483 - db.connector - INFO - Conexión a base de datos exitosa
 2025-12-10 00:00:05,792 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
 To install, run: pip install email-validator
+2025-12-23 15:50:14,386 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 15:50:14,424 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-12-23
+2025-12-23 15:53:19,123 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 15:53:19,157 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-12-23
+2025-12-23 15:57:35,446 - core.auth - ERROR - HMAC inválido para MBbcv
+2025-12-23 15:57:35,446 - core.auth - ERROR - Data string: 2025-12-23USD
+2025-12-23 15:57:35,447 - core.auth - ERROR - Firma recibida: 52a1e2e6e1f8ec61c39e2ea8ac5c2b2d0d3f5c4e6a0b8e4d1f9a3c7e5b2d8f1a
+2025-12-23 15:58:27,427 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 15:58:27,428 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-12-23
+2025-12-23 15:59:00,698 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 15:59:00,700 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-12-23
+2025-12-23 15:59:17,496 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 15:59:17,497 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-12-23
+2025-12-23 16:06:01,534 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 16:06:01,535 - services.r4_services - INFO - Modo DEBUG: Usando tasa simulada para USD - 2025-12-23
+2025-12-23 16:06:23,838 - db.connector - INFO - Cerrando pool de conexiones...
+2025-12-23 16:06:23,839 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2025-12-23 18:31:14,597 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:14,602 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:14,606 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:14,968 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:14,969 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:14,970 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:14,970 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:14,970 - core.config - INFO - Configuración validada correctamente
+2025-12-23 18:31:14,971 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:14,973 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:15,106 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:15,106 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:15,107 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:15,131 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:15,138 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:15,138 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:15,298 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:15,298 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:15,298 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:15,298 - core.config - INFO - Configuración validada correctamente
+2025-12-23 18:31:15,394 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:15,394 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:15,394 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:15,394 - core.config - INFO - Configuración validada correctamente
+2025-12-23 18:31:15,413 - core.config - INFO - Sistema de logging configurado correctamente
+2025-12-23 18:31:15,414 - core.config - INFO - Nivel de logging: INFO
+2025-12-23 18:31:15,418 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2025-12-23 18:31:15,418 - core.config - INFO - Configuración validada correctamente
+2025-12-23 18:31:28,224 - core.auth - ERROR - HMAC inválido para MBbcv
+2025-12-23 18:31:28,225 - core.auth - ERROR - Data string: 2025-12-23USD
+2025-12-23 18:31:28,225 - core.auth - ERROR - Firma recibida: 52a1e2e6e1f8ec61c39e2ea8ac5c2b2d0d3f5c4e6a0b8e4d1f9a3c7e5b2d8f1a
+2025-12-23 18:36:19,358 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 18:36:19,392 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2025-12-23
+2025-12-23 18:36:19,392 - services.r4_services - INFO - HMAC Data generado: 81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084
+2025-12-23 18:36:19,392 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2025-12-23 18:36:19,392 - services.r4_services - INFO - HMAC Data: 2025-12-23USD
+2025-12-23 18:36:19,393 - services.r4_services - INFO - HMAC Signature: 81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084
+2025-12-23 18:36:19,393 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2025-12-23 18:36:19,393 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2025-12-23'}
+2025-12-23 18:36:19,525 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2025-12-23 18:36:19,526 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2025-12-23'} Headers={'Content-Type': 'application/json', 'Authorization': '81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2025-12-23 18:36:19,526 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2025-12-23 18:36:19,527 - services.r4_services - ERROR - Error HTTP del banco: 401
+2025-12-23 18:49:44,454 - core.auth - INFO - HMAC válido para MBbcv
+2025-12-23 18:49:44,487 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2025-12-23
+2025-12-23 18:49:44,487 - services.r4_services - INFO - HMAC Data generado: 81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084
+2025-12-23 18:49:44,487 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2025-12-23 18:49:44,487 - services.r4_services - INFO - HMAC Data: 2025-12-23USD
+2025-12-23 18:49:44,487 - services.r4_services - INFO - HMAC Signature: 81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084
+2025-12-23 18:49:44,488 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2025-12-23 18:49:44,488 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2025-12-23'}
+2025-12-23 18:49:44,622 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2025-12-23 18:49:44,623 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2025-12-23'} Headers={'Content-Type': 'application/json', 'Authorization': '81ea9621f593fa398b093d063b61ec6b78b9c67dcf5531fa8e49d4075858b084', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2025-12-23 18:49:44,623 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2025-12-23 18:49:44,623 - services.r4_services - ERROR - Error HTTP del banco: 401
+2025-12-26 06:40:08,574 - db.connector - INFO - Probando conexión a la base de datos...
+2025-12-26 06:40:08,574 - db.connector - INFO - Creando nuevo pool de conexiones a MySQL...
+2025-12-26 06:40:08,597 - db.connector - INFO - Pool de conexiones creado exitosamente. Min: 1, Max: 10
+2025-12-26 06:40:08,598 - db.connector - INFO - Conexión a base de datos exitosa
+2025-12-26 06:40:22,556 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2026-01-07 17:42:44,981 - core.auth - ERROR - Header Authorization faltante para MBbcv
+2026-01-07 17:43:06,349 - core.auth - ERROR - Header Authorization faltante para MBbcv
+2026-01-07 17:48:43,165 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-07 17:48:43,166 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.153.21.9
+2026-01-07 17:50:44,346 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-07 17:50:44,346 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 190.153.21.9
+2026-01-07 17:52:19,085 - db.connector - INFO - Cerrando pool de conexiones...
+2026-01-07 17:52:19,090 - db.connector - INFO - Pool de conexiones cerrado exitosamente
+2026-01-07 18:22:43,669 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:43,678 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:43,679 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:43,679 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:43,682 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:43,682 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:43,795 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:43,797 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:43,797 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:43,848 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:43,848 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:43,849 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:44,014 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:44,014 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:44,015 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:44,015 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:44,015 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:44,015 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:44,015 - core.config - INFO - Configuración validada correctamente
+2026-01-07 18:22:44,015 - core.config - INFO - Configuración validada correctamente
+2026-01-07 18:22:44,127 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:44,127 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:44,127 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:44,127 - core.config - INFO - Configuración validada correctamente
+2026-01-07 18:22:44,171 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-07 18:22:44,172 - core.config - INFO - Nivel de logging: INFO
+2026-01-07 18:22:44,172 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-07 18:22:44,172 - core.config - INFO - Configuración validada correctamente
+2026-01-07 18:23:05,767 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-07 18:23:05,806 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-07
+2026-01-07 18:23:05,806 - services.r4_services - INFO - HMAC Data generado: efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848
+2026-01-07 18:23:05,807 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-07 18:23:05,807 - services.r4_services - INFO - HMAC Data: 2026-01-07USD
+2026-01-07 18:23:05,807 - services.r4_services - INFO - HMAC Signature: efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848
+2026-01-07 18:23:05,807 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': 'efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-07 18:23:05,807 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-07'}
+2026-01-07 18:23:05,958 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-07 18:23:05,959 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-07'} Headers={'Content-Type': 'application/json', 'Authorization': 'efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-07 18:23:05,959 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-07 18:23:05,959 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-07 18:42:53,183 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-07 18:42:53,204 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-07
+2026-01-07 18:42:53,204 - services.r4_services - INFO - HMAC Data generado: efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848
+2026-01-07 18:42:53,204 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-07 18:42:53,204 - services.r4_services - INFO - HMAC Data: 2026-01-07USD
+2026-01-07 18:42:53,204 - services.r4_services - INFO - HMAC Signature: efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848
+2026-01-07 18:42:53,204 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': 'efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-07 18:42:53,204 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-07'}
+2026-01-07 18:42:53,349 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-07 18:42:53,350 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-07'} Headers={'Content-Type': 'application/json', 'Authorization': 'efae3bb52d399e318b322907eba3e253bb80a8023f44720d641b8dafd2ec8848', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-07 18:42:53,350 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-07 18:42:53,350 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-09 10:11:38,093 - fastapi - WARNING - email-validator not installed, email fields will be treated as str.
+To install, run: pip install email-validator
+2026-01-12 18:48:22,023 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 18:48:22,025 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 38.196.193.42
+2026-01-12 18:48:57,796 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 18:48:57,797 - core.auth - WARNING - Intento de acceso desde IP no autorizada: 38.196.193.42
+2026-01-12 18:54:07,296 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,306 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,306 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,440 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,442 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,443 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,618 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,618 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,619 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,638 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,638 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,638 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,638 - core.config - INFO - Configuración validada correctamente
+2026-01-12 18:54:07,658 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,662 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,662 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,751 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,751 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,751 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,752 - core.config - INFO - Configuración validada correctamente
+2026-01-12 18:54:07,914 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,914 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,914 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,914 - core.config - INFO - Configuración validada correctamente
+2026-01-12 18:54:07,942 - core.config - INFO - Sistema de logging configurado correctamente
+2026-01-12 18:54:07,942 - core.config - INFO - Nivel de logging: INFO
+2026-01-12 18:54:07,942 - core.config - INFO - Archivo de logs: logs/r4_conecta.log
+2026-01-12 18:54:07,942 - core.config - INFO - Configuración validada correctamente
+2026-01-12 18:54:32,096 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 18:54:32,138 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-12
+2026-01-12 18:54:32,139 - services.r4_services - INFO - HMAC Data generado: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 18:54:32,139 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-12 18:54:32,140 - services.r4_services - INFO - HMAC Data: 2026-01-12USD
+2026-01-12 18:54:32,140 - services.r4_services - INFO - HMAC Signature: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 18:54:32,140 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 18:54:32,140 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-12'}
+2026-01-12 18:54:32,291 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-12 18:54:32,292 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-12'} Headers={'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 18:54:32,292 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-12 18:54:32,292 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-12 19:28:25,331 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 19:28:25,332 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-12
+2026-01-12 19:28:25,332 - services.r4_services - INFO - HMAC Data generado: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 19:28:25,332 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-12 19:28:25,332 - services.r4_services - INFO - HMAC Data: 2026-01-12USD
+2026-01-12 19:28:25,332 - services.r4_services - INFO - HMAC Signature: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 19:28:25,332 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 19:28:25,332 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-12'}
+2026-01-12 19:28:25,429 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-12 19:28:25,430 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-12'} Headers={'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 19:28:25,430 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-12 19:28:25,430 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-12 20:19:03,999 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 20:19:04,019 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-12
+2026-01-12 20:19:04,019 - services.r4_services - INFO - HMAC Data generado: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 20:19:04,020 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-12 20:19:04,020 - services.r4_services - INFO - HMAC Data: 2026-01-12USD
+2026-01-12 20:19:04,020 - services.r4_services - INFO - HMAC Signature: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 20:19:04,020 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 20:19:04,020 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-12'}
+2026-01-12 20:19:04,148 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-12 20:19:04,149 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-12'} Headers={'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 20:19:04,149 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-12 20:19:04,149 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-12 20:57:30,279 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 20:57:30,300 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-12
+2026-01-12 20:57:30,300 - services.r4_services - INFO - HMAC Data generado: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 20:57:30,301 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-12 20:57:30,301 - services.r4_services - INFO - HMAC Data: 2026-01-12USD
+2026-01-12 20:57:30,301 - services.r4_services - INFO - HMAC Signature: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 20:57:30,301 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 20:57:30,301 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-12'}
+2026-01-12 20:57:30,429 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-12 20:57:30,430 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-12'} Headers={'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 20:57:30,430 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-12 20:57:30,431 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-12 22:15:19,428 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 22:15:19,429 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-12
+2026-01-12 22:15:19,429 - services.r4_services - INFO - HMAC Data generado: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 22:15:19,429 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-12 22:15:19,429 - services.r4_services - INFO - HMAC Data: 2026-01-12USD
+2026-01-12 22:15:19,430 - services.r4_services - INFO - HMAC Signature: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 22:15:19,430 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 22:15:19,430 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-12'}
+2026-01-12 22:15:19,517 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-12 22:15:19,518 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-12'} Headers={'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 22:15:19,518 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-12 22:15:19,518 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-12 22:16:06,212 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-12 22:16:06,213 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-12
+2026-01-12 22:16:06,213 - services.r4_services - INFO - HMAC Data generado: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 22:16:06,213 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-12 22:16:06,213 - services.r4_services - INFO - HMAC Data: 2026-01-12USD
+2026-01-12 22:16:06,213 - services.r4_services - INFO - HMAC Signature: 2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc
+2026-01-12 22:16:06,214 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 22:16:06,214 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-12'}
+2026-01-12 22:16:06,301 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 401 Unauthorized"
+2026-01-12 22:16:06,302 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-12'} Headers={'Content-Type': 'application/json', 'Authorization': '2f0458e33e569ae398eaed9aae01a0dae69a33103e8f4f1e8fd88e2b35dc88bc', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-12 22:16:06,302 - services.r4_services - INFO - Respuesta del banco: Status=401, Body={
+"code": "108",
+"message": "No permitido"
+}
+2026-01-12 22:16:06,303 - services.r4_services - ERROR - Error HTTP del banco: 401
+2026-01-13 14:51:31,932 - core.auth - INFO - HMAC válido para MBbcv
+2026-01-13 14:51:31,933 - services.r4_services - INFO - Consultando tasa BCV al banco R4 para USD - 2026-01-13
+2026-01-13 14:51:31,933 - services.r4_services - INFO - HMAC Data generado: 79fa237e5f32e3c9f09cd2dde412462236e919c8e4d068cb64eacc98a71cd3c6
+2026-01-13 14:51:31,933 - services.r4_services - INFO - Enviando al banco: URL=https://r4conecta.mibanco.com.ve/MBbcv
+2026-01-13 14:51:31,933 - services.r4_services - INFO - HMAC Data: 2026-01-13USD
+2026-01-13 14:51:31,933 - services.r4_services - INFO - HMAC Signature: 79fa237e5f32e3c9f09cd2dde412462236e919c8e4d068cb64eacc98a71cd3c6
+2026-01-13 14:51:31,933 - services.r4_services - INFO - Headers: {'Content-Type': 'application/json', 'Authorization': '79fa237e5f32e3c9f09cd2dde412462236e919c8e4d068cb64eacc98a71cd3c6', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-13 14:51:31,933 - services.r4_services - INFO - Payload: {'Moneda': 'USD', 'Fechavalor': '2026-01-13'}
+2026-01-13 14:51:32,549 - httpx - INFO - HTTP Request: POST https://r4conecta.mibanco.com.ve/MBbcv "HTTP/1.1 200 OK"
+2026-01-13 14:51:32,550 - services.r4_services - INFO - Consulta enviada al banco R4. URL=https://r4conecta.mibanco.com.ve/MBbcv Payload={'Moneda': 'USD', 'Fechavalor': '2026-01-13'} Headers={'Content-Type': 'application/json', 'Authorization': '79fa237e5f32e3c9f09cd2dde412462236e919c8e4d068cb64eacc98a71cd3c6', 'Commerce': 'f2b21d6f0970274d2643fe5aae27deda1f47b3e5fbae007253e87fa663db6be4'}
+2026-01-13 14:51:32,550 - services.r4_services - INFO - Respuesta del banco: Status=200, Body={"code":"00","fechavalor":"2026-01-13","tipocambio":330.3751}
+
+2026-01-13 14:51:32,550 - services.r4_services - INFO - Tasa BCV obtenida del banco: 330.3751 VES/USD

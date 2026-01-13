@@ -1,25 +1,4 @@
-
-"""
-APLICACIÓN PRINCIPAL DE LA API R4 CONECTA
-=========================================
-
-Este es el archivo de nuestra API. Es el primer archivo que se ejecuta
-cuando iniciamos el servidor y se encarga de configurar todo lo necesario.
-
-¿Qué hace este archivo?
-- Crea la aplicación FastAPI principal
-- Configura la información básica de la API 
-- Registra todos los endpoints (rutas/URLs) que definimos en otros archivos
-- Configura el endpoint de salud para verificar que todo funcione
-- Prepara la API para recibir peticiones del banco
-
-¿Cuándo se ejecuta?
-- Al iniciar el servidor con: uvicorn app.main:app --reload (contar con el entorno virtual activado y las dependencias instaladas)
-- Es lo primero que se carga cuando arranca la aplicación
-
-Creado por: Alicson Rubio
-Fecha: 11/2025
-"""
+# main.py 
 
 # IMPORTACIONES NECESARIAS
 # ========================

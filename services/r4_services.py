@@ -1,13 +1,4 @@
-"""
-SERVICIOS R4 - LÓGICA DE NEGOCIO
-================================
 
-Contiene la lógica específica para cada tipo de operación R4.
-Cada método procesa un tipo diferente de transacción.
-
-Creado por: Alicson Rubio
-Fecha: Noviembre 2025
-"""
 
 import logging
 from datetime import date
@@ -44,13 +35,13 @@ class R4Services:
             import httpx
             
             #MODO DEBUG: Usar tasa simulada
-            if Config.DEBUG:
-                logger.info(f"Modo DEBUG: Usando tasa simulada para {moneda} - {fecha_valor}")
-                return {
-                    "code": "00",
-                    "fechavalor": date.today().isoformat(),
-                    "tipocambio": 236.5314
-                }
+            # if Config.DEBUG:
+            #     logger.info(f"Modo DEBUG: Usando tasa simulada para {moneda} - {fecha_valor}")
+            #     return {
+            #         "code": "00",
+            #         "fechavalor": date.today().isoformat(),
+            #         "tipocambio": 236.5314
+            #     }
             
             # MODO PRODUCCIÓN: Consultar al banco según especificación R4
             logger.info(f"Consultando tasa BCV al banco R4 para {moneda} - {fecha_valor}")
@@ -77,7 +68,8 @@ class R4Services:
                 # Generar firma usando el consolidado `r4_authentication`.
                 hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
                 # Antes: hmac_signature = r4_security.generate_response_signature({"data": hmac_data})
-                
+                logger.info(f"HMAC Data generado: {hmac_signature}")
+
                 headers = {
                     "Content-Type": "application/json",
                     "Authorization": hmac_signature,
@@ -100,7 +92,8 @@ class R4Services:
                 # Realizar consulta al banco
                 async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(banco_url, json=payload, headers=headers)
-                    
+                    logger.info(f"Consulta enviada al banco R4. URL={banco_url} Payload={payload} Headers={headers}")
+                    logger.info(f"Respuesta del banco: Status={response.status_code}, Body={response.text}")
                     if response.status_code == 200:
                         data = response.json()
                         
