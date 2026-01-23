@@ -38,3 +38,9 @@ class BancoR4Service(BaseBankService):
     async def consulta_cliente(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         """Método requerido por la interfaz - delega a consulta existente"""
         return await self.consulta(payload)
+    
+    # verificacion de pago movil consultando el vuelto (estado de la transaccion)
+    async def procesar_vuelto(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Método requerido por la interfaz - delega a consulta existente"""
+        logger.debug(f"[{self.bank_code}] procesar_vuelto delegando a BankR4Adapter: {payload}")
+        return await self._adapter.procesar_vuelto(payload)

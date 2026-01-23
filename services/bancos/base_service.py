@@ -73,3 +73,13 @@ class BaseBankService(ABC):
         Salida típica:
         - {"abono": true|false, "mensaje": str, "codigo": int}
         """
+
+    @abstractmethod
+    async def procesar_vuelto(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Procesar la verificación de un vuelto (estado de la transacción).
+        Entrada:
+        - Datos de la transacción (referencia, monto, etc.)
+        Salida típica:
+        - {"code": str, "message": str, "reference": str}
+        """
+        

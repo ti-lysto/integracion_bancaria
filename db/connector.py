@@ -211,46 +211,58 @@ async def ejecutar_sp_generico(
                 connection = await pool.acquire()
             cursor = await connection.cursor()
             
-            # Preparar parámetros para callproc
-            # Si hay parámetros OUT, necesitamos crear marcadores de posición
-            total_parametros = []
-            
-            if parametros_in:
-                total_parametros.extend(parametros_in)
-            
-            # Agregar marcador de posición para parámetros OUT
-            if parametros_out:
+            resultados = []
+            filas_afectadas = 0
+            valores_out = {}
+
+            # Cuando no hay OUT params, usar CALL vía execute para obtener SELECTs de forma fiable
+            if not parametros_out or len(parametros_out) == 0:
+                placeholders = ''
+                args = ()
+                if parametros_in and len(parametros_in) > 0:
+                    placeholders = ', '.join(['%s'] * len(parametros_in))
+                    args = parametros_in
+                call_stmt = f"CALL {sp_nombre}({placeholders})" if placeholders else f"CALL {sp_nombre}()"
+                await cursor.execute(call_stmt, args)
+            else:
+                # Preparar parámetros para callproc cuando hay OUT params
+                total_parametros = []
+                if parametros_in:
+                    total_parametros.extend(parametros_in)
                 # Para callproc, los parámetros OUT se pasan como None
                 total_parametros.extend([None] * len(parametros_out))
-            
-            # Llamar al stored procedure
-            if total_parametros:
                 await cursor.callproc(sp_nombre, total_parametros)
-            else:
-                await cursor.callproc(sp_nombre)
             
-            # Obtener todos los result sets (SELECT statements)
-            resultados = []
-            primer_resultado = await cursor.fetchall()
-            if primer_resultado:
-                resultados.append(primer_resultado)
-            
-            # Procesar múltiples result sets
+            # Obtener todos los result sets (SELECT statements) de forma robusta
+
+            # Capturar el set actual si es un SELECT
+            try:
+                if cursor.description:
+                    current_rs = await cursor.fetchall()
+                    if current_rs is not None:
+                        resultados.append(current_rs)
+            except aiomysql.ProgrammingError:
+                pass
+
+            # Avanzar y capturar sets subsiguientes
             while await cursor.nextset():
                 try:
-                    result_set = await cursor.fetchall()
-                    if result_set:
-                        resultados.append(result_set)
+                    if cursor.description:
+                        result_set = await cursor.fetchall()
+                        if result_set is not None:
+                            resultados.append(result_set)
                 except aiomysql.ProgrammingError:
                     # No hay más result sets
                     break
             
             # Obtener filas afectadas (para INSERT, UPDATE, DELETE)
-            filas_afectadas = cursor.rowcount
+            try:
+                filas_afectadas = cursor.rowcount
+            except Exception:
+                filas_afectadas = 0
             
             # Recuperar parámetros OUT si existen
-            valores_out = {}
-            if parametros_out:
+            if parametros_out and len(parametros_out) > 0:
                 # MySQL asigna variables @_sp_nombre_index
                 base_idx = len(parametros_in) if parametros_in else 0
                 selects = []

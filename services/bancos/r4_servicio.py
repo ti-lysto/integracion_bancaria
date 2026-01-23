@@ -72,17 +72,10 @@ class BankR4Adapter(BaseBankService):
 
     async def procesar_vuelto(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         try:
-            resultado = await r4_client.procesar_y_guardar(payload)
-            reference = None
-            try:
-                import uuid
-                reference = str(uuid.uuid4().int)[:8]
-            except Exception:
-                reference = ""
-            return {"code": "00", "message": "TRANSACCION EXITOSA", "reference": reference}
+            return await R4Services.procesar_vuelto(payload)
         except Exception as e:
             logger.error(f"[{self.bank_code}] Error procesar_vuelto: {e}")
-            return {"code": "08", "message": "Token Inválido"}
+            return {"code": "08", "message": "Error procesando vuelto"}
 
     async def generar_otp(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         try:
@@ -184,6 +177,13 @@ class BankR4Adapter(BaseBankService):
         except Exception as e:
             logger.error(f"[{self.bank_code}] Error mb_anulacion_c2p: {e}")
             return {"code": "41", "message": "Servicio no activo o negada por el banco"}
+
+    async def verificar_pago(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+        try:
+            return await R4Services.verificar_pago(payload)
+        except Exception as e:
+            logger.error(f"[{self.bank_code}] Error verificar_pago: {e}")
+            return {"code": "08", "message": "Error verificando pago"}
 
     # Métodos adicionales para mantener compatibilidad con la capa superior
     async def consulta_cliente(self, payload: Dict[str, Any]) -> Dict[str, Any]:

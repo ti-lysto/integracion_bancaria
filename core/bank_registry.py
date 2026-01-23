@@ -46,17 +46,17 @@ BANK_CONFIG: Dict[str, Dict[str, Any]] = {
     # R4 como banco más
     "r4": {
         "alias": "r4",
-        "service_cls": BancoR4Service,
-        "hmac_template": ["IdComercio", "TelefonoComercio", "TelefonoEmisor", "Monto", "Referencia"],
-        "sp_name": "sp_r4_guardar_transaccion"
+        "service_cls": BancoR4Service
+        # "hmac_template": ["IdComercio", "TelefonoComercio", "TelefonoEmisor", "Monto", "Referencia"],
+        #"sp_name": "sp_r4_guardar_transaccion"
     },
 
     # Ejemplo: Banesco (0134) mapeado al mismo adaptador por defecto
     "0134": {
         "alias": "banesco",
-        "service_cls": BancoBanescoService,
-        "hmac_template": ["IdComercio", "TelefonoComercio", "TelefonoEmisor", "Monto", "Referencia"],
-        "sp_name": "sp_banesco_guardar_transaccion"
+        "service_cls": BancoBanescoService
+        # "hmac_template": ["IdComercio", "TelefonoComercio", "TelefonoEmisor", "Monto", "Referencia"],
+        # "sp_name": "sp_banesco_guardar_transaccion"
     },
 
     # Lista inicial de bancos solicitados. Se puede ampliar dinámicamente.
