@@ -58,7 +58,7 @@ from models.schemas import (
     DomiciliacionCNTARequest, DomiciliacionCELERequest,
     ConsultarOperacionesRequest, CICuentasRequest,
     R4C2PRequest, R4AnulacionC2PRequest,
-    StandardResponse, SuccessResponse
+    StandardResponse, SuccessResponse, VerificoPagoRequest
 )
 
 router = APIRouter(prefix="/api")
@@ -129,6 +129,7 @@ async def notificar_pago(nombre_banco: str, payload: IntegracionPayload, request
 @router.post("/{nombre_banco}/R4pagos")
 async def r4pagos(nombre_banco: str, payload: R4PagosRequest):
     servicio = get_service_for_bank(nombre_banco)
+    
     return await servicio.procesar_gestion_pagos(payload.dict())
 
 
@@ -190,6 +191,12 @@ async def mb_c2p(nombre_banco: str, payload: R4C2PRequest):
 async def mb_anulacion_c2p(nombre_banco: str, payload: R4AnulacionC2PRequest):
     servicio = get_service_for_bank(nombre_banco)
     return await servicio.mb_anulacion_c2p(payload.dict())
+
+
+@router.post("/{nombre_banco}/verifico_pago")
+async def verifico_pago(nombre_banco: str, payload: VerificoPagoRequest):
+    servicio = get_service_for_bank(nombre_banco)
+    return await servicio.verificar_pago(payload.dict())
 
 
 # Ruta dinámica para endpoints por banco.

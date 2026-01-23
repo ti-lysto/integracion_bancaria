@@ -99,6 +99,11 @@ HMAC_CONFIG = {
         "separator": "",  # solo Banco
         "requires_uuid": False
     },
+    "VerificoPago": {
+        "params": ["Referencia"],
+        "separator": "",
+        "requires_uuid": False
+    },
     "R4consulta": {
         "params": [],  # No usa HMAC, solo UUID
         "requires_uuid": True
@@ -335,6 +340,13 @@ async def verify_hmac_anulacion_c2p(
     payload: Dict[str, Any] = None
 ):
     return await validar_hmac_generico("MBanulacionC2P", authorization, payload)
+
+# VERIFICO PAGO
+async def verify_hmac_verifico_pago(
+    authorization: Optional[str] = Header(None),
+    payload: Dict[str, Any] = None
+):
+    return await validar_hmac_generico("VerificoPago", authorization, payload)
 
 # CONSULTA
 async def verify_hmac_consulta(

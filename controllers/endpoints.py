@@ -18,7 +18,7 @@ Fecha: 11/2025
 # IMPORTACIONES - Aquí traemos las herramientas que necesitamos
 # ============================================================
 
-from fastapi import APIRouter, HTTPException, Request, Body, Depends
+from fastapi import APIRouter, HTTPException, Request, Body, Depends, Header
 # FastAPI: Framework web que nos ayuda a crear la API
 # APIRouter: Nos permite organizar las rutas/URLs
 # HTTPException: Para manejar errores HTTP
@@ -36,6 +36,7 @@ from services.r4_services import R4Services
 # Servicios específicos con la lógica de negocio de cada operación
 
 from core import auth
+from core.config import Config
 # Módulo de autenticación y seguridad
 
 import uuid
@@ -349,7 +350,11 @@ async def r4pagos(payload: R4PagosRequest = Body(...), _auth=Depends(auth.verify
 # PROCESAMIENTO DE VUELTO
 # =======================
 @router.post("/MBvuelto", response_model=StandardResponse, summary="R4 Vuelto")
-async def mb_vuelto(payload: R4VueltoRequest = Body(...), _auth=Depends(auth.verify_hmac_vuelto), _ip=Depends(auth.ip_whitelist_middleware)):
+async def mb_vuelto(
+    payload: R4VueltoRequest = Body(...),
+    authorization: str = Header(None),
+    _ip=Depends(auth.ip_whitelist_middleware)
+):
     """
     ENVÍA DINERO DE VUELTA A UN CLIENTE (VUELTO)
     
@@ -385,22 +390,44 @@ async def mb_vuelto(payload: R4VueltoRequest = Body(...), _auth=Depends(auth.ver
     """
     try:
         # Guardamos la información del vuelto
-        resultado = await r4_client.procesar_y_guardar(payload.dict())
+        resultado = await R4Services.procesar_vuelto(payload.dict())
         
         # Generamos una referencia única para el pago
         # uuid4() crea un identificador único, tomamos solo 8 dígitos
-        reference = str(uuid.uuid4().int)[:8]
+        reference = resultado.get("reference")
         
         # Devolvemos confirmación exitosa
         return StandardResponse(
             code="00", 
             message="TRANSACCION EXITOSA", 
-            reference=reference
+            reference=reference 
         )
         
     except Exception as e:
         # Si hay error, devolvemos código de token inválido
         return StandardResponse(code="08", message="Token Inválido")
+
+
+# VERIFICACIÓN DE PAGO
+# ====================
+@router.post("/verifico_pago", response_model=VerificoPagoResponse, summary="Verificar pago en banco y BD")
+async def verifico_pago(
+    payload: VerificoPagoRequest = Body(...),
+    commerce: str = Header(None),
+    _ip=Depends(auth.ip_whitelist_middleware)
+):
+    try:
+        # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
+        if not commerce or commerce != Config.R4_MERCHANT_ID:
+            raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
+
+        resultado = await R4Services.verificar_pago(payload.dict())
+        return VerificoPagoResponse(**resultado)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # GENERACIÓN DE CÓDIGO OTP (One Time Password)
@@ -621,21 +648,21 @@ async def domiciliacion_cnta(payload: DomiciliacionCNTARequest = Body(...), _aut
     - Para servicios públicos (luz, agua, etc.)
     - Para préstamos con cuotas automáticas
     
-    Proceso:
-    1. Cliente nos autoriza cobrar de su cuenta
-    2. Registramos su cuenta con este endpoint
-    3. Cada mes cobramos automáticamente
-    4. No necesita aprobar cada cobro individual
-    
-    Seguridad:
-    - Requiere HMAC con: cuenta (número completo)
-    - Solo funciona con cuentas válidas y activas
-    
-    Parámetros de entrada:
-    - docId: Cédula del titular de la cuenta
-    - nombre: Nombre completo del titular
-    - cuenta: Número de cuenta bancaria (20 dígitos)
-    - monto: Cantidad autorizada a cobrar
+    try:
+        # Validar firma HMAC con los campos del payload (evita 401 incorrectos)
+        await auth.verify_hmac_vuelto(authorization=authorization, payload=payload.dict())
+
+        # Procesar vuelto contra servicio R4 y devolver la respuesta recibida
+        resultado = await R4Services.procesar_vuelto(payload.dict())
+
+        referencia = resultado.get("reference") or str(uuid.uuid4().int)[:8]
+
+        return StandardResponse(
+            code=resultado.get("code", "01"),
+            message=resultado.get("message", ""),
+            reference=referencia
+        )
+
     - concepto: Descripción del servicio a cobrar
     
     Respuesta:

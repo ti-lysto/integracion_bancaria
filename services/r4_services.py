@@ -246,3 +246,180 @@ class R4Services:
                 "success": False,
                 "message": f"Error procesando dispersión: {str(e)}"
             }
+
+    @staticmethod
+    async def verificar_pago(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Verificar un pago: opcionalmente consulta banco y cruza con BD."""
+        from db import repository
+        print ("payload:", payload)
+        referencia = payload.get("Referencia")
+        # El cuerpo puede traer la bandera como "_verificacion" (alias) o ya normalizada como "verificacion"
+        verificacion_flag = payload.get("verificacion", payload.get("_verificacion"))
+        print("verificacion: ", verificacion_flag)
+        hacer_verificacion = bool(verificacion_flag)
+        #verifico filtros obligatorios si es hacer_verificacion=True
+        print ("hacer_verificacion:", hacer_verificacion)
+        # Si no se solicita verificación directa con el banco, usar solo Referencia.
+        # Enviar cadenas vacías para no filtrar por esos campos.
+        if not hacer_verificacion:
+            filtros_sp = {
+                "IdComercio": "",
+                "TelefonoComercio": "",
+                "TelefonoEmisor": "",
+                "BancoEmisor": "",
+                "Monto": "",
+                "FechaHora": "",
+                "Referencia": referencia or "",
+            }
+        else:
+            filtros_sp = {
+                "IdComercio": payload.get("IdComercio", ""),
+                "TelefonoComercio": payload.get("TelefonoComercio", ""),
+                "TelefonoEmisor": payload.get("TelefonoEmisor", ""),
+                "BancoEmisor": payload.get("BancoEmisor", ""),
+                "Monto": payload.get("Monto", ""),
+                "FechaHora": payload.get("FechaHora", ""),
+                "Referencia": referencia or "",
+            }
+
+        # Consulta en BD
+        
+        bd_result = await repository.consultar_notificacion_por_referencia(filtros_sp)
+        print ("bd_result:", bd_result)
+        fila_bd = bd_result.get("fila")
+        ref_bd = fila_bd.get("Referencia") if fila_bd else None
+        abono_bd = bool(fila_bd)
+
+        code_banco = None
+        reference_banco = None
+        message_banco = None
+
+        # Verificación directa con el banco si se solicita
+        print ("Se hara verificacion en banco:", hacer_verificacion)
+        if hacer_verificacion:
+            try:
+                #verifico campos obligatorios para consulta en banco
+                if not all(payload.get(k) for k in ("TelefonoDestino", "Cedula", "Banco", "Monto")):
+                    raise ValueError("Faltan campos obligatorios para verificación en banco")
+                
+                payload_banco = {
+                    "TelefonoDestino": payload.get("TelefonoDestino") or payload.get("TelefonoEmisor"),
+                    "Cedula": payload.get("Cedula"),
+                    "Banco": payload.get("Banco") or payload.get("BancoEmisor"),
+                    "Monto": payload.get("Monto")
+                    # Concepto e Ip son opcionales y no obligatorios para verificación
+                    #"Concepto": payload.get("Concepto"),
+                    #"Ip": payload.get("Ip"),
+                }
+
+                # Solo llamamos si tenemos los campos mínimos
+                if all(str(payload_banco.get(k) or '').strip() for k in ("TelefonoDestino", "Banco", "Monto", "Cedula")):
+                    resp_banco = await R4Services.procesar_vuelto(payload_banco)
+                    print("resp_banco:", resp_banco)
+                    code_banco = resp_banco.get("code")
+                    reference_banco = resp_banco.get("reference")
+                    message_banco = resp_banco.get("message")
+                else:
+                    code_banco = "99"
+                    message_banco = "Datos insuficientes para verificar en banco"
+            except Exception as e:
+                code_banco = "98"
+                message_banco = f"Error verificando en banco: {str(e)}"
+
+        coincide_referencia = bool(ref_bd and reference_banco and ref_bd == reference_banco)
+
+        # Determinar código final
+        if not abono_bd:
+            code_final = "04"
+            message_final = "No se encontró la referencia en BD"
+            referencia_final = reference_banco or ref_bd or referencia
+        else:
+            if hacer_verificacion:
+                if code_banco == "00" and coincide_referencia:
+                    code_final = "00"
+                    message_final = "Verificación exitosa en banco y BD"
+                else:
+                    code_final = code_banco or "06"
+                    message_final = message_banco or "No coincide referencia o banco reportó error"
+            else:
+                code_final = "00"
+                message_final = "Verificación exitosa en BD"
+            referencia_final = reference_banco or ref_bd or referencia
+
+        return {
+            "code": code_final,
+            "message": message_final,
+            "reference": referencia_final,
+            "abono_bd": abono_bd,
+            "coincide_referencia": coincide_referencia,
+            "code_banco": code_banco,
+            "detalle_bd": fila_bd
+        }
+
+    @staticmethod    
+    async def procesar_vuelto(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Procesar vuelto de pago móvil: arma firma HMAC y envía al banco."""
+        from core.config import Config
+        import httpx
+        from core.auth import r4_authentication
+
+        try:
+            banco_url = f"{Config.R4_BANCO_URL}/MBvuelto"
+
+            telefono = payload.get("TelefonoDestino")
+            monto = payload.get("Monto")
+            banco = payload.get("Banco")
+            cedula = payload.get("Cedula")
+            concepto = payload.get("Concepto")
+            ip_origen = payload.get("Ip")
+
+            # Firma según especificación: TelefonoDestino + Monto + Banco + Cedula
+            hmac_data = f"{telefono}{monto}{banco}{cedula}"
+            hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
+
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": hmac_signature,
+                "Commerce": Config.R4_MERCHANT_ID
+            }
+
+            body = {
+                "TelefonoDestino": telefono,
+                "Cedula": cedula,
+                "Banco": banco,
+                "Monto": monto
+            }
+
+            if concepto:
+                body["Concepto"] = concepto
+            if ip_origen:
+                body["Ip"] = ip_origen
+
+            async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
+                response = await client.post(banco_url, json=body, headers=headers)
+                logger.info(f"Vuelto solicitado. URL={banco_url} Payload={body} Headers={headers} Status={response.status_code}")
+
+                if response.status_code != 200:
+                    return {
+                        "code": "01",
+                        "message": f"Error HTTP {response.status_code}",
+                        "reference": ""
+                    }
+
+                data = response.json()
+                if data.get("code") == "00":
+                    return {
+                        "code": "00",
+                        "message": data.get("message", "TRANSACCION EXITOSA"),
+                        "reference": data.get("reference", "")
+                    }
+
+                return {
+                    "code": data.get("code", "01"),
+                    "message": data.get("message", "Error"),
+                    "reference": data.get("reference", "")
+                }
+
+        except Exception as e:
+            logger.error(f"Error procesando vuelto: {str(e)}")
+            return {"code": "08", "message": "Error procesando vuelto", "reference": ""}
