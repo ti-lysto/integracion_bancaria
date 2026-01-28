@@ -51,7 +51,7 @@ logger = logging.getLogger(__name__)
 # ==========================================
 # Esta variable guardará nuestro pool de conexiones
 # Se inicializa la primera vez que se usa
-_connection_pool: Optional[aiomysql.Pool] = None
+_connection_pool: Optional[aiomysql.Pool] | None= None
 
 
 # FUNCIÓN PARA OBTENER EL POOL DE CONEXIONES
@@ -126,6 +126,7 @@ async def get_connection_pool() -> aiomysql.Pool:
         )
         
         logger.info(f"Pool de conexiones creado exitosamente. Min: {Config.DB_POOL_MIN_SIZE}, Max: {Config.DB_POOL_MAX_SIZE}")
+        assert _connection_pool is not None, "El pool no fue inicializado"
         return _connection_pool
         
     except Exception as e:
@@ -209,6 +210,7 @@ async def ejecutar_sp_generico(
                 own_conn = True
                 pool = await get_connection_pool()
                 connection = await pool.acquire()
+            assert connection is not None, "La conexión no fue establecida"
             cursor = await connection.cursor()
             
             resultados = []

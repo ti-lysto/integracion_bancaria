@@ -27,7 +27,7 @@ import aiomysql
 import logging
 from typing import Dict, Any, Tuple, Optional
 from core.config import get_database_config
-from core.security import validate_r4_notification, r4_security
+#from core.security import validate_r4_notification, r4_security
 
 # Configurar logging para registrar eventos importantes
 logger = logging.getLogger(__name__)
@@ -281,7 +281,7 @@ class R4NotificaService:
                 "exito": False
             }
 
-    async def _ejecutar_sp_generico(self, sp_nombre: str, parametros_in: Tuple[Any, ...] = None, parametros_out: Tuple[Any, ...] = None) -> Dict[str, Any]:
+    async def _ejecutar_sp_generico(self, sp_nombre: str, parametros_in: Tuple[Any, ...] | None = None, parametros_out: Tuple[Any, ...] | None = None) -> Dict[str, Any]:
         """
         EJECUTAR UN STORED PROCEDURE GENÉRICO
         

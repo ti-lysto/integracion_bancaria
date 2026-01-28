@@ -49,7 +49,7 @@ class Config:
     # =====================================================
     
     # Puerto donde correrá la API
-    API_PORT = 8000
+    API_PORT = int(os.getenv("API_PORT", 8000))
     
     # Host de la API (0.0.0.0 para permitir conexiones externas)
     API_HOST = "0.0.0.0"

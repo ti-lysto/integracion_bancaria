@@ -429,6 +429,26 @@ async def verifico_pago(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# COMPROBACION DE PAGO
+# ====================
+@router.post("/comprobacion_pago",response_model=ComprueboPagoResponse, summary="Compuebo que se proceso de pago se termino correctamente y se procesa el registro en la BD")
+async def comprobacion_pago(
+    payload: ComprueboPagoRequest = Body(...),
+    commerce: str = Header(None),
+    _ip=Depends(auth.ip_whitelist_middleware)
+):
+    try:
+        # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
+        if not commerce or commerce != Config.R4_MERCHANT_ID:
+            raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
+
+        resultado = await R4Services.comprobar_pago(payload.dict())
+        return ComprueboPagoResponse(**resultado)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # GENERACIÓN DE CÓDIGO OTP (One Time Password)
 # ============================================
@@ -808,7 +828,8 @@ async def consultar_operaciones(payload: ConsultarOperacionesRequest = Body(...)
         return StandardResponse(
             code="ACCP", 
             reference=reference, 
-            success=True
+            success=True,
+            message="Operación Completada Exitosamente"
         )
         
     except Exception as e:

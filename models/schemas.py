@@ -624,65 +624,46 @@ class R4AnulacionC2PRequest(BaseModel):
 # ESQUEMAS PARA VERIFICACIÓN DE PAGO
 # ==================================
 class VerificoPagoRequest(BaseModel):
-    """Datos para verificar un pago ya registrado en BD y opcionalmente en el banco."""
+    """Datos de entrada para /verifico_pago — parámetros del SP.
 
-    model_config = ConfigDict(populate_by_name=True, protected_namespaces=())
+    Solo incluye los IN esperados por `sp_consulta_notificacion_r4`.
+    """
 
-    Referencia: Optional[str] = None  # Referencia a validar (obligatoria si _verificacion == False)
-    verificacion: bool = Field(False, alias="_verificacion")  # Si True, primero consulta al banco
-
-    # Filtros opcionales que aprovecha el SP sp_consulta_notificacion_r4
-    IdComercio: Optional[str] = None
-    TelefonoComercio: Optional[str] = None
-    TelefonoEmisor: Optional[str] = None
-    BancoEmisor: Optional[str] = None
+    Telefono: Optional[str] = None
+    Banco: Optional[str] = None
     Monto: Optional[str] = None
     FechaHora: Optional[str] = None
+    Referencia: Optional[str] = None
 
-    # Datos opcionales para llamar al banco (si _verificacion=True y quieres revalidar)
-    TelefonoDestino: Optional[str] = None
-    Cedula: Optional[str] = None
+# ESQUEMAS PARA COMPROBACIÓN DE PAGO
+# ==================================
+class ComprueboPagoRequest(BaseModel):
+    """Datos de entrada para /verifico_pago — parámetros del SP.
+
+    Solo incluye los IN esperados por `sp_consulta_notificacion_r4`.
+    """
+
+    Telefono: Optional[str] = None
     Banco: Optional[str] = None
+    Monto: Optional[str] = None
+    FechaHora: Optional[str] = None
+    Referencia: Optional[str] = None
 
-    # Validación condicional de campos requeridos (Pydantic v2)
-    @model_validator(mode="after")
-    def validar_campos_según_verificacion(self):
-        verif = bool(self.verificacion)
-        referencia = self.Referencia
-        tel = self.TelefonoDestino or self.TelefonoEmisor
-        banco = self.Banco or self.BancoEmisor
-        monto = self.Monto
-        cedula = self.Cedula
-
-        if verif:
-            faltantes = []
-            if not tel or str(tel).strip() == "":
-                faltantes.append('TelefonoDestino')
-            if not cedula or str(cedula).strip() == "":
-                faltantes.append('Cedula')
-            if not banco or str(banco).strip() == "":
-                faltantes.append('Banco')
-            if not monto or str(monto).strip() == "":
-                faltantes.append('Monto')
-            if faltantes:
-                raise ValueError(f"Campos obligatorios faltantes cuando _verificacion=true: {', '.join(faltantes)}")
-        else:
-            if not referencia or str(referencia).strip() == "":
-                raise ValueError("Referencia es obligatoria cuando _verificacion=false")
-
-        return self
-
+class ComprueboPagoResponse(BaseModel):
+    """Respuesta simplificada solicitada: campos del registro y flag `encontrado`."""
+    
+    procesado: bool = False
+    mensaje: str = ""
 
 class VerificoPagoResponse(BaseModel):
-    """Respuesta detallada de la verificación de pago."""
+    """Respuesta simplificada solicitada: campos del registro y flag `encontrado`."""
 
-    code: str
-    message: str
-    reference: Optional[str] = None
-    abono_bd: bool = False
-    coincide_referencia: bool = False
-    code_banco: Optional[str] = None
-    #detalle_bd: Optional[Dict[str, Any]] = None
+    Telefono: str = ""
+    Banco: str = ""
+    Monto: str = ""
+    FechaHora: str = ""
+    Referencia: str = ""
+    encontrado: bool = False
 
 
 # ESQUEMAS DE RESPUESTAS GENÉRICAS

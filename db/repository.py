@@ -237,133 +237,102 @@ async def consultar_notificacion_por_referencia(filtros: Dict[str, Any]) -> Dict
     """Consulta notificación en BD usando sp_consulta_notificacion_r4.
 
     Parámetros esperados por el SP (IN):
-    IdComercio, TelefonoComercio, TelefonoEmisor, BancoEmisor,
-    Monto, FechaHora, Referencia.
+    Telefono, BancoEmisor, Monto, FechaHora, Referencia.
     """
 
     proc_name = "sp_consulta_notificacion_r4"
 
-    parametros_in = (
-        filtros.get("IdComercio", ""),
-        filtros.get("TelefonoComercio", ""),
-        filtros.get("TelefonoEmisor", ""),
-        filtros.get("BancoEmisor", ""),
+    parametros_in = (        
+        filtros.get("Telefono", ""),
+        filtros.get("Banco", ""),
         filtros.get("Monto", ""),
         filtros.get("FechaHora", ""),
         filtros.get("Referencia", ""),
     )
 
     from db.connector import ejecutar_sp_generico
-    print ("Ejecutando SP:", proc_name, "con parámetros:", parametros_in)
+    print("Ejecutando SP:", proc_name, "con parámetros:", parametros_in)
     resultado = await ejecutar_sp_generico(
         proc_name,
         parametros_in,
         parametros_out=()
     )
+    print("Resultado SP completo:", resultado)
+    return resultado
 
-    # Normalizar el primer resultset a una lista de dicts para evitar tuple.get()
-    filas_raw = resultado.get("resultados", [])
-    # Seleccionar el primer resultset no vacío
-    primer_no_vacio = []
-    for rs in filas_raw:
-        if isinstance(rs, list) and rs:
-            primer_no_vacio = rs
-            break
+async def proceso_comprobacion_por_referencia(filtros: Dict[str, Any]) -> Dict[str, Any]:
+    """Procesa notificación en BD usando sp_proceso_notificacion_r4.
 
-    filas = []
-    if primer_no_vacio and isinstance(primer_no_vacio, list):
-        # El SP devuelve tuplas; las mapeamos a claves conocidas
-        columnas_posibles = [
-            "IdComercio",
-            "TelefonoComercio",
-            "TelefonoEmisor",
-            "BancoEmisor",
-            "Monto",
-            "FechaHora",
-            "Referencia",
-        ]
-        for tupla in primer_no_vacio:
-            if isinstance(tupla, tuple):
-                fila_dict = {}
-                for idx, valor in enumerate(tupla):
-                    clave = columnas_posibles[idx] if idx < len(columnas_posibles) else f"col{idx}"
-                    fila_dict[clave] = valor
-                filas.append(fila_dict)
-            elif isinstance(tupla, dict):
-                filas.append(tupla)
+    Parámetros esperados por el SP (IN):
+    Telefono, BancoEmisor, Monto, FechaHora, Referencia.
+    """
 
-    fila = filas[0] if filas else None
-    # Fallback: si el SP no devolvió filas, intentar consulta directa equivalente
-    if not fila:
-        try:
-            from db.connector import get_connection_pool
-            pool = await get_connection_pool()
-            conn = await pool.acquire()
-            cur = await conn.cursor()
-            try:
-                base_sql = "SELECT * FROM r4_notifications WHERE 1=1"
-                where = []
-                args = []
-                if filtros.get("IdComercio"):
-                    where.append(" AND IdComercio = %s")
-                    args.append(filtros["IdComercio"])
-                if filtros.get("TelefonoComercio"):
-                    where.append(" AND TelefonoComercio = %s")
-                    args.append(filtros["TelefonoComercio"])
-                if filtros.get("TelefonoEmisor"):
-                    where.append(" AND TelefonoEmisor = %s")
-                    args.append(filtros["TelefonoEmisor"])
-                if filtros.get("BancoEmisor"):
-                    where.append(" AND BancoEmisor = %s")
-                    args.append(filtros["BancoEmisor"])
-                if filtros.get("Monto"):
-                    where.append(" AND Monto = %s")
-                    args.append(filtros["Monto"])
-                if filtros.get("FechaHora"):
-                    where.append(" AND FechaHora = %s")
-                    args.append(filtros["FechaHora"])
-                if filtros.get("Referencia"):
-                    where.append(" AND Referencia = %s")
-                    args.append(filtros["Referencia"])
+    proc_name = "sp_proceso_notificacion_r4"
 
-                sql = base_sql + "".join(where) + " ORDER BY FechaHora DESC"
-                await cur.execute(sql, tuple(args))
-                direct_rows = await cur.fetchall()
+    parametros_in = (        
+        filtros.get("Telefono"),
+        filtros.get("Banco"),
+        filtros.get("Monto"),
+        filtros.get("FechaHora"),
+        filtros.get("Referencia")
+    )
+    parametros_out = ("p_mensaje","p_procesado")
 
-                if direct_rows:
-                    filas = []
-                    columnas_posibles = [
-                        "IdComercio",
-                        "TelefonoComercio",
-                        "TelefonoEmisor",
-                        "BancoEmisor",
-                        "Monto",
-                        "FechaHora",
-                        "Referencia",
-                    ]
-                    for tupla in direct_rows:
-                        if isinstance(tupla, tuple):
-                            fila_dict = {}
-                            for idx, valor in enumerate(tupla):
-                                clave = columnas_posibles[idx] if idx < len(columnas_posibles) else f"col{idx}"
-                                fila_dict[clave] = valor
-                            filas.append(fila_dict)
-                        elif isinstance(tupla, dict):
-                            filas.append(tupla)
-                    fila = filas[0]
-            finally:
-                await cur.close()
-                pool.release(conn)
-        except Exception:
-            pass
+    from db.connector import ejecutar_sp_generico
+    print("Ejecutando SP:", proc_name, "con parámetros in:", parametros_in, "y parámetros OUT:", parametros_out)
+    resultado = await ejecutar_sp_generico(
+        proc_name,
+        parametros_in,
+        parametros_out
+    )
+    print("Resultado SP completo:", resultado)
+    return resultado
 
-    return {
-        "fila": fila,
-        "filas": filas,
-        "exito": resultado.get("exito", False),
-        "error": resultado.get("error"),
-        "procedimiento": proc_name,
-    }
+    # filas = []
+    # primer_no_vacio = []
+    
+    # # Obtener resultados del SP
+    # resultados_raw = resultado.get("resultados", [])
+    
+    # print("Resultados raw:", resultados_raw)
+    
+    # # Procesar resultados
+    # if resultados_raw:
+    #     # El SP devuelve una lista de tuplas, cada tupla contiene una fila
+    #     for resultado_set in resultados_raw:
+    #         if isinstance(resultado_set, tuple) and resultado_set:
+    #             # resultado_set es una tupla que contiene una tupla por cada fila
+    #             for fila_tupla in resultado_set:
+    #                 if isinstance(fila_tupla, tuple):
+    #                     # Mapear las columnas según la estructura de la tabla
+    #                     fila_dict = {
+    #                         "IdComercio": fila_tupla[0] if len(fila_tupla) > 0 else "",
+    #                         "TelefonoComercio": fila_tupla[1] if len(fila_tupla) > 1 else "",
+    #                         "Telefono": fila_tupla[2] if len(fila_tupla) > 2 else "",
+    #                         "Concepto": fila_tupla[3] if len(fila_tupla) > 3 else "",
+    #                         "Banco": fila_tupla[4] if len(fila_tupla) > 4 else "",
+    #                         "Monto": fila_tupla[5] if len(fila_tupla) > 5 else "",
+    #                         "FechaHora": fila_tupla[6] if len(fila_tupla) > 6 else "",
+    #                         "Referencia": fila_tupla[7] if len(fila_tupla) > 7 else "",
+    #                         "CodigoRed": fila_tupla[8] if len(fila_tupla) > 8 else ""
+    #                     }
+    #                     filas.append(fila_dict)
+    #                     print(f"Fila procesada: {fila_dict}")
+                        
+    #             if filas:
+    #                 break
+    
+    # print(f"Filas procesadas: {len(filas)}")
+    
+    # fila = filas[0] if filas else None
+    
+    # return {
+    #     "fila": fila,
+    #     "exito": resultado.get("exito", False),
+    #     "error": resultado.get("error"),
+    #     "procedimiento": proc_name,
+    # }
+    
 
 
 # FUNCIONES DE UTILIDAD PARA DEBUGGING

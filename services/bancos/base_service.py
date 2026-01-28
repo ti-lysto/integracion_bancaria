@@ -35,11 +35,11 @@ class BaseBankService(ABC):
     que todos los bancos hablen el mismo idioma con nuestra API.
     """
 
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config: Dict[str, Any] | None = None):
         self.config = config or {}
 
     @abstractmethod
-    async def consultar_tasa(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+    async def consultar_tasa(self, payload: Dict[str, Any] | None = None) -> Dict[str, Any]:
         """Consultar tasa o información del banco.
 
         Entrada (payload):
@@ -50,7 +50,7 @@ class BaseBankService(ABC):
         """
     
     @abstractmethod
-    async def consulta_cliente(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+    async def consulta_cliente(self, payload: Dict[str, Any] | None = None) -> Dict[str, Any]:
         """Consultar información del cliente.
 
         ¿Para qué sirve?
@@ -62,7 +62,7 @@ class BaseBankService(ABC):
         """
 
     @abstractmethod
-    async def procesar_notificacion(self, payload: Dict[str, Any]) -> Dict[str, Any]:
+    async def procesar_notificacion(self, payload: Dict[str, Any] | None = None) -> Dict[str, Any]:
         """Procesar una notificación de pago (notifica/confirmación).
 
         ¿Qué hace?

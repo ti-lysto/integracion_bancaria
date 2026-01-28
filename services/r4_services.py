@@ -137,11 +137,11 @@ class R4Services:
                 #     pass
                 
                 # # Error final
-                # return {
-                #     "code": "01",
-                #     "fechavalor": fecha_valor,
-                #     "tipocambio": 0.0
-                # }
+                return {
+                    "code": "01",
+                    "fechavalor": fecha_valor,
+                    "tipocambio": 0.0
+                }
             
         except Exception as e:
             logger.error(f"Error crítico en consulta BCV: {str(e)}")
@@ -152,7 +152,7 @@ class R4Services:
             }
     
     @staticmethod
-    async def procesar_consulta_cliente(id_cliente: str, monto: str = None, telefono: str = None) -> Dict[str, Any]:
+    async def procesar_consulta_cliente(id_cliente: str, monto: str | None = None, telefono: str | None = None) -> Dict[str, Any]:
         """Procesar consulta de cliente"""
         try:
             # Siempre se va adevolver el valor True.
@@ -251,110 +251,93 @@ class R4Services:
     async def verificar_pago(payload: Dict[str, Any]) -> Dict[str, Any]:
         """Verificar un pago: opcionalmente consulta banco y cruza con BD."""
         from db import repository
-        print ("payload:", payload)
-        referencia = payload.get("Referencia")
-        # El cuerpo puede traer la bandera como "_verificacion" (alias) o ya normalizada como "verificacion"
-        verificacion_flag = payload.get("verificacion", payload.get("_verificacion"))
-        print("verificacion: ", verificacion_flag)
-        hacer_verificacion = bool(verificacion_flag)
-        #verifico filtros obligatorios si es hacer_verificacion=True
-        print ("hacer_verificacion:", hacer_verificacion)
-        # Si no se solicita verificación directa con el banco, usar solo Referencia.
-        # Enviar cadenas vacías para no filtrar por esos campos.
-        if not hacer_verificacion:
-            filtros_sp = {
-                "IdComercio": "",
-                "TelefonoComercio": "",
-                "TelefonoEmisor": "",
-                "BancoEmisor": "",
-                "Monto": "",
-                "FechaHora": "",
-                "Referencia": referencia or "",
-            }
-        else:
-            filtros_sp = {
-                "IdComercio": payload.get("IdComercio", ""),
-                "TelefonoComercio": payload.get("TelefonoComercio", ""),
-                "TelefonoEmisor": payload.get("TelefonoEmisor", ""),
-                "BancoEmisor": payload.get("BancoEmisor", ""),
-                "Monto": payload.get("Monto", ""),
-                "FechaHora": payload.get("FechaHora", ""),
-                "Referencia": referencia or "",
-            }
 
-        # Consulta en BD
-        
+        filtros_sp = {
+            "Telefono": payload.get("Telefono", ""),
+            "Banco": payload.get("Banco", ""),
+            "Monto": payload.get("Monto", ""),
+            "FechaHora": payload.get("FechaHora", ""),
+            "Referencia": payload.get("Referencia")
+        }
+
+                
         bd_result = await repository.consultar_notificacion_por_referencia(filtros_sp)
         print ("bd_result:", bd_result)
-        fila_bd = bd_result.get("fila")
-        ref_bd = fila_bd.get("Referencia") if fila_bd else None
-        abono_bd = bool(fila_bd)
-
-        code_banco = None
-        reference_banco = None
-        message_banco = None
-
-        # Verificación directa con el banco si se solicita
-        print ("Se hara verificacion en banco:", hacer_verificacion)
-        if hacer_verificacion:
-            try:
-                #verifico campos obligatorios para consulta en banco
-                if not all(payload.get(k) for k in ("TelefonoDestino", "Cedula", "Banco", "Monto")):
-                    raise ValueError("Faltan campos obligatorios para verificación en banco")
-                
-                payload_banco = {
-                    "TelefonoDestino": payload.get("TelefonoDestino") or payload.get("TelefonoEmisor"),
-                    "Cedula": payload.get("Cedula"),
-                    "Banco": payload.get("Banco") or payload.get("BancoEmisor"),
-                    "Monto": payload.get("Monto")
-                    # Concepto e Ip son opcionales y no obligatorios para verificación
-                    #"Concepto": payload.get("Concepto"),
-                    #"Ip": payload.get("Ip"),
-                }
-
-                # Solo llamamos si tenemos los campos mínimos
-                if all(str(payload_banco.get(k) or '').strip() for k in ("TelefonoDestino", "Banco", "Monto", "Cedula")):
-                    resp_banco = await R4Services.procesar_vuelto(payload_banco)
-                    print("resp_banco:", resp_banco)
-                    code_banco = resp_banco.get("code")
-                    reference_banco = resp_banco.get("reference")
-                    message_banco = resp_banco.get("message")
-                else:
-                    code_banco = "99"
-                    message_banco = "Datos insuficientes para verificar en banco"
-            except Exception as e:
-                code_banco = "98"
-                message_banco = f"Error verificando en banco: {str(e)}"
-
-        coincide_referencia = bool(ref_bd and reference_banco and ref_bd == reference_banco)
-
-        # Determinar código final
-        if not abono_bd:
-            code_final = "04"
-            message_final = "No se encontró la referencia en BD"
-            referencia_final = reference_banco or ref_bd or referencia
-        else:
-            if hacer_verificacion:
-                if code_banco == "00" and coincide_referencia:
-                    code_final = "00"
-                    message_final = "Verificación exitosa en banco y BD"
-                else:
-                    code_final = code_banco or "06"
-                    message_final = message_banco or "No coincide referencia o banco reportó error"
-            else:
-                code_final = "00"
-                message_final = "Verificación exitosa en BD"
-            referencia_final = reference_banco or ref_bd or referencia
-
+        # Inicializar variables
+        telefono = ""
+        banco = ""
+        monto = ""
+        fecha_hora = ""
+        referencia = ""
+        encontrado = False
+        
+        # Verificar si la consulta fue exitosa
+        if bd_result and bd_result.get("exito", False):
+            resultados = bd_result.get("resultados", [])
+            print("resultados crudos:", resultados)
+            
+            if resultados:
+                # Los resultados están en una lista que contiene tuplas
+                # Estructura: [((col1, col2, col3, ...),)]
+                for resultado_set in resultados:
+                    if isinstance(resultado_set, tuple):
+                        for fila_tupla in resultado_set:
+                            if isinstance(fila_tupla, tuple) and len(fila_tupla) >= 9:
+                                # Mapear según la estructura de la tabla r4_notifications:
+                                # [0] IdComercio, [1] TelefonoComercio, [2] TelefonoEmisor, 
+                                # [3] Concepto, [4] BancoEmisor, [5] Monto,
+                                # [6] FechaHora, [7] Referencia, [8] CodigoRed
+                                
+                                telefono = fila_tupla[2] if len(fila_tupla) > 2 else ""  # TelefonoEmisor
+                                banco = fila_tupla[4] if len(fila_tupla) > 4 else ""     # BancoEmisor
+                                monto = fila_tupla[5] if len(fila_tupla) > 5 else ""
+                                fecha_hora = fila_tupla[6] if len(fila_tupla) > 6 else ""
+                                referencia = fila_tupla[7] if len(fila_tupla) > 7 else ""
+                                
+                                encontrado = bool(referencia)
+                                print(f"Fila procesada - Tel: {telefono}, Banco: {banco}, Monto: {monto}")
+                                break  # Tomar solo el primer resultado
+        
+        print(f"telefono: {telefono}, banco: {banco}, monto: {monto}, fecha_hora: {fecha_hora}, referencia: {referencia}, encontrado: {encontrado}")
+        
         return {
-            "code": code_final,
-            "message": message_final,
-            "reference": referencia_final,
-            "abono_bd": abono_bd,
-            "coincide_referencia": coincide_referencia,
-            "code_banco": code_banco,
-            "detalle_bd": fila_bd
+            "Telefono": telefono or "",
+            "Banco": banco or "",
+            "Monto": str(monto or ""),
+            "FechaHora": fecha_hora or "",
+            "Referencia": referencia or "",
+            "encontrado": encontrado
         }
+
+    @staticmethod
+    async def comprobar_pago(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Verificar un pago: opcionalmente consulta banco y cruza con BD."""
+        from db import repository
+
+        filtros_sp = {
+            "Telefono": payload.get("Telefono", ""),
+            "Banco": payload.get("Banco", ""),
+            "Monto": payload.get("Monto", ""),
+            "FechaHora": payload.get("FechaHora", ""),
+            "Referencia": payload.get("Referencia")
+        }
+
+                
+        bd_result = await repository.proceso_comprobacion_por_referencia(filtros_sp)
+        print ("bd_result:", bd_result)
+        
+        out_params = bd_result.get("parametros_out", {})
+        print("out_params:", out_params)
+        procesado= bool(out_params.get("p_procesado", 0))
+        print("procesado:", procesado)  
+        mensaje= out_params.get("p_mensaje", "")
+        print("mensaje:", mensaje)
+        
+        return {
+            "procesado": procesado,
+            "mensaje": mensaje
+        }
+        
 
     @staticmethod    
     async def procesar_vuelto(payload: Dict[str, Any]) -> Dict[str, Any]:
