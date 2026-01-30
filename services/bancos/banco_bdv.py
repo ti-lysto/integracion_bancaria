@@ -3,14 +3,12 @@ Creado por: Alicson Rubio
 """
 from typing import Dict, Any
 import logging
-from services.bancos.base_service import BaseBankService
 
 logger = logging.getLogger(__name__)
 
 
-class BancoBDVService(BaseBankService):
-    def __init__(self, bank_code: str = "0102", config: Dict[str, Any] = None):
-        super().__init__(config=config)
+class BancoBDVService:
+    def __init__(self, bank_code: str = "0102", config: Dict[str, Any] | None = None):
         self.bank_code = bank_code
 
     async def consulta(self, payload: Dict[str, Any]) -> Dict[str, Any]:

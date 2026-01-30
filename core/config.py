@@ -24,19 +24,19 @@ class Config:
     # =====================================================
     
     # Host de la base de datos (donde está instalado MySQL)
-    DB_HOST = os.getenv("DB_HOST", "localhost")
+    DB_HOST = os.getenv("DB_HOST", "")
     
     # Puerto de MySQL (por defecto 3306)
     DB_PORT = int(os.getenv("DB_PORT", 3306))
     
     # Nombre de la base de datos
-    DB_NAME = os.getenv("DB_NAME", "Lysto") #"LystoLocal" / "Lysto"
+    DB_NAME = os.getenv("DB_NAME", "") #"LystoLocal" / "Lysto"
     
     # Usuario de MySQL
-    DB_USER = os.getenv("DB_USER", "root")
+    DB_USER = os.getenv("DB_USER", "")
     
     # Contraseña de MySQL
-    DB_PASSWORD = os.getenv("DB_PASSWORD", "root")
+    DB_PASSWORD = os.getenv("DB_PASSWORD", "")
     
     # Mínimo de conexiones en el pool
     DB_POOL_MIN_SIZE = 1
@@ -64,16 +64,10 @@ class Config:
     # ID del comercio en el sistema R4 (proporcionado por el banco)
     # Ahora se obtiene desde la variable de entorno R4_MERCHANT_ID o usa
     # un valor por defecto no válido para forzar la configuración en producción.
-    R4_MERCHANT_ID = os.getenv("R4_MERCHANT_ID", "id_comercio")
-    
-    # Clave secreta para HMAC (proporcionada por el banco)
-    # Se debe definir en la variable de entorno R4_SECRET_KEY. NO almacenar
-    # esta clave en el código fuente.
-    #R4_SECRET_KEY = os.getenv("R4_SECRET_KEY", "clave_secreta")
-    R4_SECRET_KEY = R4_MERCHANT_ID#os.getenv("R4_MERCHANT_ID", "id_comercio")
+    R4_MERCHANT_ID = os.getenv("R4_MERCHANT_ID")
     
     # URL base del banco R4
-    R4_BANCO_URL = os.getenv("R4_BANCO_URL", "https://r4conecta.mibanco.com.ve")
+    R4_BANCO_URL = os.getenv("R4_BANCO_URL")
     
 
 
@@ -99,7 +93,7 @@ class Config:
     LOG_FILE = "logs/r4_conecta.log"
 
     # UUID para identificación única
-    UUID = os.getenv("UUID", "uuid_por_defecto")
+    UUID = os.getenv("UUID")
 
 def get_database_config() -> Dict[str, Any]:
     """
@@ -156,7 +150,7 @@ def get_r4_config() -> Dict[str, Any]:
     #print(Config.R4_MERCHANT_ID)
     return {
         "merchant_id": Config.R4_MERCHANT_ID,
-        "secret_key": Config.R4_SECRET_KEY,
+        #"secret_key": Config.R4_SECRET_KEY,
         "timeout": Config.REQUEST_TIMEOUT,
         "allowed_ips": Config.BANCO_IPS_PERMITIDAS,
         "uuid": Config.UUID
@@ -176,48 +170,48 @@ def setup_logging():
     - Ayuda a detectar errores y problemas
     - Registra todas las transacciones importantes
     """
-    if Config.DEBUG:
-        # Crear directorio de logs si no existe
-        try:
-            log_dir = os.path.dirname(Config.LOG_FILE)
-            if log_dir and not os.path.exists(log_dir):
-                os.makedirs(log_dir, exist_ok=True)
-        except (OSError, PermissionError) as e:
-            print(f"Advertencia: No se pudo crear directorio de logs: {e}")
-            Config.LOG_FILE = "r4_conecta.log"  # Fallback al directorio actual
-    
+    #if Config.DEBUG:
+    # Crear directorio de logs si no existe
+    try:
+        log_dir = os.path.dirname(Config.LOG_FILE)
+        if log_dir and not os.path.exists(log_dir):
+            os.makedirs(log_dir, exist_ok=True)
+    except (OSError, PermissionError) as e:
+        print(f"Advertencia: No se pudo crear directorio de logs: {e}")
+        #Config.LOG_FILE = "r4_conecta.log"  # Fallback al directorio actual
 
-        # Configurar formato de logs
-        log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        
-        # Configurar logging con manejo de errores
-        try:
-            # Intentar configuración completa con archivo
-            logging.basicConfig(
-                level=getattr(logging, Config.LOG_LEVEL.upper(), logging.INFO),
-                format=log_format,
-                handlers=[
-                    # Guardar en archivo
-                    logging.FileHandler(Config.LOG_FILE, encoding='utf-8'),
-                    # Mostrar en consola
-                    logging.StreamHandler()
-                ]
-            )
-        except (OSError, PermissionError) as e:
-            # Fallback: solo consola si no se puede escribir archivo
-            print(f"Advertencia: No se pudo configurar archivo de log: {e}")
-            logging.basicConfig(
-                level=getattr(logging, Config.LOG_LEVEL.upper(), logging.INFO),
-                format=log_format,
-                handlers=[logging.StreamHandler()]
-            )
-        
-        # Log inicial
-        logger = logging.getLogger(__name__)
-        logger.info("Sistema de logging configurado correctamente")
-        logger.info(f"Nivel de logging: {Config.LOG_LEVEL}")
-        logger.info(f"Archivo de logs: {Config.LOG_FILE}")
-    else: pass
+
+    # Configurar formato de logs
+    log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    
+    # Configurar logging con manejo de errores
+    try:
+        # Intentar configuración completa con archivo
+        logging.basicConfig(
+            level=getattr(logging, Config.LOG_LEVEL.upper(), logging.INFO),
+            format=log_format,
+            handlers=[
+                # Guardar en archivo
+                logging.FileHandler(Config.LOG_FILE, encoding='utf-8'),
+                # Mostrar en consola
+                logging.StreamHandler()
+            ]
+        )
+    except (OSError, PermissionError) as e:
+        # Fallback: solo consola si no se puede escribir archivo
+        print(f"Advertencia: No se pudo configurar archivo de log: {e}")
+        logging.basicConfig(
+            level=getattr(logging, Config.LOG_LEVEL.upper(), logging.INFO),
+            format=log_format,
+            handlers=[logging.StreamHandler()]
+        )
+    
+    # Log inicial
+    logger = logging.getLogger(__name__)
+    logger.info("Sistema de logging configurado correctamente")
+    logger.info(f"Nivel de logging: {Config.LOG_LEVEL}")
+    logger.info(f"Archivo de logs: {Config.LOG_FILE}")
+    #else: pass
 
 def validate_config():
     """
@@ -243,11 +237,11 @@ def validate_config():
         raise ValueError("DB_USER no está configurado")
     
     # Validar configuración R4
-    if Config.R4_MERCHANT_ID == "id_comercio":
+    if Config.R4_MERCHANT_ID == "":
         logger.warning("R4_MERCHANT_ID usa valor por defecto - CAMBIAR EN PRODUCCIÓN")
     
-    if Config.R4_SECRET_KEY == "clave_secreta":
-        logger.warning("R4_SECRET_KEY usa valor por defecto - CAMBIAR EN PRODUCCIÓN")
+    # if Config.R4_SECRET_KEY == "clave_secreta":
+    #     logger.warning("R4_SECRET_KEY usa valor por defecto - CAMBIAR EN PRODUCCIÓN")
     
     # Validar puertos
     if not (1 <= Config.API_PORT <= 65535):

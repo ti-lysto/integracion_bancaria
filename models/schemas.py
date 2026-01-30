@@ -33,59 +33,59 @@ from typing import Optional, Dict, Any
 # Any: Para cualquier tipo de dato
 
 
-# ESQUEMA GENÉRICO DE INTEGRACIÓN
-# ===============================
-class IntegracionPayload(BaseModel):
-    """
-    MODELO GENÉRICO PARA CUALQUIER TRANSACCIÓN DE R4
+# # ESQUEMA GENÉRICO DE INTEGRACIÓN
+# # ===============================
+# class IntegracionPayload(BaseModel):
+#     """
+#     MODELO GENÉRICO PARA CUALQUIER TRANSACCIÓN DE R4
     
-    ¿Qué es?
-    - Un formato flexible para recibir cualquier tipo de datos de R4
-    - Se usa cuando no tenemos un esquema específico
-    - Permite campos adicionales según la necesidad
+#     ¿Qué es?
+#     - Un formato flexible para recibir cualquier tipo de datos de R4
+#     - Se usa cuando no tenemos un esquema específico
+#     - Permite campos adicionales según la necesidad
     
-    ¿Cuándo se usa?
-    - Para el endpoint /integrar (genérico)
-    - Para operaciones nuevas que aún no tienen esquema específico
-    - Como respaldo cuando otros esquemas no aplican
+#     ¿Cuándo se usa?
+#     - Para el endpoint /integrar (genérico)
+#     - Para operaciones nuevas que aún no tienen esquema específico
+#     - Como respaldo cuando otros esquemas no aplican
     
-    Campos:
-    - id_operacion: Identificador único que asigna R4 a cada operación
-    - monto: Cantidad de dinero involucrada en la transacción
-    - moneda: Tipo de moneda (USD, VES, EUR, etc.) - por defecto USD
-    - cliente_id: Identificación del cliente involucrado (opcional)
-    - metadatos: Información adicional en formato libre (opcional)
-    """
+#     Campos:
+#     - id_operacion: Identificador único que asigna R4 a cada operación
+#     - monto: Cantidad de dinero involucrada en la transacción
+#     - moneda: Tipo de moneda (USD, VES, EUR, etc.) - por defecto USD
+#     - cliente_id: Identificación del cliente involucrado (opcional)
+#     - metadatos: Información adicional en formato libre (opcional)
+#     """
     
-    # Campo obligatorio: ID único de la operación
-    id_operacion: str = Field(
-        ...,  # Los tres puntos (...) significan "obligatorio"
-        description="ID único de la operación en R4"
-    )
+#     # Campo obligatorio: ID único de la operación
+#     id_operacion: str = Field(
+#         ...,  # Los tres puntos (...) significan "obligatorio"
+#         description="ID único de la operación en R4"
+#     )
     
-    # Campo obligatorio: Monto de la transacción
-    monto: float = Field(
-        ..., 
-        description="Monto de la transacción"
-    )
+#     # Campo obligatorio: Monto de la transacción
+#     monto: float = Field(
+#         ..., 
+#         description="Monto de la transacción"
+#     )
     
-    # Campo opcional: Tipo de moneda (por defecto USD)
-    moneda: Optional[str] = Field(
-        "USD",  # Valor por defecto
-        description="Código de moneda"
-    )
+#     # Campo opcional: Tipo de moneda (por defecto USD)
+#     moneda: Optional[str] = Field(
+#         "USD",  # Valor por defecto
+#         description="Código de moneda"
+#     )
     
-    # Campo opcional: ID del cliente
-    cliente_id: Optional[str] = Field(
-        None,  # None significa que puede estar vacío
-        description="Identificador del cliente"
-    )
+#     # Campo opcional: ID del cliente
+#     cliente_id: Optional[str] = Field(
+#         None,  # None significa que puede estar vacío
+#         description="Identificador del cliente"
+#     )
     
-    # Campo opcional: Datos adicionales
-    metadatos: Optional[Dict[str, Any]] = Field(
-        None, 
-        description="Campos libres adicionales"
-    )
+#     # Campo opcional: Datos adicionales
+#     metadatos: Optional[Dict[str, Any]] = Field(
+#         None, 
+#         description="Campos libres adicionales"
+#     )
 
 
 # ESQUEMAS PARA CONSULTA DE TASA BCV
@@ -354,6 +354,13 @@ class GenerarOtpRequest(BaseModel):
     Monto: str  # Monto a debitar
     Telefono: str  # Teléfono para SMS
     Cedula: str  # Cédula del cliente
+
+class GenerarOtpResponse(BaseModel):
+    
+    code: str  # codigo de resultado del banco
+    message: str  # Mensaje descriptivo del banco
+    success: bool  # exitoso o fallido
+    
 
 
 # ESQUEMAS PARA DÉBITO INMEDIATO

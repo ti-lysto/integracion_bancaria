@@ -521,9 +521,6 @@ async def test_connection() -> bool:
         logger.error(f"Error probando conexión: {str(e)}")
         return False
 
-
-
-
 async def get_pool_status() -> Dict[str, Any]:
     """
     OBTIENE INFORMACIÓN DEL ESTADO DEL POOL DE CONEXIONES
@@ -552,6 +549,224 @@ async def get_pool_status() -> Dict[str, Any]:
         "maxsize": 10,
         "mensaje": "Pool funcionando correctamente"
     }
+
+async def guardar_transaccion_sp(datos: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    GUARDA UNA TRANSACCIÓN DE R4 USANDO PROCEDIMIENTO ALMACENADO
+    
+    ¿Qué hace esta función?
+    - Toma los datos de una transacción de R4
+    - Los prepara en el formato que espera el procedimiento almacenado
+    - Ejecuta el SP en la base de datos
+    - Procesa los resultados y parámetros de salida
+    - Devuelve una respuesta estructurada
+    
+    ¿Qué es un procedimiento almacenado (SP)?
+    - Es código SQL que vive dentro de la base de datos
+    - Se ejecuta más rápido que SQL dinámico
+    - Puede tener parámetros de entrada (IN) y salida (OUT)
+    - Puede devolver múltiples conjuntos de resultados
+    - Maneja transacciones y lógica compleja
+    
+    ¿Por qué usar SP en lugar de SQL directo?
+    - SEGURIDAD: Previene inyección SQL
+    - RENDIMIENTO: Código precompilado en la BD
+    - MANTENIMIENTO: Lógica centralizada
+    - AUDITORÍA: Fácil seguimiento de cambios
+    - TRANSACCIONES: Manejo automático de rollback
+    
+    Proceso paso a paso:
+    1. Recibe los datos de la transacción
+    2. Prepara los parámetros para el SP
+    3. Llama al conector para ejecutar el SP
+    4. Procesa los resultados
+    5. Devuelve respuesta estructurada
+    
+    
+    """
+    
+    # CONFIGURACIÓN DEL PROCEDIMIENTO ALMACENADO
+    # ==========================================
+    # Usamos el SP creado con la logica: sp_guardar_notificacion_r4
+    proc_name = "sp_guardar_notificacion_r4"
+    
+    # PREPARACIÓN DE PARÁMETROS
+    # ========================
+    # Aquí preparamos los parámetros que enviamos al SP
+    # El orden y tipo debe coincidir con la definición del SP
+    
+    # PARÁMETROS DE ENTRADA (IN) - Solo los parámetros IN
+    # params: List[Any] = [
+    #     datos.get("IdComercio", ""),           # Cédula del comercio
+    #     datos.get("TelefonoComercio", ""),     # Teléfono del comercio  
+    #     datos.get("TelefonoEmisor", ""),       # Teléfono del que pagó
+    #     datos.get("Concepto", ""),             # Descripción del pago
+    #     datos.get("BancoEmisor", ""),          # Código del banco
+    #     datos.get("Monto", ""),                # Monto del pago
+    #     datos.get("FechaHora", ""),            # Fecha y hora
+    #     datos.get("Referencia", ""),           # Referencia única
+    #     datos.get("CodigoRed", "")             # Código de respuesta
+    # ]
+    parametros_in = (
+        datos.get("IdComercio", ""),           # Cédula del comercio
+        datos.get("TelefonoComercio", ""),     # Teléfono del comercio  
+        datos.get("TelefonoEmisor", ""),       # Teléfono del que pagó
+        datos.get("Concepto", ""),             # Descripción del pago
+        datos.get("BancoEmisor", ""),          # Código del banco
+        datos.get("Monto", ""),                # Monto del pago
+        datos.get("FechaHora", ""),            # Fecha y hora
+        datos.get("Referencia", ""),           # Referencia única
+        datos.get("CodigoRed", "")             # Código de respuesta
+    )
+
+    # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
+    # =====================================
+    # Llamamos al conector que maneja la conexión y ejecución
+    #resultsets, out_params = await call_stored_procedure(proc_name, params)
+    parametros_out = ("p_mensaje", "p_codigo")
+    
+    # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
+    from db.connector import ejecutar_sp_generico
+    resultado = await ejecutar_sp_generico(
+        #None,  # self no es necesario si la función es independiente
+        proc_name, 
+        parametros_in, 
+        parametros_out
+    )
+
+    # PROCESAMIENTO DE RESULTADOS
+    # ===========================
+    # Construimos una respuesta estructurada con toda la información
+    # respuesta = {
+    #     # Conjuntos de resultados que devuelve el SP (tablas de datos)
+    #     "resultsets": resultsets,
+        
+    #     # Parámetros de salida del SP (mensajes, códigos, etc.)
+    #     "out_params": out_params,
+        
+    #     # Información adicional para debugging
+    #     "procedimiento": proc_name,
+    #     "parametros_enviados": len(params),
+    #     "exito": True  # Si llegamos aquí, no hubo errores
+    # }
+    respuesta = {
+        "resultsets": resultado.get("resultados", []),
+        "out_params": resultado.get("parametros_out", {}),
+        "filas_afectadas": resultado.get("filas_afectadas", 0),
+        "procedimiento": proc_name,
+        "parametros_enviados": len(parametros_in),
+        "exito": resultado.get("exito", False),
+        "error": resultado.get("error", None)
+    }
+    
+    return respuesta
+
+async def consultar_notificacion_por_referencia(filtros: Dict[str, Any]) -> Dict[str, Any]:
+    """Consulta notificación en BD usando sp_consulta_notificacion_r4.
+
+    Parámetros esperados por el SP (IN):
+    Telefono, BancoEmisor, Monto, FechaHora, Referencia.
+    """
+
+    proc_name = "sp_consulta_notificacion_r4"
+
+    parametros_in = (        
+        filtros.get("Telefono", ""),
+        filtros.get("Banco", ""),
+        filtros.get("Monto", ""),
+        filtros.get("FechaHora", ""),
+        filtros.get("Referencia", ""),
+    )
+
+    from db.connector import ejecutar_sp_generico
+    print("Ejecutando SP:", proc_name, "con parámetros:", parametros_in)
+    resultado = await ejecutar_sp_generico(
+        proc_name,
+        parametros_in,
+        parametros_out=()
+    )
+    print("Resultado SP completo:", resultado)
+    return resultado
+
+async def proceso_comprobacion_por_referencia(filtros: Dict[str, Any]) -> Dict[str, Any]:
+    """Procesa notificación en BD usando sp_proceso_notificacion_r4.
+
+    Parámetros esperados por el SP (IN):
+    Telefono, BancoEmisor, Monto, FechaHora, Referencia.
+    """
+
+    proc_name = "sp_proceso_notificacion_r4"
+
+    parametros_in = (        
+        filtros.get("Telefono"),
+        filtros.get("Banco"),
+        filtros.get("Monto"),
+        filtros.get("FechaHora"),
+        filtros.get("Referencia")
+    )
+    parametros_out = ("p_mensaje","p_procesado")
+
+    from db.connector import ejecutar_sp_generico
+    print("Ejecutando SP:", proc_name, "con parámetros in:", parametros_in, "y parámetros OUT:", parametros_out)
+    resultado = await ejecutar_sp_generico(
+        proc_name,
+        parametros_in,
+        parametros_out
+    )
+    print("Resultado SP completo:", resultado)
+    return resultado
+
+async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Dict[str, Any] = {}) -> Dict[str, Any]:
+    """
+    Guarda o actualiza transacción en r4_pending_transactions usando sp_upsert_condicional_r4.
+    """
+    proc_name = "sp_upsert_condicional_r4"
+
+    # Construir WHERE dinámico desde el diccionario
+    where_parts = [
+        f"{key} = '{value}'"
+        for key, value in datos_identificadores.items()
+        if value  # Solo si tiene valor
+    ]
+
+    p_where_condition = " AND ".join(where_parts) if where_parts else ""
+
+    # Parámetros IN del SP (en orden exacto)
+    parametros_in = (
+        p_where_condition,                    # IN p_where_condition TEXT
+        datos_identificadores.get("endpoint", ""),          # IN p_endpoint VARCHAR(30)
+        filtros.get("transaction_type", ""),  # IN p_transaction_type VARCHAR(20)
+        filtros.get("IdComercio", ""),        # IN p_IdComercio VARCHAR(8)
+        filtros.get("IdCliente", ""),         # IN p_IdCliente VARCHAR(8)
+        filtros.get("Cedula", ""),            # IN p_Cedula VARCHAR(9)
+        filtros.get("Nombre", ""),            # IN p_Nombre VARCHAR(20)
+        filtros.get("TelefonoComercio", ""),  # IN p_TelefonoComercio VARCHAR(11)
+        filtros.get("TelefonoEmisor", ""),    # IN p_TelefonoEmisor VARCHAR(11)
+        filtros.get("TelefonoDestino", ""),   # IN p_TelefonoDestino VARCHAR(11)
+        filtros.get("BancoEmisor", ""),       # IN p_BancoEmisor VARCHAR(4)
+        filtros.get("Banco", ""),             # IN p_Banco VARCHAR(4)
+        filtros.get("Monto", ""),             # IN p_Monto VARCHAR(20)
+        filtros.get("Moneda", "USD"),         # IN p_Moneda VARCHAR(3)
+        filtros.get("OTP", ""),               # IN p_OTP VARCHAR(8)
+        filtros.get("Referencia", ""),        # IN p_Referencia VARCHAR(20)
+        filtros.get("CodigoRed", ""),         # IN p_CodigoRed VARCHAR(2)
+        filtros.get("Concepto", ""),          # IN p_Concepto VARCHAR(30)
+        filtros.get("id_dev_cred", ""),       # IN p_id_dev_cred VARCHAR(36)
+        filtros.get("FechaHora", ""),         # IN p_FechaHora VARCHAR(25)
+        filtros.get("etapa", "INICIO"),       # IN p_etapa VARCHAR(20)
+        filtros.get("completado", 0),         # IN p_completado TINYINT(1)
+        filtros.get("codigo_respuesta", ""),  # IN p_codigo_respuesta VARCHAR(10)
+    )
+    print("Parámetros IN para SP:", parametros_in)
+    from db.connector import ejecutar_sp_generico
+    print("Ejecutando SP:", proc_name, "con parámetros:", parametros_in)
+    resultado = await ejecutar_sp_generico(
+        proc_name,
+        parametros_in,
+        parametros_out=()
+    )
+    print("Resultado SP completo:", resultado)
+    return resultado
 
 
 # INFORMACIÓN ADICIONAL SOBRE ESTE ARCHIVO

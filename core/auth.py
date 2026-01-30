@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 # obtener clave secreta desde configuración
 config = get_r4_config()
-SECRET_KEY = config.get("secret_key") 
+SECRET_KEY = config.get("merchant_id") 
 # =====================================================
 # CONFIGURACIÓN DE HMAC POR ENDPOINT
 # =====================================================
@@ -177,7 +177,7 @@ class R4Authentication:
                 import json
                 data_string = json.dumps(response_data, sort_keys=True, separators=(',', ':'), ensure_ascii=False)
 
-            secret = self.config.get("secret_key", "")
+            secret = self.config.get("merchant_id")  # Usar merchant_id como clave secreta
             if not secret:
                 logger.error("Clave secreta no configurada para generar firma")
                 return ""
@@ -245,7 +245,7 @@ async def validar_hmac_generico(
         data_string = hmac_config["separator"].join(data_parts)
         
         # Verificar HMAC
-        if not verificar_hmac_r4(data_string, authorization, config["secret_key"]):
+        if not verificar_hmac_r4(data_string, authorization, config["merchant_id"]):
             logger.error(f"HMAC inválido para {endpoint}")
             logger.error(f"Data string: {data_string}")
             logger.error(f"Firma recibida: {authorization}")
@@ -264,7 +264,8 @@ async def validar_hmac_generico(
 async def verify_hmac_bcv(
     authorization: Optional[str] = Header(None),
     payload: Dict[str, Any] | None = None
-):
+): 
+    print(authorization, payload)
     return await validar_hmac_generico("MBbcv", authorization, payload)
 
 # GESTIÓN DE PAGOS
@@ -286,6 +287,7 @@ async def verify_hmac_generar_otp(
     authorization: Optional[str] = Header(None),
     payload: Dict[str, Any] | None = None
 ):
+    
     return await validar_hmac_generico("GenerarOtp", authorization, payload)
 
 # DÉBITO INMEDIATO
