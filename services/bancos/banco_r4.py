@@ -130,16 +130,6 @@ class R4Services:
             # es decir, aceptamos todos las inteinciones de pago.
             from core.config import Config
             # guardo en la tabla de transito la intencion de pago
-            from db import connector as connector
-            filtros_sp = {
-                "idcliente": id_cliente,
-                "monto": monto or "",
-                "TelefonoComercio": telefono or ""
-            }
-            datos_identificadores={
-                "endpoint": endpoint
-            }
-            respuesta = await connector.guardar_transito_sp(filtros_sp, datos_identificadores)
             cliente_valido = True
             if Config.DEBUG:
                 logger.info(f"Consulta cliente {id_cliente} - Valido: {cliente_valido}")
@@ -203,26 +193,39 @@ class R4Services:
     async def procesar_gestion_pagos(datos: Dict[str, Any]) -> Dict[str, Any]:
         """Procesar dispersión de pagos"""
         try:
-            # IMPLEMENTAR: Validar suma de montos y procesar dispersión
-            monto_total = float(datos.get("monto", "0"))
+            from core.config import Config
+            import httpx
+            from core.auth import r4_authentication
+            banco_url = f"{Config.R4_BANCO_URL}/R4pagos"
+            # Firma según especificación: Monto + Fecha + Referencia + concatenación de montos parciales
+            monto = datos.get("monto", "")
+            fecha = datos.get("fecha", "")
+            referencia = datos.get("Referencia", "")
             personas = datos.get("personas", [])
+            concatenacion_montos = "".join(p.get("montoPart", "") for p in personas)
             
-            suma_parciales = sum(float(p.get("montoPart", "0")) for p in personas)
+            hmac_data = f"{monto}{fecha}{referencia}{concatenacion_montos}"
+            hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": hmac_signature,
+                "Commerce": Config.R4_MERCHANT_ID
+            }
+            body = datos
+            async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
+                response = await client.post(banco_url, json=body, headers=headers)
+                logger.info(f"Dispersión solicitada R4pagos. URL={banco_url} Payload={body} Headers={headers} Status={response.status_code}")
+                data = response.json()
+                return {
+                    "error": data.get("error",""),
+                    "success": data.get("success",""),
+                    "message": data
+                }
             
-            if abs(monto_total - suma_parciales) < 0.01:  # Tolerancia de centavos
-                return {
-                    "success": True,
-                    "message": "Dispersión exitosa"
-                }
-            else:
-                return {
-                    "success": False,
-                    "message": "Error: suma de montos no coincide"
-                }
-                
         except Exception as e:
             logger.error(f"Error en gestión pagos: {str(e)}")
             return {
+                "error": str(e),
                 "success": False,
                 "message": f"Error procesando dispersión: {str(e)}"
             }
@@ -256,27 +259,20 @@ class R4Services:
             resultados = bd_result.get("resultados", [])
             print("resultados crudos:", resultados)
             
-            if resultados:
-                # Los resultados están en una lista que contiene tuplas
-                # Estructura: [((col1, col2, col3, ...),)]
-                for resultado_set in resultados:
-                    if isinstance(resultado_set, tuple):
-                        for fila_tupla in resultado_set:
-                            if isinstance(fila_tupla, tuple) and len(fila_tupla) >= 9:
-                                # Mapear según la estructura de la tabla r4_notifications:
-                                # [0] IdComercio, [1] TelefonoComercio, [2] TelefonoEmisor, 
-                                # [3] Concepto, [4] BancoEmisor, [5] Monto,
-                                # [6] FechaHora, [7] Referencia, [8] CodigoRed
-                                
-                                telefono = fila_tupla[2] if len(fila_tupla) > 2 else ""  # TelefonoEmisor
-                                banco = fila_tupla[4] if len(fila_tupla) > 4 else ""     # BancoEmisor
-                                monto = fila_tupla[5] if len(fila_tupla) > 5 else ""
-                                fecha_hora = fila_tupla[6] if len(fila_tupla) > 6 else ""
-                                referencia = fila_tupla[7] if len(fila_tupla) > 7 else ""
-                                
-                                encontrado = bool(referencia)
-                                print(f"Fila procesada - Tel: {telefono}, Banco: {banco}, Monto: {monto}")
-                                break  # Tomar solo el primer resultado
+            if bd_result and bd_result.get("exito", False):
+                resultados = bd_result.get("resultados") or []
+                primer_set = resultados[0] if resultados else ()
+                fila = primer_set[0] if primer_set else None
+
+                if fila and len(fila) >= 10:
+                    telefono = fila[2]
+                    banco = fila[4]
+                    monto = fila[5]
+                    fecha_hora = fila[7]
+                    referencia = fila[8]
+                    encontrado = bool(referencia)
+        print(f"Procesado - Tel: {telefono}, Banco: {banco}, Monto: {monto}")
+        #break  # Tomar solo el primer resultado
         
         print(f"telefono: {telefono}, banco: {banco}, monto: {monto}, fecha_hora: {fecha_hora}, referencia: {referencia}, encontrado: {encontrado}")
         
@@ -317,7 +313,6 @@ class R4Services:
             "procesado": procesado,
             "mensaje": mensaje
         }
-        
 
     @staticmethod    
     async def procesar_vuelto(payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -396,7 +391,7 @@ class R4Services:
 
         try:
             banco_url = f"{Config.R4_BANCO_URL}/GenerarOtp"
-
+            
             banco = payload.get("Banco")
             monto = payload.get("Monto")
             telefono = payload.get("Telefono")
@@ -412,10 +407,7 @@ class R4Services:
                 "Authorization": hmac_signature,
                 "Commerce": Config.R4_MERCHANT_ID
             }
-            print("payload:", payload)
-            print("hmac_data:", hmac_data)
-            print("hmac_signature:", hmac_signature)  
-
+            
             body = {
                 "banco": banco,
                 "monto": monto,
@@ -426,6 +418,26 @@ class R4Services:
             async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
                 response = await client.post(banco_url, json=body, headers=headers)
                 logger.info(f"OTP solicitado. URL={banco_url} Payload={body} Headers={headers} Status={response.status_code}")
+                data = response.json()
+                from db import connector as connector
+                resutado = await connector.guardar_transito_sp({
+                        "TelefonoContacto": telefono,
+                        "Banco": banco,
+                        "Monto": monto,
+                        "Cedula": cedula,
+                        "Otp": data.get("otp"),
+                        "respuesta":data.get("message"),
+                        "endpoint": "GenerarOtp",
+                        
+                    }, {
+                        "TelefonoContacto": telefono,
+                        "Banco": banco,
+                        "Monto": monto,
+                        "Cedula": cedula,
+                        "Otp": data.get("otp")
+                    },
+                        {"GenerarOtp": {"solicitud": payload, "respuesta": data}}
+                    )
 
                 if response.status_code != 200:
                     return {
@@ -433,15 +445,12 @@ class R4Services:
                         "message": f"Error HTTP {response.status_code}",
                         "success": False
                     }
-
-                data = response.json()
                 if data.get("code") == "202":
                     return {
                         "code": "202",
                         "message": data.get("message"),
                         "success": data.get("success")
                     }
-
                 return {
                     "code": data.get("code", "01"),
                     "message": data.get("message", "Error generando OTP"),
@@ -452,4 +461,243 @@ class R4Services:
             logger.error(f"Error procesando OTP: {str(e)}")
             return {"code": "08", "message": "Error procesando OTP", "success": False}
 
+    @staticmethod
+    async def procesar_debitoinmediato(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Procesar débito inmediato: arma firma HMAC y envía al banco."""
+        from core.config import Config
+        import httpx
+        from core.auth import r4_authentication
 
+        try:
+            banco_url = f"{Config.R4_BANCO_URL}/DebitoInmediato"
+
+            banco = payload.get("Banco")
+            monto = payload.get("Monto")
+            telefono = payload.get("Telefono")
+            cedula = payload.get("Cedula")  
+            nombre = payload.get("Nombre")
+            otp = payload.get("OTP")
+            concepto = payload.get("Concepto")            
+
+            # Firma según especificación: Banco + Cedula + Telefono + Monto + OTP
+            hmac_data = f"{banco}{cedula}{telefono}{monto}{otp}"
+            hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
+
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": hmac_signature,
+                "Commerce": Config.R4_MERCHANT_ID
+            }
+
+            body = {
+                "banco": banco,
+                "monto": monto,
+                "telefono": telefono,
+                "cedula": cedula,
+                "nombre": nombre,
+                "otp": otp,
+                "concepto": concepto
+            }
+
+            async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
+                response = await client.post(banco_url, json=body, headers=headers)
+            logger.info(f"Débito inmediato solicitado. URL={banco_url} Payload={body} Headers={headers} Status={response.status_code}")
+            data = response.json()
+            from db import connector as connector
+            resutado = await connector.guardar_transito_sp({
+                    "TelefonoContacto": telefono,
+                    "Banco": banco,
+                    "Monto": monto,
+                    "Cedula": cedula,
+                    "OTP": otp,
+                    #"respuesta":data.get("message"),
+                    "Respuesta":data.get("message", ""),
+                    "endpoint": "DebitoInmediato",
+                    #"id_dev_cred": data.get("Id"),
+                    "id_dev_cred": "6785d97e-2092-49f0-9f7d-3d5921f0b13f",
+                    #"Referencia": data.get("reference")
+                    "Referencia": "REF1234567890",
+                    #"completado": "1" #if data.get("code") == "ACCP" else "0"
+                }, {
+                    "TelefonoContacto": telefono,
+                    "Banco": banco,
+                    "Monto": monto,
+                    "Cedula": cedula
+                },                
+                {"DebitoInmediato": {"solicitud": payload, "respuesta": data}}
+                )
+            print("resultado debito inmediato:", resutado)
+            if data.get("code") == "ACCP":
+                return {
+                    "code": data.get("code"),
+                    "message": data.get("message", ""),
+                    "reference": data.get("reference", ""),
+                    "Id": data.get("Id", "")
+                }            
+            else:
+                return {
+                    "code": data.get("code"),
+                    "message": data.get("message"),
+                    "reference": data.get("reference", ""),
+                    "Id": data.get("Id", "")
+                }
+
+        except Exception as e:
+            logger.error(f"Error procesando débito inmediato: {str(e)}")
+            return {"code": "08", "message": "Error procesando OTP", "success": False}
+
+    @staticmethod
+    async def procesar_c2p(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Procesar cobro c2p: arma firma HMAC y envía al banco."""
+        from core.config import Config
+        import httpx
+        from core.auth import r4_authentication
+
+        try:
+            banco_url = f"{Config.R4_BANCO_URL}/MBc2p"
+
+            telefono = payload.get("TelefonoDestino")
+            cedula = payload.get("Cedula")  
+            concepto = payload.get("Concepto")            
+            banco = payload.get("Banco")
+            monto = payload.get("Monto")
+            otp = payload.get("Otp")
+            
+
+            # Firma según especificación: Banco + Cedula + Telefono + Monto + OTP
+            hmac_data = f"{telefono}{monto}{banco}{cedula}"
+            hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
+
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": hmac_signature,
+                "Commerce": Config.R4_MERCHANT_ID
+            }
+
+            body = {
+                "TelefonoContacto": telefono,
+                "Cedula": cedula,
+                "Concepto": concepto,
+                "Banco": banco,
+                "Monto": monto,
+                "Otp": otp
+            }
+
+            async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
+                response = await client.post(banco_url, json=body, headers=headers)
+            logger.info(f"Verificación C2P manual solicitado. URL={banco_url} Payload={body} Headers={headers} Status={response.status_code}")
+            data = response.json()
+            from db import connector as connector
+            resutado = await connector.guardar_transito_sp({
+                    "TelefonoContacto": telefono,
+                    "Banco": banco,
+                    "Monto": monto,
+                    "Cedula": cedula,
+                    "OTP": otp,
+                    "Concepto": concepto,
+                    #"respuesta":data.get("message"),
+                    #"respuesta":"Operación Aceptada",
+                    "endpoint": "C2P",
+                    #"id_dev_cred": data.get("Id"),
+                    #"id_dev_cred": "6785d97e-2092-49f0-9f7d-3d5921f0b13f",
+                    #"Referencia": data.get("reference")
+                    "Referencia": "REF1234567890",
+                    "mensaje": data.get("message"),
+                    "code": data.get("code")
+                }, {
+                    "TelefonoContacto": telefono,
+                    "Banco": banco,
+                    "Monto": monto,
+                    "Cedula": cedula
+                    #"OTP": otp
+                },                
+                {"C2P": {"solicitud": payload, "respuesta": data}}
+                )
+            print("resultado c2p:", resutado)
+            
+            return {
+                "message": data.get("message", ""),
+                "code": data.get("code",""),                    
+                "reference": data.get("reference", "")
+            }            
+            
+        except Exception as e:
+            logger.error(f"Error procesando débito inmediato: {str(e)}")
+            return {"code": "08", "message": "Error procesando OTP", "success": False}
+
+    @staticmethod
+    async def procesar_creditoinmediato(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Procesar crédito inmediato: arma firma HMAC y envía al banco."""
+        from core.config import Config
+        import httpx
+        from core.auth import r4_authentication
+
+        try:
+            banco_url = f"{Config.R4_BANCO_URL}/CreditoInmediato"
+
+            banco = payload.get("Banco")
+            monto = payload.get("Monto")
+            telefono = payload.get("Telefono")
+            cedula = payload.get("Cedula")
+            concepto = payload.get("Concepto")            
+
+            # Firma según especificación: Banco + Cedula + Telefono + Monto
+            hmac_data = f"{banco}{cedula}{telefono}{monto}"
+            hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
+
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": hmac_signature,
+                "Commerce": Config.R4_MERCHANT_ID
+            }
+
+            body = {
+                "Banco": banco,
+                "Cedula": cedula,
+                "Telefono": telefono,
+                "Monto": monto,
+                "Concepto": concepto
+            }
+
+            async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
+                response = await client.post(banco_url, json=body, headers=headers)
+            logger.info(f"Crédito inmediato solicitado. URL={banco_url} Payload={body} Headers={headers} Status={response.status_code}")
+            data = response.json()
+            from db import connector as connector
+            resutado = await connector.guardar_transito_sp({
+                    "TelefonoContacto": telefono,
+                    "Banco": banco,
+                    "Monto": monto,
+                    "Cedula": cedula,
+                    #"OTP": otp,
+                    "Concepto": concepto,
+                    #"respuesta":data.get("message"),
+                    #"respuesta":"Operación Aceptada",
+                    "endpoint": "CreditoInmediato",
+                    #"id_dev_cred": data.get("Id"),
+                    "id_dev_cred": "6785d97e-2092-49f0-9f7d-3d5921f0b13f",
+                    #"Referencia": data.get("reference")
+                    "Referencia": "REF1234567890",
+                    "mensaje": data.get("message"),
+                    #"code": data.get("code")
+                }, {            
+                    "Banco": banco,
+                    "Cedula": cedula,
+                    "TelefonoContacto": telefono,
+                    "Monto": monto,
+                    #"Concepto": concepto
+                    #"OTP": otp
+                },                
+                {"CreditoInmediato": {"solicitud": payload, "respuesta": data}}
+                )
+            print("resultado CreditoInmediato:", resutado)
+            return {
+                "code": data.get("code",""),
+                "message": data.get("message",""),
+                "reference": data.get("reference", ""),
+                "Id": data.get("Id", "")
+            }
+
+        except Exception as e:
+            logger.error(f"Error procesando crédito inmediato: {str(e)}")
+            return {"code": "08", "message": "Error procesando crédito inmediato", "success": False}

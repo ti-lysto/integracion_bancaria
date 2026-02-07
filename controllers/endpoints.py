@@ -98,7 +98,7 @@ async def mbcv(payload: R4BcvRequest = Body(...), _auth=Depends(auth.verify_hmac
 # CONSULTA Y VALIDACIÓN DE CLIENTE
 # ================================
 @router_r4.post("/R4consulta", response_model=R4ConsultaResponse, summary="Consulta de cliente")
-async def r4consulta(payload: R4ConsultaRequest = Body(...), _auth=Depends(auth.verify_hmac_consulta), _ip=Depends(auth.ip_whitelist_middleware), request: Request = None):
+async def r4consulta(payload: R4ConsultaRequest = Body(...), *,_auth=Depends(auth.verify_hmac_consulta), _ip=Depends(auth.ip_whitelist_middleware), request: Request):
     """
     VALIDA SI UN CLIENTE EXISTE Y PUEDE RECIBIR PAGOS
     En esta operacion se asume que es unas INTENCION de pago movil 
@@ -129,11 +129,12 @@ async def r4consulta(payload: R4ConsultaRequest = Body(...), _auth=Depends(auth.
     """
     try:
         # Procesamos la consulta del cliente
+        path = request.scope["route"].path
         resultado = await R4Services.procesar_consulta_cliente(
             payload.IdCliente, 
             payload.Monto, 
             payload.TelefonoComercio,
-            request.scope["route"].path
+            path
         )
         
         # Devolvemos la respuesta      
@@ -201,7 +202,7 @@ async def r4notifica(payload: R4NotificaRequest = Body(...), _auth=Depends(auth.
 
 # GESTIÓN DE PAGOS MÚLTIPLES (DISPERSIÓN)
 # =======================================
-@router_r4.post("/R4pagos", response_model=SuccessResponse, summary="Gestión de Pagos (dispersión)")
+@router_r4.post("/R4pagos", response_model=R4PagosResponse, summary="Gestión de Pagos (dispersión)")
 async def r4pagos(payload: R4PagosRequest = Body(...), _auth=Depends(auth.verify_hmac_pagos), _ip=Depends(auth.ip_whitelist_middleware)):
     """
     ENVÍA DINERO A MÚLTIPLES PERSONAS DE UNA SOLA VEZ
@@ -244,7 +245,7 @@ async def r4pagos(payload: R4PagosRequest = Body(...), _auth=Depends(auth.verify
     resultado = await R4Services.procesar_gestion_pagos(payload.dict())
     
     # Devolvemos el resultado
-    return SuccessResponse(**resultado)
+    return R4PagosResponse(**resultado)
 
 
 # PROCESAMIENTO DE VUELTO
@@ -307,49 +308,6 @@ async def mb_vuelto(
         # Si hay error, devolvemos código de token inválido
         return StandardResponse(code="08", message="Token Inválido")
 
-
-# VERIFICACIÓN DE PAGO
-# ====================
-@router_r4.post("/verifico_pago", response_model=VerificoPagoResponse, summary="Verificar pago en banco y BD")
-async def verifico_pago(
-    payload: VerificoPagoRequest = Body(...),
-    commerce: str = Header(None),
-    _ip=Depends(auth.ip_whitelist_middleware)
-):
-    try:
-        # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
-        if not commerce or commerce != Config.R4_MERCHANT_ID:
-            raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
-
-        resultado = await R4Services.verificar_pago(payload.dict())
-        return VerificoPagoResponse(**resultado)
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-# COMPROBACION DE PAGO
-# ====================
-@router_r4.post("/comprobacion_pago",response_model=ComprueboPagoResponse, summary="Compuebo que se proceso de pago se termino correctamente y se procesa el registro en la BD")
-async def comprobacion_pago(
-    payload: ComprueboPagoRequest = Body(...),
-    commerce: str = Header(None),
-    _ip=Depends(auth.ip_whitelist_middleware)
-):
-    try:
-        # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
-        if not commerce or commerce != Config.R4_MERCHANT_ID:
-            raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
-
-        resultado = await R4Services.comprobar_pago(payload.dict())
-        return ComprueboPagoResponse(**resultado)
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
 # GENERACIÓN DE CÓDIGO OTP (One Time Password)
 # ============================================
 @router_r4.post("/GenerarOtp", response_model=GenerarOtpResponse, summary="Generar OTP")
@@ -397,7 +355,6 @@ async def generar_otp(payload: GenerarOtpRequest = Body(...), _auth=Depends(auth
     try:
         # Guardamos la solicitud de OTP
         resultado = await R4Services.procesar_otp(payload.dict())
-        print ("resultado", resultado)
         # Devolvemos confirmación de que se procesó
         return GenerarOtpResponse(
             code=resultado.get("code", ""), 
@@ -412,7 +369,7 @@ async def generar_otp(payload: GenerarOtpRequest = Body(...), _auth=Depends(auth
 
 # DÉBITO INMEDIATO (COBRAR DINERO AL CLIENTE)
 # ===========================================
-@router_r4.post("/DebitoInmediato", response_model=StandardResponse, summary="Débito Inmediato")
+@router_r4.post("/DebitoInmediato", response_model=DebitoInmediatoResponse, summary="Débito Inmediato")
 async def debito_inmediato(payload: DebitoInmediatoRequest = Body(...), _auth=Depends(auth.verify_hmac_debito_inmediato), _ip=Depends(auth.ip_whitelist_middleware)):
     """
     COBRA DINERO DIRECTAMENTE DE LA CUENTA DEL CLIENTE
@@ -458,33 +415,33 @@ async def debito_inmediato(payload: DebitoInmediatoRequest = Body(...), _auth=De
     """
     try:
         # Guardamos la información del débito
-        #resultado = await r4_client.procesar_y_guardar(payload.dict())
+        resultado= await R4Services.procesar_debitoinmediato(payload.dict())
         
         # Generamos identificadores únicos
-        operation_id = str(uuid.uuid4())  # ID único de la operación
-        reference = str(uuid.uuid4().int)[:8]  # Referencia numérica
+        # operation_id = str(uuid.uuid4())  # ID único de la operación
+        # reference = str(uuid.uuid4().int)[:8]  # Referencia numérica
         
         # Devolvemos confirmación exitosa
-        return StandardResponse(
-            code="ACCP", 
-            message="Operación Aceptada", 
-            reference=reference, 
-            Id=operation_id
+        return DebitoInmediatoResponse(
+            code=resultado.get("code",""), 
+            message=resultado.get("message",""), 
+            reference=resultado.get("reference",""), 
+            id=resultado.get("id","")
         )
         
     except Exception as e:
         # Si hay error, la operación queda en espera
-        operation_id = str(uuid.uuid4())
-        return StandardResponse(
+        return DebitoInmediatoResponse(
             code="AC00", 
-            message="Operación en Espera de Respuesta del Receptor", 
-            Id=operation_id
+            message="Operación en Espera de Respuesta del Receptor",
+            reference="",
+            id=""
         )
 
 
-# CRÉDITO INMEDIATO (ENVIAR DINERO AL CLIENTE)
-# ============================================
-@router_r4.post("/CreditoInmediato", response_model=StandardResponse, summary="Crédito Inmediato")
+# # CRÉDITO INMEDIATO (ENVIAR DINERO AL CLIENTE)
+# # ============================================
+@router_r4.post("/CreditoInmediato", response_model=CreditoInmediatoResponse, summary="Crédito Inmediato")
 async def credito_inmediato(payload: CreditoInmediatoRequest = Body(...), _auth=Depends(auth.verify_hmac_credito_inmediato), _ip=Depends(auth.ip_whitelist_middleware)):
     """
     ENVÍA DINERO DIRECTAMENTE A LA CUENTA DEL CLIENTE
@@ -521,286 +478,282 @@ async def credito_inmediato(payload: CreditoInmediatoRequest = Body(...), _auth=
     """
     try:
         # Guardamos la información del crédito
-        #resultado = await r4_client.procesar_y_guardar(payload.dict())
-        
-        # Generamos identificadores únicos
-        operation_id = str(uuid.uuid4())
-        reference = str(uuid.uuid4().int)[:8]
+        resuldato = await R4Services.procesar_creditoinmediato(payload.dict())
         
         # Devolvemos confirmación exitosa
-        return StandardResponse(
-            code="ACCP", 
-            message="Operación Aceptada", 
-            reference=reference, 
-            Id=operation_id
+        return CreditoInmediatoResponse(
+            code=resuldato.get("code",""), 
+            message=resuldato.get("message",""), 
+            reference=resuldato.get("reference",""), 
+            id=resuldato.get("id","")
         )
         
     except Exception as e:
         # Si hay error, la operación queda en espera
-        operation_id = str(uuid.uuid4())
-        return StandardResponse(
-            code="AC00", 
-            message="Operación en Espera de Respuesta del Receptor", 
-            Id=operation_id
+        return CreditoInmediatoResponse(
+            code="", 
+            message="Error Interno", 
+            reference="",
+            id=""
         )
 
 
-# DOMICILIACIÓN POR NÚMERO DE CUENTA
-# ==================================
-@router_r4.post("/TransferenciaOnline/DomiciliacionCNTA", response_model=StandardResponse, summary="Domiciliación de cuentas 20 dígitos")
-async def domiciliacion_cnta(payload: DomiciliacionCNTARequest = Body(...), _auth=Depends(auth.verify_hmac_domiciliacion_cnta), _ip=Depends(auth.ip_whitelist_middleware)):
-    """
-    CONFIGURA COBRO AUTOMÁTICO USANDO NÚMERO DE CUENTA
+# # DOMICILIACIÓN POR NÚMERO DE CUENTA
+# # ==================================
+# @router_r4.post("/TransferenciaOnline/DomiciliacionCNTA", response_model=StandardResponse, summary="Domiciliación de cuentas 20 dígitos")
+# async def domiciliacion_cnta(payload: DomiciliacionCNTARequest = Body(...), _auth=Depends(auth.verify_hmac_domiciliacion_cnta), _ip=Depends(auth.ip_whitelist_middleware)):
+#     """
+#     CONFIGURA COBRO AUTOMÁTICO USANDO NÚMERO DE CUENTA
     
-    ¿Qué es domiciliación?
-    - Es autorizar cobros automáticos recurrentes
-    - Como cuando el banco te cobra la mensualidad de la tarjeta
-    - El cliente autoriza una vez, nosotros cobramos cuando queramos
+#     ¿Qué es domiciliación?
+#     - Es autorizar cobros automáticos recurrentes
+#     - Como cuando el banco te cobra la mensualidad de la tarjeta
+#     - El cliente autoriza una vez, nosotros cobramos cuando queramos
     
-    ¿Qué hace este endpoint?
-    - Registra una cuenta bancaria para cobros automáticos
-    - Usa el número de cuenta completo (20 dígitos)
-    - Configura el monto y concepto del cobro
+#     ¿Qué hace este endpoint?
+#     - Registra una cuenta bancaria para cobros automáticos
+#     - Usa el número de cuenta completo (20 dígitos)
+#     - Configura el monto y concepto del cobro
     
-    ¿Cuándo se usa?
-    - Para servicios de suscripción mensual
-    - Para seguros con pago automático
-    - Para servicios públicos (luz, agua, etc.)
-    - Para préstamos con cuotas automáticas
+#     ¿Cuándo se usa?
+#     - Para servicios de suscripción mensual
+#     - Para seguros con pago automático
+#     - Para servicios públicos (luz, agua, etc.)
+#     - Para préstamos con cuotas automáticas
     
-    try:
-        # Validar firma HMAC con los campos del payload (evita 401 incorrectos)
-        await auth.verify_hmac_vuelto(authorization=authorization, payload=payload.dict())
+#     try:
+#         # Validar firma HMAC con los campos del payload (evita 401 incorrectos)
+#         await auth.verify_hmac_vuelto(authorization=authorization, payload=payload.dict())
 
-        # Procesar vuelto contra servicio R4 y devolver la respuesta recibida
-        resultado = await R4Services.procesar_vuelto(payload.dict())
+#         # Procesar vuelto contra servicio R4 y devolver la respuesta recibida
+#         resultado = await R4Services.procesar_vuelto(payload.dict())
 
-        referencia = resultado.get("reference") or str(uuid.uuid4().int)[:8]
+#         referencia = resultado.get("reference") or str(uuid.uuid4().int)[:8]
 
-        return StandardResponse(
-            code=resultado.get("code", "01"),
-            message=resultado.get("message", ""),
-            reference=referencia
-        )
+#         return StandardResponse(
+#             code=resultado.get("code", "01"),
+#             message=resultado.get("message", ""),
+#             reference=referencia
+#         )
 
-    - concepto: Descripción del servicio a cobrar
+#     - concepto: Descripción del servicio a cobrar
     
-    Respuesta:
-    - codigo: "202" si se registró correctamente
-    - mensaje: Confirmación del registro
-    - uuid: Identificador único de la domiciliación
-    """
-    try:
-        # Guardamos la información de domiciliación
-        #resultado = await r4_client.procesar_y_guardar(payload.dict())
+#     Respuesta:
+#     - codigo: "202" si se registró correctamente
+#     - mensaje: Confirmación del registro
+#     - uuid: Identificador único de la domiciliación
+#     """
+#     try:
+#         # Guardamos la información de domiciliación
+#         #resultado = await r4_client.procesar_y_guardar(payload.dict())
         
-        # Generamos identificador único para esta domiciliación
-        operation_uuid = str(uuid.uuid4())
+#         # Generamos identificador único para esta domiciliación
+#         operation_uuid = str(uuid.uuid4())
         
-        # Devolvemos confirmación exitosa
-        return StandardResponse(
-            code="202", 
-            message="Se ha recibido el mensaje de forma satisfactoria", 
-            uuid=operation_uuid
-        )
+#         # Devolvemos confirmación exitosa
+#         return StandardResponse(
+#             code="202", 
+#             message="Se ha recibido el mensaje de forma satisfactoria", 
+#             uuid=operation_uuid
+#         )
         
-    except Exception as e:
-        # Si hay error en los datos
-        return StandardResponse(
-            code="07", 
-            message="Request Inválida, error en el campo: DocId", 
-            uuid=""
-        )
-
-
-# DOMICILIACIÓN POR TELÉFONO
-# =========================
-@router_r4.post("/TransferenciaOnline/DomiciliacionCELE", response_model=StandardResponse, summary="Domiciliación por teléfono")
-async def domiciliacion_cele(payload: DomiciliacionCELERequest = Body(...), _auth=Depends(auth.verify_hmac_domiciliacion_cele), _ip=Depends(auth.ip_whitelist_middleware)):
-    """
-    CONFIGURA COBRO AUTOMÁTICO USANDO TELÉFONO
-    
-    ¿Qué hace?
-    - Similar a la domiciliación por cuenta
-    - Pero usa el teléfono en lugar del número de cuenta
-    - Más fácil para el cliente (solo necesita su teléfono)
-    
-    ¿Cuándo se usa?
-    - Cuando el cliente no sabe su número de cuenta
-    - Para servicios más simples y accesibles
-    - Para clientes que prefieren usar pago móvil
-    
-    NOTA IMPORTANTE:
-    - El primer envío es solo para afiliación
-    - No genera cobro inmediato
-    - El cliente debe confirmar en su banco primero
-    
-    Proceso:
-    1. Enviamos solicitud de afiliación
-    2. Cliente va a su banco y autoriza
-    3. Una vez autorizado, podemos cobrar automáticamente
-    
-    Seguridad:
-    - Requiere HMAC con: telefono
-    
-    Parámetros de entrada:
-    - docId: Cédula del cliente
-    - telefono: Teléfono registrado en pago móvil
-    - nombre: Nombre completo del cliente
-    - banco: Código del banco del cliente
-    - monto: Cantidad autorizada a cobrar
-    - concepto: Descripción del servicio
-    
-    Respuesta:
-    - codigo: "202" si se procesó correctamente
-    - mensaje: Confirmación del procesamiento
-    - uuid: Identificador único de la solicitud
-    """
-    try:
-        # Guardamos la información de domiciliación por teléfono
-        #resultado = await r4_client.procesar_y_guardar(payload.dict())
-        
-        # Generamos identificador único
-        operation_uuid = str(uuid.uuid4())
-        
-        # Devolvemos confirmación exitosa
-        return StandardResponse(
-            code="202", 
-            message="Se ha recibido el mensaje de forma satisfactoria", 
-            uuid=operation_uuid
-        )
-        
-    except Exception as e:
-        # Si hay error en los datos
-        return StandardResponse(
-            code="07", 
-            message="Request Inválida, error en el campo: DocId", 
-            uuid=""
-        )
+#     except Exception as e:
+#         # Si hay error en los datos
+#         return StandardResponse(
+#             code="07", 
+#             message="Request Inválida, error en el campo: DocId", 
+#             uuid=""
+#         )
 
 
-# CONSULTA DE ESTADO DE OPERACIONES
-# =================================
-@router_r4.post("/ConsultarOperaciones", response_model=StandardResponse, summary="Consultar Operaciones")
-async def consultar_operaciones(payload: ConsultarOperacionesRequest = Body(...), _auth=Depends(auth.verify_hmac_consultar_operaciones), _ip=Depends(auth.ip_whitelist_middleware)):
-    """
-    CONSULTA EL ESTADO ACTUAL DE UNA OPERACIÓN
+# # DOMICILIACIÓN POR TELÉFONO
+# # =========================
+# @router_r4.post("/TransferenciaOnline/DomiciliacionCELE", response_model=StandardResponse, summary="Domiciliación por teléfono")
+# async def domiciliacion_cele(payload: DomiciliacionCELERequest = Body(...), _auth=Depends(auth.verify_hmac_domiciliacion_cele), _ip=Depends(auth.ip_whitelist_middleware)):
+#     """
+#     CONFIGURA COBRO AUTOMÁTICO USANDO TELÉFONO
     
-    ¿Qué hace?
-    - Verifica si una operación anterior ya se completó
-    - Obtiene el resultado final de operaciones en espera
-    - Es como "preguntar" si ya se procesó algo
+#     ¿Qué hace?
+#     - Similar a la domiciliación por cuenta
+#     - Pero usa el teléfono en lugar del número de cuenta
+#     - Más fácil para el cliente (solo necesita su teléfono)
     
-    ¿Cuándo se usa?
-    - Cuando una operación respondió "AC00" (en espera)
-    - Para verificar débitos o créditos pendientes
-    - Para confirmar si un pago ya se procesó
+#     ¿Cuándo se usa?
+#     - Cuando el cliente no sabe su número de cuenta
+#     - Para servicios más simples y accesibles
+#     - Para clientes que prefieren usar pago móvil
     
-    ¿Por qué es necesario?
-    - Algunas operaciones no son instantáneas
-    - Los bancos pueden tardar en procesar
-    - Necesitamos saber cuándo ya terminaron
+#     NOTA IMPORTANTE:
+#     - El primer envío es solo para afiliación
+#     - No genera cobro inmediato
+#     - El cliente debe confirmar en su banco primero
     
-    Ejemplo de uso:
-    1. Hacemos un débito inmediato
-    2. Responde "AC00" (en espera)
-    3. Esperamos unos minutos
-    4. Consultamos con este endpoint
-    5. Ahora responde "ACCP" (completado)
+#     Proceso:
+#     1. Enviamos solicitud de afiliación
+#     2. Cliente va a su banco y autoriza
+#     3. Una vez autorizado, podemos cobrar automáticamente
     
-    Seguridad:
-    - Requiere HMAC con: Id (identificador de la operación)
+#     Seguridad:
+#     - Requiere HMAC con: telefono
     
-    Parámetros de entrada:
-    - Id: Identificador único de la operación a consultar
-           (es el UUID que devolvió la operación original)
+#     Parámetros de entrada:
+#     - docId: Cédula del cliente
+#     - telefono: Teléfono registrado en pago móvil
+#     - nombre: Nombre completo del cliente
+#     - banco: Código del banco del cliente
+#     - monto: Cantidad autorizada a cobrar
+#     - concepto: Descripción del servicio
     
-    Respuesta:
-    - code: Estado actual ("ACCP" = completado, otros = pendiente/error)
-    - reference: Número de referencia si se completó
-    - success: true si la consulta fue exitosa
-    """
-    try:
-        # Simulamos consulta exitosa (en producción consultaría la BD real)
-        reference = str(uuid.uuid4().int)[:8]
+#     Respuesta:
+#     - codigo: "202" si se procesó correctamente
+#     - mensaje: Confirmación del procesamiento
+#     - uuid: Identificador único de la solicitud
+#     """
+#     try:
+#         # Guardamos la información de domiciliación por teléfono
+#         #resultado = await r4_client.procesar_y_guardar(payload.dict())
         
-        # Devolvemos estado completado
-        return StandardResponse(
-            code="ACCP", 
-            reference=reference, 
-            success=True,
-            message="Operación Completada Exitosamente"
-        )
+#         # Generamos identificador único
+#         operation_uuid = str(uuid.uuid4())
         
-    except Exception as e:
-        # Si hay error en la consulta
-        raise HTTPException(status_code=500, detail=str(e))
+#         # Devolvemos confirmación exitosa
+#         return StandardResponse(
+#             code="202", 
+#             message="Se ha recibido el mensaje de forma satisfactoria", 
+#             uuid=operation_uuid
+#         )
+        
+#     except Exception as e:
+#         # Si hay error en los datos
+#         return StandardResponse(
+#             code="07", 
+#             message="Request Inválida, error en el campo: DocId", 
+#             uuid=""
+#         )
 
 
-# CRÉDITO INMEDIATO CON CUENTA DE 20 DÍGITOS
-# ==========================================
-@router_r4.post("/CICuentas", response_model=StandardResponse, summary="Crédito Inmediato cuentas 20 dígitos")
-async def ci_cuentas(payload: CICuentasRequest = Body(...), _auth=Depends(auth.verify_hmac_ci_cuentas), _ip=Depends(auth.ip_whitelist_middleware)):
-    """
-    ENVÍA DINERO USANDO EL NÚMERO DE CUENTA COMPLETO
+# # CONSULTA DE ESTADO DE OPERACIONES
+# # =================================
+# @router_r4.post("/ConsultarOperaciones", response_model=StandardResponse, summary="Consultar Operaciones")
+# async def consultar_operaciones(payload: ConsultarOperacionesRequest = Body(...), _auth=Depends(auth.verify_hmac_consultar_operaciones), _ip=Depends(auth.ip_whitelist_middleware)):
+#     """
+#     CONSULTA EL ESTADO ACTUAL DE UNA OPERACIÓN
     
-    ¿Qué hace?
-    - Similar al crédito inmediato normal
-    - Pero usa el número de cuenta en lugar del teléfono
-    - Más preciso y directo
+#     ¿Qué hace?
+#     - Verifica si una operación anterior ya se completó
+#     - Obtiene el resultado final de operaciones en espera
+#     - Es como "preguntar" si ya se procesó algo
     
-    ¿Cuándo se usa?
-    - Para transferencias empresariales
-    - Cuando necesitamos máxima precisión
-    - Para cuentas que no tienen pago móvil activo
+#     ¿Cuándo se usa?
+#     - Cuando una operación respondió "AC00" (en espera)
+#     - Para verificar débitos o créditos pendientes
+#     - Para confirmar si un pago ya se procesó
     
-    Ventajas:
-    - No depende del pago móvil
-    - Más rápido (va directo a la cuenta)
-    - Menos posibilidad de error
+#     ¿Por qué es necesario?
+#     - Algunas operaciones no son instantáneas
+#     - Los bancos pueden tardar en procesar
+#     - Necesitamos saber cuándo ya terminaron
     
-    Seguridad:
-    - Requiere HMAC con: Cedula + Cuenta + Monto
-    - Verifica que la cuenta sea válida
+#     Ejemplo de uso:
+#     1. Hacemos un débito inmediato
+#     2. Responde "AC00" (en espera)
+#     3. Esperamos unos minutos
+#     4. Consultamos con este endpoint
+#     5. Ahora responde "ACCP" (completado)
     
-    Parámetros de entrada:
-    - Cedula: Cédula del beneficiario
-    - Cuenta: Número de cuenta completo (20 dígitos)
-    - Monto: Cantidad a enviar
-    - Concepto: Descripción del pago
+#     Seguridad:
+#     - Requiere HMAC con: Id (identificador de la operación)
     
-    Respuesta:
-    - code: "ACCP" si fue exitoso
-    - message: Descripción del resultado
-    - reference: Número de referencia único
-    """
-    try:
-        # Guardamos la información del crédito
-        #resultado = await r4_client.procesar_y_guardar(payload.dict())
+#     Parámetros de entrada:
+#     - Id: Identificador único de la operación a consultar
+#            (es el UUID que devolvió la operación original)
+    
+#     Respuesta:
+#     - code: Estado actual ("ACCP" = completado, otros = pendiente/error)
+#     - reference: Número de referencia si se completó
+#     - success: true si la consulta fue exitosa
+#     """
+#     try:
+#         # Simulamos consulta exitosa (en producción consultaría la BD real)
+#         reference = str(uuid.uuid4().int)[:8]
         
-        # Generamos referencia única
-        reference = str(uuid.uuid4().int)[:8]
+#         # Devolvemos estado completado
+#         return StandardResponse(
+#             code="ACCP", 
+#             reference=reference, 
+#             success=True,
+#             message="Operación Completada Exitosamente"
+#         )
         
-        # Devolvemos confirmación exitosa
-        return StandardResponse(
-            code="ACCP", 
-            message="Operación Aceptada", 
-            reference=reference
-        )
+#     except Exception as e:
+#         # Si hay error en la consulta
+#         raise HTTPException(status_code=500, detail=str(e))
+
+
+# # CRÉDITO INMEDIATO CON CUENTA DE 20 DÍGITOS
+# # ==========================================
+# @router_r4.post("/CICuentas", response_model=StandardResponse, summary="Crédito Inmediato cuentas 20 dígitos")
+# async def ci_cuentas(payload: CICuentasRequest = Body(...), _auth=Depends(auth.verify_hmac_ci_cuentas), _ip=Depends(auth.ip_whitelist_middleware)):
+#     """
+#     ENVÍA DINERO USANDO EL NÚMERO DE CUENTA COMPLETO
+    
+#     ¿Qué hace?
+#     - Similar al crédito inmediato normal
+#     - Pero usa el número de cuenta en lugar del teléfono
+#     - Más preciso y directo
+    
+#     ¿Cuándo se usa?
+#     - Para transferencias empresariales
+#     - Cuando necesitamos máxima precisión
+#     - Para cuentas que no tienen pago móvil activo
+    
+#     Ventajas:
+#     - No depende del pago móvil
+#     - Más rápido (va directo a la cuenta)
+#     - Menos posibilidad de error
+    
+#     Seguridad:
+#     - Requiere HMAC con: Cedula + Cuenta + Monto
+#     - Verifica que la cuenta sea válida
+    
+#     Parámetros de entrada:
+#     - Cedula: Cédula del beneficiario
+#     - Cuenta: Número de cuenta completo (20 dígitos)
+#     - Monto: Cantidad a enviar
+#     - Concepto: Descripción del pago
+    
+#     Respuesta:
+#     - code: "ACCP" si fue exitoso
+#     - message: Descripción del resultado
+#     - reference: Número de referencia único
+#     """
+#     try:
+#         # Guardamos la información del crédito
+#         #resultado = await r4_client.procesar_y_guardar(payload.dict())
         
-    except Exception as e:
-        # Si hay error, la operación queda en espera
-        operation_id = str(uuid.uuid4())
-        return StandardResponse(
-            code="AC00", 
-            message="Operación en Espera de Respuesta del Receptor", 
-            Id=operation_id
-        )
+#         # Generamos referencia única
+#         reference = str(uuid.uuid4().int)[:8]
+        
+#         # Devolvemos confirmación exitosa
+#         return StandardResponse(
+#             code="ACCP", 
+#             message="Operación Aceptada", 
+#             reference=reference
+#         )
+        
+#     except Exception as e:
+#         # Si hay error, la operación queda en espera
+#         operation_id = str(uuid.uuid4())
+#         return StandardResponse(
+#             code="AC00", 
+#             message="Operación en Espera de Respuesta del Receptor", 
+#             Id=operation_id
+#         )
 
 
 # COBRO C2P (Cliente a Persona)
 # =============================
-@router_r4.post("/MBc2p", response_model=StandardResponse, summary="Cobro C2P")
+@router_r4.post("/MBc2p", response_model=R4C2PResponse, summary="Cobro C2P")
 async def mb_c2p(payload: R4C2PRequest = Body(...), _auth=Depends(auth.verify_hmac_c2p), _ip=Depends(auth.ip_whitelist_middleware)):
     """
     PROCESA COBRO DIRECTO AL CLIENTE (C2P = Client to Person)
@@ -846,21 +799,21 @@ async def mb_c2p(payload: R4C2PRequest = Body(...), _auth=Depends(auth.verify_hm
     """
     try:
         # Guardamos la información del cobro C2P
-        #resultado = await r4_client.procesar_y_guardar(payload.dict())
+        resultado = await R4Services.procesar_c2p(payload.dict())
         
         # Generamos referencia única
-        reference = str(uuid.uuid4().int)[:8]
+        #reference = str(uuid.uuid4().int)[:8]
         
         # Devolvemos confirmación exitosa
-        return StandardResponse(
-            code="00", 
-            message="TRANSACCION EXITOSA", 
-            reference=reference
+        return R4C2PResponse(
+            code=resultado.get("code", ""),
+            message= resultado.get("message", "T"),
+            reference=resultado.get("reference", "")
         )
         
     except Exception as e:
         # Si hay error, devolvemos token inválido
-        return StandardResponse(code="08", message="TOKEN inválido")
+        return R4C2PResponse(code="08", message="TOKEN inválido", reference="")
 
 
 # ANULACIÓN DE COBRO C2P
@@ -926,6 +879,49 @@ async def mb_anulacion_c2p(payload: R4AnulacionC2PRequest = Body(...), _auth=Dep
             code="41", 
             message="Servicio no activo o negada por el banco"
         )
+
+
+# VERIFICACIÓN DE PAGO
+# ====================
+@router_r4.post("/verifico_pago", response_model=VerificoPagoResponse, summary="Verificar pago en banco y BD")
+async def verifico_pago(
+    payload: VerificoPagoRequest = Body(...),
+    commerce: str = Header(None),
+    _ip=Depends(auth.ip_whitelist_middleware)
+):
+    try:
+        # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
+        if not commerce or commerce != Config.R4_MERCHANT_ID:
+            raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
+
+        resultado = await R4Services.verificar_pago(payload.dict())
+        return VerificoPagoResponse(**resultado)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# COMPROBACION DE PAGO
+# ====================
+@router_r4.post("/comprobacion_pago",response_model=ComprueboPagoResponse, summary="Compuebo que se proceso de pago se termino correctamente y se procesa el registro en la BD")
+async def comprobacion_pago(
+    payload: ComprueboPagoRequest = Body(...),
+    commerce: str = Header(None),
+    _ip=Depends(auth.ip_whitelist_middleware)
+):
+    try:
+        # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
+        if not commerce or commerce != Config.R4_MERCHANT_ID:
+            raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
+
+        resultado = await R4Services.comprobar_pago(payload.dict())
+        return ComprueboPagoResponse(**resultado)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # ENDPOINTS DE SISTEMA

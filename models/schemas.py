@@ -111,7 +111,6 @@ class R4BcvRequest(BaseModel):
     Moneda: str  # Código de moneda (obligatorio)
     Fechavalor: str  # Fecha en formato YYYY-MM-DD (obligatorio)
 
-
 class R4BcvResponse(BaseModel):
     """
     RESPUESTA QUE ENVIAMOS CON LA TASA DEL BCV
@@ -161,7 +160,6 @@ class R4ConsultaRequest(BaseModel):
     IdCliente: str  # Cédula del cliente (obligatorio)
     Monto: Optional[str]  # Monto a recibir (opcional)
     TelefonoComercio: Optional[str]  # Nuestro teléfono (opcional)
-
 
 class R4ConsultaResponse(BaseModel):
     """
@@ -214,7 +212,6 @@ class R4NotificaRequest(BaseModel):
     Referencia: str  # Número de referencia único
     CodigoRed: str  # Código de resultado
 
-
 class R4NotificaResponse(BaseModel):
     """
     RESPUESTA A LA NOTIFICACIÓN DE PAGO
@@ -230,7 +227,7 @@ class R4NotificaResponse(BaseModel):
 
 # ESQUEMAS PARA GESTIÓN DE PAGOS (DISPERSIÓN)
 # ===========================================
-class PersonaPago(BaseModel):
+class R4pagos_PersonaPago(BaseModel):
     """
     INFORMACIÓN DE UNA PERSONA QUE RECIBIRÁ DINERO EN LA DISPERSIÓN
     
@@ -250,7 +247,6 @@ class PersonaPago(BaseModel):
     documento: str  # Cédula con tipo
     destino: str  # Cuenta bancaria
     montoPart: str  # Monto individual
-
 
 class R4PagosRequest(BaseModel):
     """
@@ -282,8 +278,13 @@ class R4PagosRequest(BaseModel):
     monto: str  # Monto total
     fecha: str  # Fecha en MM/DD/YYYY
     Referencia: str  # Referencia única
-    personas: list[PersonaPago]  # Lista de beneficiarios
+    personas: list[R4pagos_PersonaPago]  # Lista de beneficiarios
 
+class R4PagosResponse(BaseModel):
+    error: str
+    success: str
+    message: str
+    
 
 # ESQUEMAS PARA VUELTO
 # ===================
@@ -402,6 +403,11 @@ class DebitoInmediatoRequest(BaseModel):
     OTP: str  # Código de autorización
     Concepto: str  # Descripción del cobro
 
+class DebitoInmediatoResponse(BaseModel):
+    code: str
+    message: str
+    reference: str
+    id: str
 
 # ESQUEMAS PARA CRÉDITO INMEDIATO
 # ===============================
@@ -438,6 +444,11 @@ class CreditoInmediatoRequest(BaseModel):
     Monto: str  # Cantidad a enviar
     Concepto: str  # Descripción del pago
 
+class CreditoInmediatoResponse(BaseModel):
+    code: str
+    message: str
+    reference: str
+    id: str
 
 # ESQUEMAS PARA DOMICILIACIÓN POR CUENTA
 # ======================================
@@ -592,10 +603,14 @@ class R4C2PRequest(BaseModel):
     Cedula: str  # Cédula del cliente
     Concepto: str  # Descripción del cobro
     Banco: str  # Código del banco
-    Ip: str  # Dirección IP
+    #Ip: str  # Dirección IP
     Monto: str  # Cantidad a cobrar
     Otp: str  # Código OTP del cliente
 
+class R4C2PResponse(BaseModel):
+    code: str
+    message: str
+    reference: str
 
 # ESQUEMAS PARA ANULACIÓN C2P
 # ===========================

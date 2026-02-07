@@ -25,6 +25,7 @@ Fecha: 11/2025
 # IMPORTACIONES NECESARIAS
 # ========================
 import aiomysql
+import json
 # aiomysql: Biblioteca para conectar a MySQL de forma asíncrona
 # Permite que la aplicación no se "congele" mientras espera la BD
 
@@ -39,7 +40,7 @@ import logging
 
 from core.config import Config, get_database_config
 # config: Configuración de la aplicación (credenciales de BD, etc.)
-
+from datetime import datetime
 
 # CONFIGURACIÓN DE LOGGING
 # ========================
@@ -584,82 +585,96 @@ async def guardar_transaccion_sp(datos: Dict[str, Any]) -> Dict[str, Any]:
     
     
     """
-    
-    # CONFIGURACIÓN DEL PROCEDIMIENTO ALMACENADO
-    # ==========================================
-    # Usamos el SP creado con la logica: sp_guardar_notificacion_r4
-    proc_name = "sp_guardar_notificacion_r4"
-    
-    # PREPARACIÓN DE PARÁMETROS
-    # ========================
-    # Aquí preparamos los parámetros que enviamos al SP
-    # El orden y tipo debe coincidir con la definición del SP
-    
-    # PARÁMETROS DE ENTRADA (IN) - Solo los parámetros IN
-    # params: List[Any] = [
-    #     datos.get("IdComercio", ""),           # Cédula del comercio
-    #     datos.get("TelefonoComercio", ""),     # Teléfono del comercio  
-    #     datos.get("TelefonoEmisor", ""),       # Teléfono del que pagó
-    #     datos.get("Concepto", ""),             # Descripción del pago
-    #     datos.get("BancoEmisor", ""),          # Código del banco
-    #     datos.get("Monto", ""),                # Monto del pago
-    #     datos.get("FechaHora", ""),            # Fecha y hora
-    #     datos.get("Referencia", ""),           # Referencia única
-    #     datos.get("CodigoRed", "")             # Código de respuesta
-    # ]
-    parametros_in = (
-        datos.get("IdComercio", ""),           # Cédula del comercio
-        datos.get("TelefonoComercio", ""),     # Teléfono del comercio  
-        datos.get("TelefonoEmisor", ""),       # Teléfono del que pagó
-        datos.get("Concepto", ""),             # Descripción del pago
-        datos.get("BancoEmisor", ""),          # Código del banco
-        datos.get("Monto", ""),                # Monto del pago
-        datos.get("FechaHora", ""),            # Fecha y hora
-        datos.get("Referencia", ""),           # Referencia única
-        datos.get("CodigoRed", "")             # Código de respuesta
-    )
-
-    # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
-    # =====================================
-    # Llamamos al conector que maneja la conexión y ejecución
-    #resultsets, out_params = await call_stored_procedure(proc_name, params)
-    parametros_out = ("p_mensaje", "p_codigo")
-    
-    # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
-    from db.connector import ejecutar_sp_generico
-    resultado = await ejecutar_sp_generico(
-        #None,  # self no es necesario si la función es independiente
-        proc_name, 
-        parametros_in, 
-        parametros_out
-    )
-
-    # PROCESAMIENTO DE RESULTADOS
-    # ===========================
-    # Construimos una respuesta estructurada con toda la información
-    # respuesta = {
-    #     # Conjuntos de resultados que devuelve el SP (tablas de datos)
-    #     "resultsets": resultsets,
+    try:
+        # CONFIGURACIÓN DEL PROCEDIMIENTO ALMACENADO
+        # ==========================================
+        # Usamos el SP creado con la logica: sp_guardar_notificacion_r4
+        proc_name = "sp_guardar_notificacion_r4"
         
-    #     # Parámetros de salida del SP (mensajes, códigos, etc.)
-    #     "out_params": out_params,
+        # PREPARACIÓN DE PARÁMETROS
+        # ========================
+        # Aquí preparamos los parámetros que enviamos al SP
+        # El orden y tipo debe coincidir con la definición del SP
         
-    #     # Información adicional para debugging
-    #     "procedimiento": proc_name,
-    #     "parametros_enviados": len(params),
-    #     "exito": True  # Si llegamos aquí, no hubo errores
-    # }
-    respuesta = {
-        "resultsets": resultado.get("resultados", []),
-        "out_params": resultado.get("parametros_out", {}),
-        "filas_afectadas": resultado.get("filas_afectadas", 0),
-        "procedimiento": proc_name,
-        "parametros_enviados": len(parametros_in),
-        "exito": resultado.get("exito", False),
-        "error": resultado.get("error", None)
-    }
-    
-    return respuesta
+        # PARÁMETROS DE ENTRADA (IN) - Solo los parámetros IN
+        # params: List[Any] = [
+        #     datos.get("IdComercio", ""),           # Cédula del comercio
+        #     datos.get("TelefonoComercio", ""),     # Teléfono del comercio  
+        #     datos.get("TelefonoEmisor", ""),       # Teléfono del que pagó
+        #     datos.get("Concepto", ""),             # Descripción del pago
+        #     datos.get("BancoEmisor", ""),          # Código del banco
+        #     datos.get("Monto", ""),                # Monto del pago
+        #     datos.get("FechaHora", ""),            # Fecha y hora
+        #     datos.get("Referencia", ""),           # Referencia única
+        #     datos.get("CodigoRed", "")             # Código de respuesta
+        # ]
+        parametros_in = (
+            datos.get("IdComercio", ""),           # Cédula del comercio
+            datos.get("TelefonoComercio", ""),     # Teléfono del comercio  
+            datos.get("TelefonoEmisor", ""),       # Teléfono del que pagó
+            datos.get("Concepto", ""),             # Descripción del pago
+            datos.get("BancoEmisor", ""),          # Código del banco
+            datos.get("Monto", ""),                # Monto del pago
+            datos.get("FechaHora", ""),            # Fecha y hora
+            datos.get("Referencia", ""),           # Referencia única
+            datos.get("CodigoRed", "")             # Código de respuesta
+        )
+
+        # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
+        # =====================================
+        # Llamamos al conector que maneja la conexión y ejecución
+        #resultsets, out_params = await call_stored_procedure(proc_name, params)
+        parametros_out = ("p_mensaje", "p_codigo")
+        
+        # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
+        from db.connector import ejecutar_sp_generico
+        resultado = await ejecutar_sp_generico(
+            #None,  # self no es necesario si la función es independiente
+            proc_name, 
+            parametros_in, 
+            parametros_out
+        )
+
+        # PROCESAMIENTO DE RESULTADOS
+        # ===========================
+        # Construimos una respuesta estructurada con toda la información
+        # respuesta = {
+        #     # Conjuntos de resultados que devuelve el SP (tablas de datos)
+        #     "resultsets": resultsets,
+            
+        #     # Parámetros de salida del SP (mensajes, códigos, etc.)
+        #     "out_params": out_params,
+            
+        #     # Información adicional para debugging
+        #     "procedimiento": proc_name,
+        #     "parametros_enviados": len(params),
+        #     "exito": True  # Si llegamos aquí, no hubo errores
+        # }
+        respuesta = {
+            "resultsets": resultado.get("resultados", []),
+            "out_params": resultado.get("parametros_out", {}),
+            "filas_afectadas": resultado.get("filas_afectadas", 0),
+            "procedimiento": proc_name,
+            "parametros_enviados": len(parametros_in),
+            "exito": resultado.get("exito", False),
+            "error": resultado.get("error", None)
+        }
+        
+        return respuesta
+    except Exception as e:
+        logger.error(f"Error en guardar_transaccion_sp: {str(e)}")
+        return {
+            "resultsets": [],
+            "out_params": {},
+            "filas_afectadas": 0,
+            "exito": False,
+            "error": str(e)
+        }
+    finally:
+        #cierro todas las conexiones abiertas en caso de error
+        await close_connection_pool()   
+
+
 
 async def consultar_notificacion_por_referencia(filtros: Dict[str, Any]) -> Dict[str, Any]:
     """Consulta notificación en BD usando sp_consulta_notificacion_r4.
@@ -716,7 +731,7 @@ async def proceso_comprobacion_por_referencia(filtros: Dict[str, Any]) -> Dict[s
     print("Resultado SP completo:", resultado)
     return resultado
 
-async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Dict[str, Any] = {}) -> Dict[str, Any]:
+async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Dict[str, Any] = {}, v_json: Dict[str, Any] |None = None) -> Dict[str, Any]:
     """
     Guarda o actualiza transacción en r4_pending_transactions usando sp_upsert_condicional_r4.
     """
@@ -734,28 +749,29 @@ async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Di
     # Parámetros IN del SP (en orden exacto)
     parametros_in = (
         p_where_condition,                    # IN p_where_condition TEXT
-        datos_identificadores.get("endpoint", ""),          # IN p_endpoint VARCHAR(30)
-        filtros.get("transaction_type", ""),  # IN p_transaction_type VARCHAR(20)
-        filtros.get("IdComercio", ""),        # IN p_IdComercio VARCHAR(8)
-        filtros.get("IdCliente", ""),         # IN p_IdCliente VARCHAR(8)
-        filtros.get("Cedula", ""),            # IN p_Cedula VARCHAR(9)
-        filtros.get("Nombre", ""),            # IN p_Nombre VARCHAR(20)
-        filtros.get("TelefonoComercio", ""),  # IN p_TelefonoComercio VARCHAR(11)
-        filtros.get("TelefonoEmisor", ""),    # IN p_TelefonoEmisor VARCHAR(11)
-        filtros.get("TelefonoDestino", ""),   # IN p_TelefonoDestino VARCHAR(11)
-        filtros.get("BancoEmisor", ""),       # IN p_BancoEmisor VARCHAR(4)
-        filtros.get("Banco", ""),             # IN p_Banco VARCHAR(4)
-        filtros.get("Monto", ""),             # IN p_Monto VARCHAR(20)
+        filtros.get("endpoint"),          # IN p_endpoint VARCHAR(30)
+        #filtros.get("transaction_type", ""),  # IN p_transaction_type VARCHAR(20)
+        filtros.get("IdComercio"),        # IN p_IdComercio VARCHAR(8)
+        #filtros.get("IdCliente", ""),         # IN p_IdCliente VARCHAR(8)
+        filtros.get("Cedula"),            # IN p_Cedula VARCHAR(9)
+        filtros.get("Nombre"),            # IN p_Nombre VARCHAR(20)
+        filtros.get("TelefonoComercio"),  # IN p_TelefonoComercio VARCHAR(11)
+        filtros.get("TelefonoContacto"),    # IN p_TelefonoEmisor VARCHAR(11)
+        #filtros.get("TelefonoDestino", ""),   # IN p_TelefonoDestino VARCHAR(11)
+        #filtros.get("BancoEmisor", ""),       # IN p_BancoEmisor VARCHAR(4)
+        filtros.get("Banco"),             # IN p_Banco VARCHAR(4)
+        filtros.get("Monto"),             # IN p_Monto VARCHAR(20)
         filtros.get("Moneda", "USD"),         # IN p_Moneda VARCHAR(3)
-        filtros.get("OTP", ""),               # IN p_OTP VARCHAR(8)
-        filtros.get("Referencia", ""),        # IN p_Referencia VARCHAR(20)
-        filtros.get("CodigoRed", ""),         # IN p_CodigoRed VARCHAR(2)
-        filtros.get("Concepto", ""),          # IN p_Concepto VARCHAR(30)
-        filtros.get("id_dev_cred", ""),       # IN p_id_dev_cred VARCHAR(36)
-        filtros.get("FechaHora", ""),         # IN p_FechaHora VARCHAR(25)
-        filtros.get("etapa", "INICIO"),       # IN p_etapa VARCHAR(20)
-        filtros.get("completado", 0),         # IN p_completado TINYINT(1)
-        filtros.get("codigo_respuesta", ""),  # IN p_codigo_respuesta VARCHAR(10)
+        filtros.get("OTP"),               # IN p_OTP VARCHAR(8)
+        filtros.get("Referencia"),        # IN p_Referencia VARCHAR(20)
+        filtros.get("CodigoRed"),         # IN p_CodigoRed VARCHAR(2)
+        filtros.get("Concepto"),          # IN p_Concepto VARCHAR(30)
+        filtros.get("id_dev_cred"),       # IN p_id_dev_cred VARCHAR(36)
+        #filtros.get("FechaHora", ""),         # IN p_FechaHora VARCHAR(25)
+        filtros.get("etapa"),       # IN p_etapa VARCHAR(20)
+        #filtros.get("completado"),         # IN p_completado TINYINT(1)
+        filtros.get("respuesta"),  # IN p_codigo_respuesta VARCHAR(10)
+        json.dumps(v_json) if v_json else None  # IN p_json TEXT (convertir dict a JSON string
     )
     print("Parámetros IN para SP:", parametros_in)
     from db.connector import ejecutar_sp_generico
