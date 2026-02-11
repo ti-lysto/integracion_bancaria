@@ -57,7 +57,7 @@ logger = logging.getLogger(__name__)
 # CONSULTA DE TASA DEL BANCO CENTRAL DE VENEZUELA (BCV)
 # =====================================================
 @router_r4.post("/MBbcv", response_model=R4BcvResponse, summary="Consulta tasa BCV")
-async def mbcv(payload: R4BcvRequest = Body(...), _auth=Depends(auth.verify_hmac_bcv), _ip=Depends(auth.ip_whitelist_middleware)):
+async def mbcv(payload: R4BcvRequest = Body(...), _ip=Depends(auth.ip_whitelist_middleware)): # _auth=Depends(auth.verify_hmac_bcv)): # se comenta la autenticación
     """
     CONSULTA LA TASA DE CAMBIO OFICIAL DEL BCV
     
@@ -92,6 +92,7 @@ async def mbcv(payload: R4BcvRequest = Body(...), _auth=Depends(auth.verify_hmac
         
     except Exception as e:
         # Si hay error, lo reportamos
+        logger.error(f"Error interno en consulta BCV: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -147,6 +148,7 @@ async def r4consulta(payload: R4ConsultaRequest = Body(...), *,_auth=Depends(aut
         
     except Exception as e:
         # Si hay error, lo reportamos
+        logger.error(f"Error interno en consulta cliente: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -198,6 +200,7 @@ async def r4notifica(payload: R4NotificaRequest = Body(...), _auth=Depends(auth.
         
     except Exception as e:
         # Si hay error, lo reportamos
+        logger.error(f"Error interno en notificación de pago: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # GESTIÓN DE PAGOS MÚLTIPLES (DISPERSIÓN)
@@ -241,11 +244,17 @@ async def r4pagos(payload: R4PagosRequest = Body(...), _auth=Depends(auth.verify
     - message: Descripción del resultado
     - error: Detalles del error si algo falló
     """
-    # Procesamos la dispersión de pagos
-    resultado = await R4Services.procesar_gestion_pagos(payload.dict())
+    try:
+        # Procesamos la dispersión de pagos
+        resultado = await R4Services.procesar_gestion_pagos(payload.dict())
+        
+        # Devolvemos el resultado
+        return R4PagosResponse(**resultado)
     
-    # Devolvemos el resultado
-    return R4PagosResponse(**resultado)
+    except Exception as e:
+        # Si hay error, lo reportamos
+        logger.error(f"Error interno en gestión de pagos: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # PROCESAMIENTO DE VUELTO
@@ -293,25 +302,23 @@ async def mb_vuelto(
         # Guardamos la información del vuelto
         resultado = await R4Services.procesar_vuelto(payload.dict())
         
-        # Generamos una referencia única para el pago
-        # uuid4() crea un identificador único, tomamos solo 8 dígitos
-        reference = resultado.get("reference")
         
         # Devolvemos confirmación exitosa
         return StandardResponse(
-            code="00", 
-            message="TRANSACCION EXITOSA", 
-            reference=reference 
+            code=resultado.get("code"),
+            message=resultado.get("message"), 
+            reference=resultado.get("reference")
         )
         
     except Exception as e:
-        # Si hay error, devolvemos código de token inválido
-        return StandardResponse(code="08", message="Token Inválido")
+        # Si hay error, lo reportamos
+        logger.error(f"Error interno en procesamiento de vuelto: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # GENERACIÓN DE CÓDIGO OTP (One Time Password)
 # ============================================
-@router_r4.post("/GenerarOtp", response_model=GenerarOtpResponse, summary="Generar OTP")
-async def generar_otp(payload: GenerarOtpRequest = Body(...), _auth=Depends(auth.verify_hmac_generar_otp), _ip=Depends(auth.ip_whitelist_middleware)):
+@router_r4.post("/GenerarOtp", response_model=R4GenerarOtpResponse, summary="Generar OTP")
+async def generar_otp(payload: R4GenerarOtpRequest = Body(...), _ip=Depends(auth.ip_whitelist_middleware)): # _auth=Depends(auth.verify_hmac_generar_otp)): # se elimino la firma para este enpoint
     """
     SOLICITA LA GENERACIÓN DE UN CÓDIGO OTP TEMPORAL
     
@@ -356,21 +363,21 @@ async def generar_otp(payload: GenerarOtpRequest = Body(...), _auth=Depends(auth
         # Guardamos la solicitud de OTP
         resultado = await R4Services.procesar_otp(payload.dict())
         # Devolvemos confirmación de que se procesó
-        return GenerarOtpResponse(
+        return R4GenerarOtpResponse(
             code=resultado.get("code", ""), 
             message=resultado.get("message", ""), 
             success=resultado.get("success", False)
         )
         
     except Exception as e:
-        # Si hay error, lo reportamos
+        logger.error(f"Error interno en el endpoint de generación de OTP: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
 # DÉBITO INMEDIATO (COBRAR DINERO AL CLIENTE)
 # ===========================================
-@router_r4.post("/DebitoInmediato", response_model=DebitoInmediatoResponse, summary="Débito Inmediato")
-async def debito_inmediato(payload: DebitoInmediatoRequest = Body(...), _auth=Depends(auth.verify_hmac_debito_inmediato), _ip=Depends(auth.ip_whitelist_middleware)):
+@router_r4.post("/DebitoInmediato", response_model=R4DebitoInmediatoResponse, summary="Débito Inmediato")
+async def debito_inmediato(payload: R4DebitoInmediatoRequest = Body(...), _ip=Depends(auth.ip_whitelist_middleware)): # _auth=Depends(auth.verify_hmac_generar_otp)): # se elimino la firma para este enpoint
     """
     COBRA DINERO DIRECTAMENTE DE LA CUENTA DEL CLIENTE
     
@@ -417,32 +424,23 @@ async def debito_inmediato(payload: DebitoInmediatoRequest = Body(...), _auth=De
         # Guardamos la información del débito
         resultado= await R4Services.procesar_debitoinmediato(payload.dict())
         
-        # Generamos identificadores únicos
-        # operation_id = str(uuid.uuid4())  # ID único de la operación
-        # reference = str(uuid.uuid4().int)[:8]  # Referencia numérica
-        
         # Devolvemos confirmación exitosa
-        return DebitoInmediatoResponse(
+        return R4DebitoInmediatoResponse(
             code=resultado.get("code",""), 
             message=resultado.get("message",""), 
             reference=resultado.get("reference",""), 
-            id=resultado.get("id","")
+            Id=resultado.get("Id","")
         )
         
     except Exception as e:
-        # Si hay error, la operación queda en espera
-        return DebitoInmediatoResponse(
-            code="AC00", 
-            message="Operación en Espera de Respuesta del Receptor",
-            reference="",
-            id=""
-        )
+        logger.error(f"Error interno en procesamiento del endpoint débito inmediato: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # # CRÉDITO INMEDIATO (ENVIAR DINERO AL CLIENTE)
 # # ============================================
-@router_r4.post("/CreditoInmediato", response_model=CreditoInmediatoResponse, summary="Crédito Inmediato")
-async def credito_inmediato(payload: CreditoInmediatoRequest = Body(...), _auth=Depends(auth.verify_hmac_credito_inmediato), _ip=Depends(auth.ip_whitelist_middleware)):
+@router_r4.post("/CreditoInmediato", response_model=R4CreditoInmediatoResponse, summary="Crédito Inmediato")
+async def credito_inmediato(payload: R4CreditoInmediatoRequest = Body(...), _auth=Depends(auth.verify_hmac_credito_inmediato), _ip=Depends(auth.ip_whitelist_middleware)):
     """
     ENVÍA DINERO DIRECTAMENTE A LA CUENTA DEL CLIENTE
     
@@ -478,24 +476,19 @@ async def credito_inmediato(payload: CreditoInmediatoRequest = Body(...), _auth=
     """
     try:
         # Guardamos la información del crédito
-        resuldato = await R4Services.procesar_creditoinmediato(payload.dict())
+        resultado = await R4Services.procesar_creditoinmediato(payload.dict())
         
         # Devolvemos confirmación exitosa
-        return CreditoInmediatoResponse(
-            code=resuldato.get("code",""), 
-            message=resuldato.get("message",""), 
-            reference=resuldato.get("reference",""), 
-            id=resuldato.get("id","")
+        return R4CreditoInmediatoResponse(
+            code=resultado.get("code",""), 
+            message=resultado.get("message",""), 
+            reference=resultado.get("reference",""), 
+            Id=resultado.get("Id","")
         )
         
     except Exception as e:
-        # Si hay error, la operación queda en espera
-        return CreditoInmediatoResponse(
-            code="", 
-            message="Error Interno", 
-            reference="",
-            id=""
-        )
+        logger.error(f"Error interno en procesamiento del endpoint crédito inmediato: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # # DOMICILIACIÓN POR NÚMERO DE CUENTA
@@ -632,62 +625,61 @@ async def credito_inmediato(payload: CreditoInmediatoRequest = Body(...), _auth=
 #         )
 
 
-# # CONSULTA DE ESTADO DE OPERACIONES
-# # =================================
-# @router_r4.post("/ConsultarOperaciones", response_model=StandardResponse, summary="Consultar Operaciones")
-# async def consultar_operaciones(payload: ConsultarOperacionesRequest = Body(...), _auth=Depends(auth.verify_hmac_consultar_operaciones), _ip=Depends(auth.ip_whitelist_middleware)):
-#     """
-#     CONSULTA EL ESTADO ACTUAL DE UNA OPERACIÓN
+# CONSULTA DE ESTADO DE OPERACIONES
+# =================================
+@router_r4.post("/ConsultarOperaciones", response_model=R4ConsultarOperacionesResponse, summary="Consultar Operaciones")
+async def consultar_operaciones(payload: R4ConsultarOperacionesRequest = Body(...),  _ip=Depends(auth.ip_whitelist_middleware)): # _auth=Depends(auth.verify_hmac_consultar_operaciones)): # se quito la comprovacion de la firma en la solicitud
+    """
+    CONSULTA EL ESTADO ACTUAL DE UNA OPERACIÓN
     
-#     ¿Qué hace?
-#     - Verifica si una operación anterior ya se completó
-#     - Obtiene el resultado final de operaciones en espera
-#     - Es como "preguntar" si ya se procesó algo
+    ¿Qué hace?
+    - Verifica si una operación anterior ya se completó
+    - Obtiene el resultado final de operaciones en espera
+    - Es como "preguntar" si ya se procesó algo
     
-#     ¿Cuándo se usa?
-#     - Cuando una operación respondió "AC00" (en espera)
-#     - Para verificar débitos o créditos pendientes
-#     - Para confirmar si un pago ya se procesó
+    ¿Cuándo se usa?
+    - Cuando una operación respondió "AC00" (en espera)
+    - Para verificar débitos o créditos pendientes
+    - Para confirmar si un pago ya se procesó
     
-#     ¿Por qué es necesario?
-#     - Algunas operaciones no son instantáneas
-#     - Los bancos pueden tardar en procesar
-#     - Necesitamos saber cuándo ya terminaron
+    ¿Por qué es necesario?
+    - Algunas operaciones no son instantáneas
+    - Los bancos pueden tardar en procesar
+    - Necesitamos saber cuándo ya terminaron
     
-#     Ejemplo de uso:
-#     1. Hacemos un débito inmediato
-#     2. Responde "AC00" (en espera)
-#     3. Esperamos unos minutos
-#     4. Consultamos con este endpoint
-#     5. Ahora responde "ACCP" (completado)
+    Ejemplo de uso:
+    1. Hacemos un débito inmediato
+    2. Responde "AC00" (en espera)
+    3. Esperamos unos minutos
+    4. Consultamos con este endpoint
+    5. Ahora responde "ACCP" (completado)
     
-#     Seguridad:
-#     - Requiere HMAC con: Id (identificador de la operación)
+    Seguridad:
+    - Requiere HMAC con: Id (identificador de la operación)
     
-#     Parámetros de entrada:
-#     - Id: Identificador único de la operación a consultar
-#            (es el UUID que devolvió la operación original)
+    Parámetros de entrada:
+    - Id: Identificador único de la operación a consultar
+        (es el UUID que devolvió la operación original)
     
-#     Respuesta:
-#     - code: Estado actual ("ACCP" = completado, otros = pendiente/error)
-#     - reference: Número de referencia si se completó
-#     - success: true si la consulta fue exitosa
-#     """
-#     try:
-#         # Simulamos consulta exitosa (en producción consultaría la BD real)
-#         reference = str(uuid.uuid4().int)[:8]
+    Respuesta:
+    - code: Estado actual ("ACCP" = completado, otros = pendiente/error)
+    - reference: Número de referencia si se completó
+    - success: true si la consulta fue exitosa
+    """
+    try:
         
-#         # Devolvemos estado completado
-#         return StandardResponse(
-#             code="ACCP", 
-#             reference=reference, 
-#             success=True,
-#             message="Operación Completada Exitosamente"
-#         )
+        respuesta = await R4Services.procesar_consulta_operaciones(payload.dict())
         
-#     except Exception as e:
-#         # Si hay error en la consulta
-#         raise HTTPException(status_code=500, detail=str(e))
+        
+        return R4ConsultarOperacionesResponse(
+            code=respuesta.get("code",""),
+            reference=respuesta.get("reference",""),
+            success=respuesta.get("success", False)
+        )
+
+    except Exception as e:
+        logger.error(f"Error interno en procesamiento del endpoint consultar operaciones: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # # CRÉDITO INMEDIATO CON CUENTA DE 20 DÍGITOS
@@ -754,7 +746,7 @@ async def credito_inmediato(payload: CreditoInmediatoRequest = Body(...), _auth=
 # COBRO C2P (Cliente a Persona)
 # =============================
 @router_r4.post("/MBc2p", response_model=R4C2PResponse, summary="Cobro C2P")
-async def mb_c2p(payload: R4C2PRequest = Body(...), _auth=Depends(auth.verify_hmac_c2p), _ip=Depends(auth.ip_whitelist_middleware)):
+async def mb_c2p(payload: R4C2PRequest = Body(...), _ip=Depends(auth.ip_whitelist_middleware)): # _auth=Depends(auth.verify_hmac_generar_otp)): # se elimino la firma para este enpoint
     """
     PROCESA COBRO DIRECTO AL CLIENTE (C2P = Client to Person)
     
@@ -801,24 +793,22 @@ async def mb_c2p(payload: R4C2PRequest = Body(...), _auth=Depends(auth.verify_hm
         # Guardamos la información del cobro C2P
         resultado = await R4Services.procesar_c2p(payload.dict())
         
-        # Generamos referencia única
-        #reference = str(uuid.uuid4().int)[:8]
         
         # Devolvemos confirmación exitosa
         return R4C2PResponse(
             code=resultado.get("code", ""),
-            message= resultado.get("message", "T"),
+            message= resultado.get("message", ""),
             reference=resultado.get("reference", "")
         )
         
     except Exception as e:
-        # Si hay error, devolvemos token inválido
-        return R4C2PResponse(code="08", message="TOKEN inválido", reference="")
+        logger.error(f"Error interno en procesamiento del endpoint de cobro C2P: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # ANULACIÓN DE COBRO C2P
 # ======================
-@router_r4.post("/MBanulacionC2P", response_model=StandardResponse, summary="Anulación C2P")
+@router_r4.post("/MBanulacionC2P", response_model=R4AnulacionC2PResponse, summary="Anulación C2P")
 async def mb_anulacion_c2p(payload: R4AnulacionC2PRequest = Body(...), _auth=Depends(auth.verify_hmac_anulacion_c2p), _ip=Depends(auth.ip_whitelist_middleware)):
     """
     CANCELA UN COBRO C2P PREVIAMENTE REALIZADO
@@ -861,66 +851,65 @@ async def mb_anulacion_c2p(payload: R4AnulacionC2PRequest = Body(...), _auth=Dep
     """
     try:
         # Guardamos la información de la anulación
-        #resultado = await r4_client.procesar_y_guardar(payload.dict())
+        resultado = await R4Services.procesar_anulacionc2p(payload.dict())
         
-        # Generamos nueva referencia para la anulación
-        reference = str(uuid.uuid4().int)[:8]
-        
-        # Devolvemos confirmación exitosa
         return StandardResponse(
-            code="00", 
-            message="TRANSACCION EXITOSA", 
-            reference=reference
+            code=resultado.get("code"),
+            message=resultado.get("message", "Servicio no activo o negada por el banco"),
+            reference=resultado.get("reference", "")
         )
         
     except Exception as e:
-        # Si hay error, el servicio no está activo
-        return StandardResponse(
-            code="41", 
-            message="Servicio no activo o negada por el banco"
-        )
+        logger.error(f"Error interno en procesamiento del endpoint de anulación C2P: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # VERIFICACIÓN DE PAGO
 # ====================
-@router_r4.post("/verifico_pago", response_model=VerificoPagoResponse, summary="Verificar pago en banco y BD")
+@router_r4.post("/verifico_pago", response_model=R4VerificoPagoResponse, summary="Verificar pago en banco y BD")
 async def verifico_pago(
-    payload: VerificoPagoRequest = Body(...),
+    payload: R4VerificoPagoRequest = Body(...),
     commerce: str = Header(None),
     _ip=Depends(auth.ip_whitelist_middleware)
 ):
     try:
         # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
         if not commerce or commerce != Config.R4_MERCHANT_ID:
+            logger.warning(f"Intento de acceso a /verifico_pago sin header Commerce válido. Commerce recibido: {commerce}")
             raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
 
         resultado = await R4Services.verificar_pago(payload.dict())
-        return VerificoPagoResponse(**resultado)
+        return R4VerificoPagoResponse(**resultado)
 
-    except HTTPException:
+    except HTTPException as e:
+        logger.exception(f"Error en verifico_pago: {e.detail}")
         raise
     except Exception as e:
+        logger.exception(f"Error interno en verifico_pago: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # COMPROBACION DE PAGO
 # ====================
-@router_r4.post("/comprobacion_pago",response_model=ComprueboPagoResponse, summary="Compuebo que se proceso de pago se termino correctamente y se procesa el registro en la BD")
+@router_r4.post("/comprobacion_pago",response_model=R4ComprueboPagoResponse, summary="Compuebo que se proceso de pago se termino correctamente y se procesa el registro en la BD")
 async def comprobacion_pago(
-    payload: ComprueboPagoRequest = Body(...),
+    payload: R4ComprueboPagoRequest = Body(...),
     commerce: str = Header(None),
     _ip=Depends(auth.ip_whitelist_middleware)
 ):
     try:
         # Solo validamos que el header Commerce coincida con nuestro R4_MERCHANT_ID
         if not commerce or commerce != Config.R4_MERCHANT_ID:
+            logger.warning(f"Intento de acceso a /comprobacion_pago sin header Commerce válido. Commerce recibido: {commerce}")
             raise HTTPException(status_code=401, detail="Header Commerce inválido o ausente")
 
         resultado = await R4Services.comprobar_pago(payload.dict())
-        return ComprueboPagoResponse(**resultado)
+        return R4ComprueboPagoResponse(**resultado)
 
-    except HTTPException:
+    except HTTPException as e:
+        logger.exception(f"Error en comprobacion_pago: {e.detail}")
         raise
     except Exception as e:
+        logger.exception(f"Error interno en comprobacion_pago: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -938,7 +927,7 @@ async def health_check():
         
         return {
             "message": "API integracion-bancaria funcionando correctamente",
-            "version": "1.0",
+            "version": Config.API_VERSION,
             "status BD": status,
             "Conectado": db_ok,
             "endpoints_count": [
@@ -955,11 +944,28 @@ async def root():
     """Información básica de la API"""
     return {
         "name": "API integracion-bancaria",
-        "version": "1.0",
-        "endpoints": [
-            "/integrar", "/MBbcv", "/R4consulta", "/R4notifica", "/R4pagos",
-            "/MBvuelto", "/GenerarOtp", "/DebitoInmediato", "/CreditoInmediato",
-            "/TransferenciaOnline/DomiciliacionCNTA", "/TransferenciaOnline/DomiciliacionCELE",
-            "/ConsultarOperaciones", "/CICuentas", "/MBc2p", "/MBanulacionC2P"
-        ]
+        "version": Config.API_VERSION,
+        "bancos_soportados": {
+            "R4 Conecta": {
+                "endpoints": [
+                    "/MBbcv",
+                    "/R4consulta",
+                    "/R4notifica", 
+                    "/R4pagos",
+                    "/MBvuelto",
+                    "/GenerarOtp",
+                    "/DebitoInmediato",
+                    "/CreditoInmediato",
+                    #"/TransferenciaOnline/DomiciliacionCNTA",
+                    #"/TransferenciaOnline/DomiciliacionCELE",
+                    "/ConsultarOperaciones",
+                    #"/CICuentas",
+                    "/MBc2p",
+                    "/MBanulacionC2P",
+                    "/verifico_pago",
+                    "/comprobacion_pago"
+                ]
+            }
+        },
+        "estado": "operativo"
     }

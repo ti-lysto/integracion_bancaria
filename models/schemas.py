@@ -322,7 +322,7 @@ class R4VueltoRequest(BaseModel):
 
 # ESQUEMAS PARA GENERACIÓN DE OTP
 # ===============================
-class GenerarOtpRequest(BaseModel):
+class R4GenerarOtpRequest(BaseModel):
     """
     DATOS PARA SOLICITAR GENERACIÓN DE CÓDIGO OTP
     
@@ -356,7 +356,7 @@ class GenerarOtpRequest(BaseModel):
     Telefono: str  # Teléfono para SMS
     Cedula: str  # Cédula del cliente
 
-class GenerarOtpResponse(BaseModel):
+class R4GenerarOtpResponse(BaseModel):
     
     code: str  # codigo de resultado del banco
     message: str  # Mensaje descriptivo del banco
@@ -366,7 +366,7 @@ class GenerarOtpResponse(BaseModel):
 
 # ESQUEMAS PARA DÉBITO INMEDIATO
 # ==============================
-class DebitoInmediatoRequest(BaseModel):
+class R4DebitoInmediatoRequest(BaseModel):
     """
     DATOS PARA COBRAR DINERO DIRECTAMENTE AL CLIENTE
     
@@ -403,15 +403,15 @@ class DebitoInmediatoRequest(BaseModel):
     OTP: str  # Código de autorización
     Concepto: str  # Descripción del cobro
 
-class DebitoInmediatoResponse(BaseModel):
+class R4DebitoInmediatoResponse(BaseModel):
     code: str
     message: str
     reference: str
-    id: str
+    Id: str
 
 # ESQUEMAS PARA CRÉDITO INMEDIATO
 # ===============================
-class CreditoInmediatoRequest(BaseModel):
+class R4CreditoInmediatoRequest(BaseModel):
     """
     DATOS PARA ENVIAR DINERO DIRECTAMENTE AL CLIENTE
     
@@ -444,15 +444,15 @@ class CreditoInmediatoRequest(BaseModel):
     Monto: str  # Cantidad a enviar
     Concepto: str  # Descripción del pago
 
-class CreditoInmediatoResponse(BaseModel):
+class R4CreditoInmediatoResponse(BaseModel):
     code: str
     message: str
     reference: str
-    id: str
+    Id: str
 
 # ESQUEMAS PARA DOMICILIACIÓN POR CUENTA
 # ======================================
-class DomiciliacionCNTARequest(BaseModel):
+class R4DomiciliacionCNTARequest(BaseModel):
     """
     DATOS PARA CONFIGURAR COBRO AUTOMÁTICO POR CUENTA
     
@@ -484,7 +484,7 @@ class DomiciliacionCNTARequest(BaseModel):
 
 # ESQUEMAS PARA DOMICILIACIÓN POR TELÉFONO
 # ========================================
-class DomiciliacionCELERequest(BaseModel):
+class R4DomiciliacionCELERequest(BaseModel):
     """
     DATOS PARA CONFIGURAR COBRO AUTOMÁTICO POR TELÉFONO
     
@@ -522,7 +522,7 @@ class DomiciliacionCELERequest(BaseModel):
 
 # ESQUEMAS PARA CONSULTA DE OPERACIONES
 # =====================================
-class ConsultarOperacionesRequest(BaseModel):
+class R4ConsultarOperacionesRequest(BaseModel):
     """
     DATOS PARA CONSULTAR EL ESTADO DE UNA OPERACIÓN
     
@@ -543,10 +543,14 @@ class ConsultarOperacionesRequest(BaseModel):
     
     Id: str  # Identificador único de la operación
 
+class R4ConsultarOperacionesResponse(BaseModel):
+    code: str
+    reference: str
+    success: bool
 
 # ESQUEMAS PARA CRÉDITO INMEDIATO CON CUENTAS
 # ===========================================
-class CICuentasRequest(BaseModel):
+class R4CICuentasRequest(BaseModel):
     """
     DATOS PARA CRÉDITO INMEDIATO USANDO NÚMERO DE CUENTA
     
@@ -642,10 +646,14 @@ class R4AnulacionC2PRequest(BaseModel):
     Banco: str  # Código del banco
     Referencia: str  # Referencia del cobro a anular
 
+class R4AnulacionC2PResponse(BaseModel):
+    message: str
+    code: str
+    reference: str
 
 # ESQUEMAS PARA VERIFICACIÓN DE PAGO
 # ==================================
-class VerificoPagoRequest(BaseModel):
+class R4VerificoPagoRequest(BaseModel):
     """Datos de entrada para /verifico_pago — parámetros del SP.
 
     Solo incluye los IN esperados por `sp_consulta_notificacion_r4`.
@@ -659,7 +667,7 @@ class VerificoPagoRequest(BaseModel):
 
 # ESQUEMAS PARA COMPROBACIÓN DE PAGO
 # ==================================
-class ComprueboPagoRequest(BaseModel):
+class R4ComprueboPagoRequest(BaseModel):
     """Datos de entrada para /verifico_pago — parámetros del SP.
 
     Solo incluye los IN esperados por `sp_consulta_notificacion_r4`.
@@ -671,13 +679,13 @@ class ComprueboPagoRequest(BaseModel):
     FechaHora: Optional[str] = None
     Referencia: Optional[str] = None
 
-class ComprueboPagoResponse(BaseModel):
+class R4ComprueboPagoResponse(BaseModel):
     """Respuesta simplificada solicitada: campos del registro y flag `encontrado`."""
     
     procesado: bool = False
     mensaje: str = ""
 
-class VerificoPagoResponse(BaseModel):
+class R4VerificoPagoResponse(BaseModel):
     """Respuesta simplificada solicitada: campos del registro y flag `encontrado`."""
 
     Telefono: str = ""
@@ -686,6 +694,7 @@ class VerificoPagoResponse(BaseModel):
     FechaHora: str = ""
     Referencia: str = ""
     encontrado: bool = False
+    id_notificacion: Optional[int] = None
 
 
 # ESQUEMAS DE RESPUESTAS GENÉRICAS

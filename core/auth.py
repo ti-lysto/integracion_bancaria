@@ -80,7 +80,7 @@ HMAC_CONFIG = {
         "requires_uuid": False
     },
     "ConsultarOperaciones": {
-        "params": ["id"],
+        "params": ["Id"],
         "separator": "",  # solo id
         "requires_uuid": False
     },
@@ -165,7 +165,7 @@ class R4Authentication:
 
         Comportamiento simple y compatible con el uso actual en `r4_services`:
         - Si response_data contiene la clave 'data' y es string, la firmamos
-          directamente.
+        directamente.
         - En cualquier otro caso, serializamos a JSON ordenado y firmamos.
         """
         try:

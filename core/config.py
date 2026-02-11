@@ -48,6 +48,8 @@ class Config:
     # CONFIGURACIÓN DE LA API
     # =====================================================
     
+    # version de la api actual
+    API_VERSION = os.getenv("API_VERSION", "0.0.0")
     # Puerto donde correrá la API
     API_PORT = int(os.getenv("API_PORT", 8000))
     
@@ -132,6 +134,7 @@ def get_api_config() -> Dict[str, Any]:
     - Timeouts y límites
     """
     return {
+        "version": Config.API_VERSION,
         "host": Config.API_HOST,
         "port": Config.API_PORT,
         "debug": Config.DEBUG,
