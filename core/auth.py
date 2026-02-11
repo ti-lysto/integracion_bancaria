@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 # obtener clave secreta desde configuración
 config = get_r4_config()
-SECRET_KEY = config.get("secret_key") 
+SECRET_KEY = config.get("merchant_id") 
 # =====================================================
 # CONFIGURACIÓN DE HMAC POR ENDPOINT
 # =====================================================
@@ -80,7 +80,7 @@ HMAC_CONFIG = {
         "requires_uuid": False
     },
     "ConsultarOperaciones": {
-        "params": ["id"],
+        "params": ["Id"],
         "separator": "",  # solo id
         "requires_uuid": False
     },
@@ -143,6 +143,8 @@ def validar_uuid(token: str) -> bool:
         #if (uuid.UUID(token)) or (token == get_r4_config().get("uuid")):        
         if (token == get_r4_config().get("uuid")):
             return True
+        else:
+            return False    
     except ValueError:
         return False
 
@@ -163,7 +165,7 @@ class R4Authentication:
 
         Comportamiento simple y compatible con el uso actual en `r4_services`:
         - Si response_data contiene la clave 'data' y es string, la firmamos
-          directamente.
+        directamente.
         - En cualquier otro caso, serializamos a JSON ordenado y firmamos.
         """
         try:
@@ -175,7 +177,7 @@ class R4Authentication:
                 import json
                 data_string = json.dumps(response_data, sort_keys=True, separators=(',', ':'), ensure_ascii=False)
 
-            secret = self.config.get("secret_key", "")
+            secret = self.config.get("merchant_id")  # Usar merchant_id como clave secreta
             if not secret:
                 logger.error("Clave secreta no configurada para generar firma")
                 return ""
@@ -204,7 +206,7 @@ async def ip_whitelist_middleware(request: Request):
 async def validar_hmac_generico(
     endpoint: str,
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None =  None
 ) -> bool:
     """
     Función genérica para validar HMAC según endpoint
@@ -232,6 +234,7 @@ async def validar_hmac_generico(
     try:
         # Construir string según parámetros configurados
         data_parts = []
+        assert payload is not None, "El payload no debe ser None"
         for param in hmac_config["params"]:
             value = payload.get(param)
             if value is None:
@@ -242,7 +245,7 @@ async def validar_hmac_generico(
         data_string = hmac_config["separator"].join(data_parts)
         
         # Verificar HMAC
-        if not verificar_hmac_r4(data_string, authorization, config["secret_key"]):
+        if not verificar_hmac_r4(data_string, authorization, config["merchant_id"]):
             logger.error(f"HMAC inválido para {endpoint}")
             logger.error(f"Data string: {data_string}")
             logger.error(f"Firma recibida: {authorization}")
@@ -260,105 +263,107 @@ async def validar_hmac_generico(
 # CONSULTA BCV
 async def verify_hmac_bcv(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
-):
+    payload: Dict[str, Any] | None = None
+): 
+    print(authorization, payload)
     return await validar_hmac_generico("MBbcv", authorization, payload)
 
 # GESTIÓN DE PAGOS
 async def verify_hmac_pagos(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("R4pagos", authorization, payload)
 
 # VUELTO
 async def verify_hmac_vuelto(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("MBvuelto", authorization, payload)
 
 # GENERAR OTP
 async def verify_hmac_generar_otp(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
+    
     return await validar_hmac_generico("GenerarOtp", authorization, payload)
 
 # DÉBITO INMEDIATO
 async def verify_hmac_debito_inmediato(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("DebitoInmediato", authorization, payload)
 
 # CRÉDITO INMEDIATO
 async def verify_hmac_credito_inmediato(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("CreditoInmediato", authorization, payload)
 
 # DOMICILIACIÓN POR CUENTA
 async def verify_hmac_domiciliacion_cnta(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("DomiciliacionCNTA", authorization, payload)
 
 # DOMICILIACIÓN POR TELÉFONO
 async def verify_hmac_domiciliacion_cele(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("DomiciliacionCELE", authorization, payload)
 
 # CONSULTAR OPERACIONES
 async def verify_hmac_consultar_operaciones(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("ConsultarOperaciones", authorization, payload)
 
 # CRÉDITO INMEDIATO CUENTAS
 async def verify_hmac_ci_cuentas(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("CICuentas", authorization, payload)
 
 # COBRO C2P
 async def verify_hmac_c2p(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("MBc2p", authorization, payload)
 
 # ANULACIÓN C2P
 async def verify_hmac_anulacion_c2p(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("MBanulacionC2P", authorization, payload)
 
 # VERIFICO PAGO
 async def verify_hmac_verifico_pago(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("VerificoPago", authorization, payload)
 
 # CONSULTA
 async def verify_hmac_consulta(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("R4consulta", authorization, payload)
 
 # NOTIFICA
 async def verify_hmac_notifica(
     authorization: Optional[str] = Header(None),
-    payload: Dict[str, Any] = None
+    payload: Dict[str, Any] | None = None
 ):
     return await validar_hmac_generico("R4notifica", authorization, payload)
 # =====================================================

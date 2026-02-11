@@ -5,10 +5,10 @@
 from fastapi import FastAPI
 # FastAPI: El framework web que usamos para crear la API REST
 
-from controllers.endpoints import router
+from controllers.endpoints import router, router_r4
 from core.config import validate_config, setup_logging
 # Importamos controladores y configuraciones
-from routers.bancos import router as bancos_router
+#from routers.bancos import router as bancos_router
 from db.connector import close_connection_pool
 
 
@@ -80,9 +80,10 @@ except Exception as e:
 # REGISTRO DE RUTAS/ENDPOINTS
 # ===========================
 # Registrar todos los endpoints R4
-app.include_router(router, tags=["R4 Conecta"])
+app.include_router(router, tags=["Integración Bancaria"])
+app.include_router(router_r4, tags=["R4 Conecta"])
 # Registrar router genérico para múltiples bancos (usa el mismo modelo R4 por ahora)
-app.include_router(bancos_router, tags=["Bancos"])
+#app.include_router(bancos_router, tags=["Bancos"])
 
 
 # ENDPOINTS REGISTRADOS VÍA ROUTER

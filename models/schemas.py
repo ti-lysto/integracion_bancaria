@@ -33,59 +33,59 @@ from typing import Optional, Dict, Any
 # Any: Para cualquier tipo de dato
 
 
-# ESQUEMA GENÉRICO DE INTEGRACIÓN
-# ===============================
-class IntegracionPayload(BaseModel):
-    """
-    MODELO GENÉRICO PARA CUALQUIER TRANSACCIÓN DE R4
+# # ESQUEMA GENÉRICO DE INTEGRACIÓN
+# # ===============================
+# class IntegracionPayload(BaseModel):
+#     """
+#     MODELO GENÉRICO PARA CUALQUIER TRANSACCIÓN DE R4
     
-    ¿Qué es?
-    - Un formato flexible para recibir cualquier tipo de datos de R4
-    - Se usa cuando no tenemos un esquema específico
-    - Permite campos adicionales según la necesidad
+#     ¿Qué es?
+#     - Un formato flexible para recibir cualquier tipo de datos de R4
+#     - Se usa cuando no tenemos un esquema específico
+#     - Permite campos adicionales según la necesidad
     
-    ¿Cuándo se usa?
-    - Para el endpoint /integrar (genérico)
-    - Para operaciones nuevas que aún no tienen esquema específico
-    - Como respaldo cuando otros esquemas no aplican
+#     ¿Cuándo se usa?
+#     - Para el endpoint /integrar (genérico)
+#     - Para operaciones nuevas que aún no tienen esquema específico
+#     - Como respaldo cuando otros esquemas no aplican
     
-    Campos:
-    - id_operacion: Identificador único que asigna R4 a cada operación
-    - monto: Cantidad de dinero involucrada en la transacción
-    - moneda: Tipo de moneda (USD, VES, EUR, etc.) - por defecto USD
-    - cliente_id: Identificación del cliente involucrado (opcional)
-    - metadatos: Información adicional en formato libre (opcional)
-    """
+#     Campos:
+#     - id_operacion: Identificador único que asigna R4 a cada operación
+#     - monto: Cantidad de dinero involucrada en la transacción
+#     - moneda: Tipo de moneda (USD, VES, EUR, etc.) - por defecto USD
+#     - cliente_id: Identificación del cliente involucrado (opcional)
+#     - metadatos: Información adicional en formato libre (opcional)
+#     """
     
-    # Campo obligatorio: ID único de la operación
-    id_operacion: str = Field(
-        ...,  # Los tres puntos (...) significan "obligatorio"
-        description="ID único de la operación en R4"
-    )
+#     # Campo obligatorio: ID único de la operación
+#     id_operacion: str = Field(
+#         ...,  # Los tres puntos (...) significan "obligatorio"
+#         description="ID único de la operación en R4"
+#     )
     
-    # Campo obligatorio: Monto de la transacción
-    monto: float = Field(
-        ..., 
-        description="Monto de la transacción"
-    )
+#     # Campo obligatorio: Monto de la transacción
+#     monto: float = Field(
+#         ..., 
+#         description="Monto de la transacción"
+#     )
     
-    # Campo opcional: Tipo de moneda (por defecto USD)
-    moneda: Optional[str] = Field(
-        "USD",  # Valor por defecto
-        description="Código de moneda"
-    )
+#     # Campo opcional: Tipo de moneda (por defecto USD)
+#     moneda: Optional[str] = Field(
+#         "USD",  # Valor por defecto
+#         description="Código de moneda"
+#     )
     
-    # Campo opcional: ID del cliente
-    cliente_id: Optional[str] = Field(
-        None,  # None significa que puede estar vacío
-        description="Identificador del cliente"
-    )
+#     # Campo opcional: ID del cliente
+#     cliente_id: Optional[str] = Field(
+#         None,  # None significa que puede estar vacío
+#         description="Identificador del cliente"
+#     )
     
-    # Campo opcional: Datos adicionales
-    metadatos: Optional[Dict[str, Any]] = Field(
-        None, 
-        description="Campos libres adicionales"
-    )
+#     # Campo opcional: Datos adicionales
+#     metadatos: Optional[Dict[str, Any]] = Field(
+#         None, 
+#         description="Campos libres adicionales"
+#     )
 
 
 # ESQUEMAS PARA CONSULTA DE TASA BCV
@@ -110,7 +110,6 @@ class R4BcvRequest(BaseModel):
     
     Moneda: str  # Código de moneda (obligatorio)
     Fechavalor: str  # Fecha en formato YYYY-MM-DD (obligatorio)
-
 
 class R4BcvResponse(BaseModel):
     """
@@ -161,7 +160,6 @@ class R4ConsultaRequest(BaseModel):
     IdCliente: str  # Cédula del cliente (obligatorio)
     Monto: Optional[str]  # Monto a recibir (opcional)
     TelefonoComercio: Optional[str]  # Nuestro teléfono (opcional)
-
 
 class R4ConsultaResponse(BaseModel):
     """
@@ -214,7 +212,6 @@ class R4NotificaRequest(BaseModel):
     Referencia: str  # Número de referencia único
     CodigoRed: str  # Código de resultado
 
-
 class R4NotificaResponse(BaseModel):
     """
     RESPUESTA A LA NOTIFICACIÓN DE PAGO
@@ -230,7 +227,7 @@ class R4NotificaResponse(BaseModel):
 
 # ESQUEMAS PARA GESTIÓN DE PAGOS (DISPERSIÓN)
 # ===========================================
-class PersonaPago(BaseModel):
+class R4pagos_PersonaPago(BaseModel):
     """
     INFORMACIÓN DE UNA PERSONA QUE RECIBIRÁ DINERO EN LA DISPERSIÓN
     
@@ -250,7 +247,6 @@ class PersonaPago(BaseModel):
     documento: str  # Cédula con tipo
     destino: str  # Cuenta bancaria
     montoPart: str  # Monto individual
-
 
 class R4PagosRequest(BaseModel):
     """
@@ -282,8 +278,13 @@ class R4PagosRequest(BaseModel):
     monto: str  # Monto total
     fecha: str  # Fecha en MM/DD/YYYY
     Referencia: str  # Referencia única
-    personas: list[PersonaPago]  # Lista de beneficiarios
+    personas: list[R4pagos_PersonaPago]  # Lista de beneficiarios
 
+class R4PagosResponse(BaseModel):
+    error: str
+    success: str
+    message: str
+    
 
 # ESQUEMAS PARA VUELTO
 # ===================
@@ -321,7 +322,7 @@ class R4VueltoRequest(BaseModel):
 
 # ESQUEMAS PARA GENERACIÓN DE OTP
 # ===============================
-class GenerarOtpRequest(BaseModel):
+class R4GenerarOtpRequest(BaseModel):
     """
     DATOS PARA SOLICITAR GENERACIÓN DE CÓDIGO OTP
     
@@ -355,10 +356,17 @@ class GenerarOtpRequest(BaseModel):
     Telefono: str  # Teléfono para SMS
     Cedula: str  # Cédula del cliente
 
+class R4GenerarOtpResponse(BaseModel):
+    
+    code: str  # codigo de resultado del banco
+    message: str  # Mensaje descriptivo del banco
+    success: bool  # exitoso o fallido
+    
+
 
 # ESQUEMAS PARA DÉBITO INMEDIATO
 # ==============================
-class DebitoInmediatoRequest(BaseModel):
+class R4DebitoInmediatoRequest(BaseModel):
     """
     DATOS PARA COBRAR DINERO DIRECTAMENTE AL CLIENTE
     
@@ -395,10 +403,15 @@ class DebitoInmediatoRequest(BaseModel):
     OTP: str  # Código de autorización
     Concepto: str  # Descripción del cobro
 
+class R4DebitoInmediatoResponse(BaseModel):
+    code: str
+    message: str
+    reference: str
+    Id: str
 
 # ESQUEMAS PARA CRÉDITO INMEDIATO
 # ===============================
-class CreditoInmediatoRequest(BaseModel):
+class R4CreditoInmediatoRequest(BaseModel):
     """
     DATOS PARA ENVIAR DINERO DIRECTAMENTE AL CLIENTE
     
@@ -431,10 +444,15 @@ class CreditoInmediatoRequest(BaseModel):
     Monto: str  # Cantidad a enviar
     Concepto: str  # Descripción del pago
 
+class R4CreditoInmediatoResponse(BaseModel):
+    code: str
+    message: str
+    reference: str
+    Id: str
 
 # ESQUEMAS PARA DOMICILIACIÓN POR CUENTA
 # ======================================
-class DomiciliacionCNTARequest(BaseModel):
+class R4DomiciliacionCNTARequest(BaseModel):
     """
     DATOS PARA CONFIGURAR COBRO AUTOMÁTICO POR CUENTA
     
@@ -466,7 +484,7 @@ class DomiciliacionCNTARequest(BaseModel):
 
 # ESQUEMAS PARA DOMICILIACIÓN POR TELÉFONO
 # ========================================
-class DomiciliacionCELERequest(BaseModel):
+class R4DomiciliacionCELERequest(BaseModel):
     """
     DATOS PARA CONFIGURAR COBRO AUTOMÁTICO POR TELÉFONO
     
@@ -504,7 +522,7 @@ class DomiciliacionCELERequest(BaseModel):
 
 # ESQUEMAS PARA CONSULTA DE OPERACIONES
 # =====================================
-class ConsultarOperacionesRequest(BaseModel):
+class R4ConsultarOperacionesRequest(BaseModel):
     """
     DATOS PARA CONSULTAR EL ESTADO DE UNA OPERACIÓN
     
@@ -525,10 +543,14 @@ class ConsultarOperacionesRequest(BaseModel):
     
     Id: str  # Identificador único de la operación
 
+class R4ConsultarOperacionesResponse(BaseModel):
+    code: str
+    reference: str
+    success: bool
 
 # ESQUEMAS PARA CRÉDITO INMEDIATO CON CUENTAS
 # ===========================================
-class CICuentasRequest(BaseModel):
+class R4CICuentasRequest(BaseModel):
     """
     DATOS PARA CRÉDITO INMEDIATO USANDO NÚMERO DE CUENTA
     
@@ -585,10 +607,14 @@ class R4C2PRequest(BaseModel):
     Cedula: str  # Cédula del cliente
     Concepto: str  # Descripción del cobro
     Banco: str  # Código del banco
-    Ip: str  # Dirección IP
+    #Ip: str  # Dirección IP
     Monto: str  # Cantidad a cobrar
     Otp: str  # Código OTP del cliente
 
+class R4C2PResponse(BaseModel):
+    code: str
+    message: str
+    reference: str
 
 # ESQUEMAS PARA ANULACIÓN C2P
 # ===========================
@@ -620,69 +646,55 @@ class R4AnulacionC2PRequest(BaseModel):
     Banco: str  # Código del banco
     Referencia: str  # Referencia del cobro a anular
 
+class R4AnulacionC2PResponse(BaseModel):
+    message: str
+    code: str
+    reference: str
 
 # ESQUEMAS PARA VERIFICACIÓN DE PAGO
 # ==================================
-class VerificoPagoRequest(BaseModel):
-    """Datos para verificar un pago ya registrado en BD y opcionalmente en el banco."""
+class R4VerificoPagoRequest(BaseModel):
+    """Datos de entrada para /verifico_pago — parámetros del SP.
 
-    model_config = ConfigDict(populate_by_name=True, protected_namespaces=())
+    Solo incluye los IN esperados por `sp_consulta_notificacion_r4`.
+    """
 
-    Referencia: Optional[str] = None  # Referencia a validar (obligatoria si _verificacion == False)
-    verificacion: bool = Field(False, alias="_verificacion")  # Si True, primero consulta al banco
-
-    # Filtros opcionales que aprovecha el SP sp_consulta_notificacion_r4
-    IdComercio: Optional[str] = None
-    TelefonoComercio: Optional[str] = None
-    TelefonoEmisor: Optional[str] = None
-    BancoEmisor: Optional[str] = None
+    Telefono: Optional[str] = None
+    Banco: Optional[str] = None
     Monto: Optional[str] = None
     FechaHora: Optional[str] = None
+    Referencia: Optional[str] = None
 
-    # Datos opcionales para llamar al banco (si _verificacion=True y quieres revalidar)
-    TelefonoDestino: Optional[str] = None
-    Cedula: Optional[str] = None
+# ESQUEMAS PARA COMPROBACIÓN DE PAGO
+# ==================================
+class R4ComprueboPagoRequest(BaseModel):
+    """Datos de entrada para /verifico_pago — parámetros del SP.
+
+    Solo incluye los IN esperados por `sp_consulta_notificacion_r4`.
+    """
+
+    Telefono: Optional[str] = None
     Banco: Optional[str] = None
+    Monto: Optional[str] = None
+    FechaHora: Optional[str] = None
+    Referencia: Optional[str] = None
 
-    # Validación condicional de campos requeridos (Pydantic v2)
-    @model_validator(mode="after")
-    def validar_campos_según_verificacion(self):
-        verif = bool(self.verificacion)
-        referencia = self.Referencia
-        tel = self.TelefonoDestino or self.TelefonoEmisor
-        banco = self.Banco or self.BancoEmisor
-        monto = self.Monto
-        cedula = self.Cedula
+class R4ComprueboPagoResponse(BaseModel):
+    """Respuesta simplificada solicitada: campos del registro y flag `encontrado`."""
+    
+    procesado: bool = False
+    mensaje: str = ""
 
-        if verif:
-            faltantes = []
-            if not tel or str(tel).strip() == "":
-                faltantes.append('TelefonoDestino')
-            if not cedula or str(cedula).strip() == "":
-                faltantes.append('Cedula')
-            if not banco or str(banco).strip() == "":
-                faltantes.append('Banco')
-            if not monto or str(monto).strip() == "":
-                faltantes.append('Monto')
-            if faltantes:
-                raise ValueError(f"Campos obligatorios faltantes cuando _verificacion=true: {', '.join(faltantes)}")
-        else:
-            if not referencia or str(referencia).strip() == "":
-                raise ValueError("Referencia es obligatoria cuando _verificacion=false")
+class R4VerificoPagoResponse(BaseModel):
+    """Respuesta simplificada solicitada: campos del registro y flag `encontrado`."""
 
-        return self
-
-
-class VerificoPagoResponse(BaseModel):
-    """Respuesta detallada de la verificación de pago."""
-
-    code: str
-    message: str
-    reference: Optional[str] = None
-    abono_bd: bool = False
-    coincide_referencia: bool = False
-    code_banco: Optional[str] = None
-    #detalle_bd: Optional[Dict[str, Any]] = None
+    Telefono: str = ""
+    Banco: str = ""
+    Monto: str = ""
+    FechaHora: str = ""
+    Referencia: str = ""
+    encontrado: bool = False
+    id_notificacion: Optional[int] = None
 
 
 # ESQUEMAS DE RESPUESTAS GENÉRICAS
