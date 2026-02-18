@@ -30,16 +30,11 @@ class R4Services:
             try:                
                 banco_url = f"{Config.R4_BANCO_URL}/MBbcv"
                 
-                # Headers según especificación
                 from core.auth import r4_authentication
                 
-                # Datos para HMAC según documento: "fechavalor + moneda"
                 hmac_data = f"{fecha_valor}{moneda}"
-                # Generar firma usando el consolidado `r4_authentication`.
                 hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
-                # Antes: hmac_signature = r4_security.generate_response_signature({"data": hmac_data})
-                logger.info(f"HMAC Data generado: {hmac_signature}")
-
+                
                 headers = {
                     "Content-Type": "application/json",
                     "Authorization": hmac_signature,
@@ -52,17 +47,11 @@ class R4Services:
                     "Fechavalor": fecha_valor
                 }
                 
-                # Log para debugging
-                logger.info(f"Enviando al banco: URL={banco_url}")
-                logger.info(f"HMAC Data: {hmac_data}")
-                logger.info(f"HMAC Signature: {hmac_signature}")
-                logger.info(f"Headers: {headers}")
-                logger.info(f"Payload: {payload}")
 
                 # Realizar consulta al banco
                 async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(banco_url, json=payload, headers=headers)
-                    logger.info(f"Consulta enviada al banco R4. URL={banco_url} Payload={payload} Headers={headers}")
+                    logger.info(f"Consulta enviada al banco R4. URL={banco_url} Payload={payload}")
                     logger.info(f"Respuesta del banco: Status={response.status_code}, Body={response.text}")
                     if response.status_code == 200:
                         data = response.json()
@@ -99,7 +88,7 @@ class R4Services:
                 }
             
         except Exception as e:
-            logger.error(f"Error crítico en consulta BCV: {str(e)}")
+            logger.error(f"Error interno crítico en consulta BCV: {str(e)}")
             return {
                 "code": "01",
                 "fechavalor": fecha_valor,
@@ -406,7 +395,7 @@ class R4Services:
                 return {
                     "code": data.get("code"),
                     "message": data.get("message"),
-                    "success": data.get("success")
+                    "success": bool(data.get("success"))
                 }
 
         except Exception as e:

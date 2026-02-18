@@ -98,7 +98,7 @@ async def get_connection_pool() -> aiomysql.Pool:
     try:
         # CREAR NUEVO POOL DE CONEXIONES
         # ==============================
-        logger.info("Creando nuevo pool de conexiones a MySQL...")
+        #logger.info("Creando nuevo pool de conexiones a MySQL...")
         
         db_config = get_database_config()
         
@@ -172,7 +172,7 @@ async def close_connection_pool():
         # Verificar si el pool existe
         
         if _connection_pool is not None:
-            logger.info("Cerrando pool de conexiones...")
+            #logger.info("Cerrando pool de conexiones...")
             
             # Cerrar el pool de forma segura (API aiomysql)
             _connection_pool.close()
