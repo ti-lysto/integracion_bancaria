@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 # ==========================================
 # Esta variable guardará nuestro pool de conexiones
 # Se inicializa la primera vez que se usa
-_connection_pool: Optional[aiomysql.Pool] | None= None
+_connection_pool: Optional[aiomysql.Pool] = None #| None= None
 
 
 # FUNCIÓN PARA OBTENER EL POOL DE CONEXIONES
@@ -137,7 +137,9 @@ async def get_connection_pool() -> aiomysql.Pool:
         logger.error(f"Configuración: host={Config.DB_HOST}, port={Config.DB_PORT}, user={Config.DB_USER}, db={Config.DB_NAME}")
         if _connection_pool:
             try:
-                await _connection_pool.close()
+                #await _connection_pool.close()
+                _connection_pool.close()
+                await _connection_pool.wait_closed()    
             except:
                 pass
             _connection_pool = None
@@ -210,6 +212,9 @@ async def ejecutar_sp_generico(
             * 'parametros_out': Diccionario con valores de parámetros OUT
             * 'filas_afectadas': Número de filas afectadas
         """
+        cursor = None
+        pool = None
+        own_conn = False
         try:
             own_conn=False
             pool = None
@@ -735,7 +740,7 @@ async def proceso_comprobacion_por_referencia(filtros: Dict[str, Any]) -> Dict[s
         # Cerrar el pool de conexiones para liberar recursos
         await close_connection_pool()
 
-async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Dict[str, Any] = {}, v_json: Dict[str, Any] |None = None) -> Dict[str, Any]:
+async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Dict[str, Any] = {}, v_json: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """
     Guarda o actualiza transacción en r4_pending_transactions usando sp_upsert_condicional_r4.
     """

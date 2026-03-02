@@ -23,7 +23,7 @@ Fecha: 11/2025
 
 # IMPORTACIONES NECESARIAS
 # ========================
-from pydantic import BaseModel, Field, model_validator, ConfigDict
+from pydantic import BaseModel, Field
 # BaseModel: Clase base para crear esquemas de datos
 # Field: Para agregar validaciones y descripciones a los campos
 
