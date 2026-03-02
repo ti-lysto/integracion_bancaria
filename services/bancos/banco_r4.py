@@ -3,9 +3,10 @@
 import logging
 from datetime import date
 from typing import Dict, Any
+from core.config import get_r4_config 
 
 logger = logging.getLogger(__name__)
-
+r4_config = get_r4_config()
 class R4Services:
     """Servicios específicos para operaciones R4"""
     
@@ -30,16 +31,11 @@ class R4Services:
             try:                
                 banco_url = f"{Config.R4_BANCO_URL}/MBbcv"
                 
-                # Headers según especificación
                 from core.auth import r4_authentication
                 
-                # Datos para HMAC según documento: "fechavalor + moneda"
                 hmac_data = f"{fecha_valor}{moneda}"
-                # Generar firma usando el consolidado `r4_authentication`.
                 hmac_signature = r4_authentication.generate_response_signature({"data": hmac_data})
-                # Antes: hmac_signature = r4_security.generate_response_signature({"data": hmac_data})
-                logger.info(f"HMAC Data generado: {hmac_signature}")
-
+                
                 headers = {
                     "Content-Type": "application/json",
                     "Authorization": hmac_signature,
@@ -52,17 +48,11 @@ class R4Services:
                     "Fechavalor": fecha_valor
                 }
                 
-                # Log para debugging
-                logger.info(f"Enviando al banco: URL={banco_url}")
-                logger.info(f"HMAC Data: {hmac_data}")
-                logger.info(f"HMAC Signature: {hmac_signature}")
-                logger.info(f"Headers: {headers}")
-                logger.info(f"Payload: {payload}")
 
                 # Realizar consulta al banco
                 async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(banco_url, json=payload, headers=headers)
-                    logger.info(f"Consulta enviada al banco R4. URL={banco_url} Payload={payload} Headers={headers}")
+                    logger.info(f"Consulta enviada al banco R4. URL={banco_url} Payload={payload}")
                     logger.info(f"Respuesta del banco: Status={response.status_code}, Body={response.text}")
                     if response.status_code == 200:
                         data = response.json()
@@ -99,7 +89,7 @@ class R4Services:
                 }
             
         except Exception as e:
-            logger.error(f"Error crítico en consulta BCV: {str(e)}")
+            logger.error(f"Error interno crítico en consulta BCV: {str(e)}")
             return {
                 "code": "01",
                 "fechavalor": fecha_valor,
@@ -406,7 +396,7 @@ class R4Services:
                 return {
                     "code": data.get("code"),
                     "message": data.get("message"),
-                    "success": data.get("success")
+                    "success": bool(data.get("success"))
                 }
 
         except Exception as e:
@@ -462,24 +452,29 @@ class R4Services:
                     "Monto": monto,
                     "Cedula": cedula,
                     "OTP": otp,
-                    #"respuesta":data.get("message"),
                     "Respuesta":data.get("message", ""),
                     "endpoint": "DebitoInmediato",
-                    "id_dev_cred": data.get("Id"),
-                    #"id_dev_cred": "6785d97e-2092-49f0-9f7d-3d5921f0b13f",
+                    "id_dev_cred": data.get("id"),
+                    #"id_dev_cred": "6785d97e-2092-49f0-9f7d-3d5921f0b136",
                     "Referencia": data.get("reference"),
-                    #"Referencia": "REF1234567890",
-                    #"completado": "1" #if data.get("code") == "ACCP" else "0"
+                    #"Referencia": "REFerenciatest4",
                     "CodigoRed": data.get("code", "")
                 }, {
                     "TelefonoContacto": telefono,
                     "Banco": banco,
                     "Monto": monto,
-                    "Cedula": cedula
+                    "Cedula": cedula,
+                    "OTP": otp
                 },                
                 {"DebitoInmediato": {"solicitud": payload, "respuesta": data}}
                 )
-            
+            intentos = 0
+            resultado = data
+            while resultado.get("code") == "AC00" and intentos < r4_config["reintentos"]:
+                print(f"Intento {intentos+1} de consulta de operaciones para Id: {resultado.get('Id')}")
+                intentos += 1
+                resultado = await R4Services.procesar_consulta_operaciones({"Id": resultado.get("Id")})
+            print(f"Resultado final después de {intentos} intentos: {resultado}")
             return {
                     "code": data.get("code"),
                     "message": data.get("message"),
@@ -499,6 +494,7 @@ class R4Services:
         from core.auth import r4_authentication
 
         try:
+            logger.info(f"Procesando C2P con payload: {payload}")
             banco_url = f"{Config.R4_BANCO_URL}/MBc2p"
 
             telefono = payload.get("TelefonoDestino")
@@ -554,8 +550,8 @@ class R4Services:
                     "TelefonoContacto": telefono,
                     "Banco": banco,
                     "Monto": monto,
-                    "Cedula": cedula
-                    #"OTP": otp
+                    "Cedula": cedula,
+                    "OTP": otp
                 },                
                 {"C2P": {"solicitud": payload, "respuesta": data}}
                 )
@@ -732,6 +728,7 @@ class R4Services:
             code=""
             mesage=""
             success=False
+            data = None
             if not verificacion.get("Referencia"):                
             
                 banco_url = f"{Config.R4_BANCO_URL}/ConsultaOperaciones"
@@ -765,7 +762,7 @@ class R4Services:
                         "mensaje": data.get("message"),
                         "CodigoRed": data.get("code", ""),
                         "Referencia": data.get("reference", "")
-                        #"Referencia": "REF1111111111"
+                        #"Referencia": "REFerenciatest7"
                     }, {            
                         "id_dev_cred": id
                     },                
@@ -779,8 +776,8 @@ class R4Services:
 
 
             return {
-                "code": data.get("code", ""),
-                "reference": data.get("reference", ""),
+                "code": data.get("code","") if data else "",
+                "reference": data.get("reference","") if data else "",
                 "message": mesage,
                 "success": success
             }

@@ -22,80 +22,41 @@ class Config:
     # =====================================================
     # CONFIGURACIÓN DE BASE DE DATOS
     # =====================================================
-    
-    # Host de la base de datos (donde está instalado MySQL)
     DB_HOST = os.getenv("DB_HOST", "")
-    
-    # Puerto de MySQL (por defecto 3306)
     DB_PORT = int(os.getenv("DB_PORT", 3306))
-    
-    # Nombre de la base de datos
     DB_NAME = os.getenv("DB_NAME", "") #"LystoLocal" / "Lysto"
-    
-    # Usuario de MySQL
     DB_USER = os.getenv("DB_USER", "")
-    
-    # Contraseña de MySQL
     DB_PASSWORD = os.getenv("DB_PASSWORD", "")
-    
-    # Mínimo de conexiones en el pool
     DB_POOL_MIN_SIZE = 1
-    
-    # Máximo de conexiones en el pool
     DB_POOL_MAX_SIZE = 10
     
     # =====================================================
     # CONFIGURACIÓN DE LA API
     # =====================================================
-    
-    # version de la api actual
     API_VERSION = os.getenv("API_VERSION", "0.0.0")
-    # Puerto donde correrá la API
-    API_PORT = int(os.getenv("API_PORT", 8000))
-    
-    # Host de la API (0.0.0.0 para permitir conexiones externas)
+    API_PORT = int(os.getenv("API_PORT", 0))
     API_HOST = "0.0.0.0"
-    
-    # Modo debug (True para desarrollo, False para producción)
     DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes") #True
     
     # =====================================================
     # CONFIGURACIÓN DE SEGURIDAD R4
     # =====================================================
-    
-    # ID del comercio en el sistema R4 (proporcionado por el banco)
-    # Ahora se obtiene desde la variable de entorno R4_MERCHANT_ID o usa
-    # un valor por defecto no válido para forzar la configuración en producción.
     R4_MERCHANT_ID = os.getenv("R4_MERCHANT_ID")
-    
-    # URL base del banco R4
     R4_BANCO_URL = os.getenv("R4_BANCO_URL")
-    
-
-
-    # Timeout para requests (en segundos)
     REQUEST_TIMEOUT = 30
-    
-    # IPs permitidas del banco (según documento R4 Conecta V3.0)
     BANCO_IPS_PERMITIDAS = [ip for ip in os.getenv("BANCO_IPS_PERMITIDAS", "").split(",") if ip]
     # Incluimos localhost para pruebas locales cuando no hay lista explícita o cuando DEBUG está activo.
     if DEBUG or not BANCO_IPS_PERMITIDAS:
         BANCO_IPS_PERMITIDAS.append("127.0.0.1")
     BANCO_IPS_PERMITIDAS = tuple(BANCO_IPS_PERMITIDAS) # Convertir a tupla para inmutabilidad
-
+    R4_REINTENTOS = int(os.getenv("CONSULTAR_OPERACIONES_REINTENTOS", 0))
     
     # =====================================================
     # CONFIGURACIÓN DE LOGGING
     # =====================================================
-    
     # Nivel de logging (DEBUG, INFO, WARNING, ERROR)
     LOG_LEVEL = "INFO"
-    
-    # Archivo donde guardar logs
     LOG_FILE = "logs/r4_conecta.log"
-
-    # UUID para identificación única
-    UUID = os.getenv("UUID")
 
 def get_database_config() -> Dict[str, Any]:
     """
@@ -153,10 +114,9 @@ def get_r4_config() -> Dict[str, Any]:
     #print(Config.R4_MERCHANT_ID)
     return {
         "merchant_id": Config.R4_MERCHANT_ID,
-        #"secret_key": Config.R4_SECRET_KEY,
         "timeout": Config.REQUEST_TIMEOUT,
         "allowed_ips": Config.BANCO_IPS_PERMITIDAS,
-        "uuid": Config.UUID
+        "reintentos": Config.R4_REINTENTOS
     }
 
 def setup_logging():

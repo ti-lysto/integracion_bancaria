@@ -305,9 +305,9 @@ async def mb_vuelto(
         
         # Devolvemos confirmación exitosa
         return StandardResponse(
-            code=resultado.get("code"),
-            message=resultado.get("message"), 
-            reference=resultado.get("reference")
+            code=resultado.get("code",''),
+            message=resultado.get("message", ""), 
+            reference=resultado.get("reference", "")
         )
         
     except Exception as e:
@@ -854,7 +854,7 @@ async def mb_anulacion_c2p(payload: R4AnulacionC2PRequest = Body(...), _auth=Dep
         resultado = await R4Services.procesar_anulacionc2p(payload.dict())
         
         return StandardResponse(
-            code=resultado.get("code"),
+            code=resultado.get("code",''),
             message=resultado.get("message", "Servicio no activo o negada por el banco"),
             reference=resultado.get("reference", "")
         )
