@@ -771,7 +771,7 @@ async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Di
             #filtros.get("BancoEmisor", ""),       # IN p_BancoEmisor VARCHAR(4)
             filtros.get("Banco"),             # IN p_Banco VARCHAR(4)
             filtros.get("Monto"),             # IN p_Monto VARCHAR(20)
-            filtros.get("Moneda", "USD"),         # IN p_Moneda VARCHAR(3)
+            filtros.get("Moneda"),         # IN p_Moneda VARCHAR(3)
             filtros.get("OTP"),               # IN p_OTP VARCHAR(8)
             filtros.get("Referencia"),        # IN p_Referencia VARCHAR(20)
             filtros.get("CodigoRed"),         # IN p_CodigoRed VARCHAR(2)
