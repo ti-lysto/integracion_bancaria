@@ -676,8 +676,8 @@ async def consultar_notificacion_por_referencia(filtros: Dict[str, Any]) -> Dict
             filtros.get("Banco", ""),
             filtros.get("Monto", ""),
             filtros.get("FechaHora", ""),
-            filtros.get("Referencia", ""),
-            filtros.get("Id", "")
+            filtros.get("Referencia", "")
+            #filtros.get("Id", "")
         )
 
         from db.connector import ejecutar_sp_generico

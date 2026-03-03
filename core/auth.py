@@ -211,7 +211,6 @@ async def validar_hmac_generico(
     """
     Función genérica para validar HMAC según endpoint
     """
-    logger.info(f"Validando HMAC para endpoint: {endpoint}, con el payload {payload}, autorization: {authorization}")
     if not authorization:
         logger.error(f"Header Authorization faltante para {endpoint}")
         raise HTTPException(status_code=401, detail="Authorization header requerido")
