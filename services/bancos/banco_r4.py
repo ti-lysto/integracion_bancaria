@@ -203,7 +203,7 @@ class R4Services:
                 "Monto": payload.get("Monto", ""),
                 "FechaHora": payload.get("FechaHora", ""),
                 "Referencia": payload.get("Referencia"),
-                "Id": payload.get("Id", "" )
+                "Id": payload.get("id", "" )
             }
 
                     
@@ -470,17 +470,17 @@ class R4Services:
                 )
             intentos = 0
             resultado = data
-            logger.info(f"Resultado code: {resultado.get('code')} - Id: {resultado.get('Id')}")
-            while resultado.get("code") == "AC00" and intentos < r4_config["reintentos"]:
-                logger.info(f"Intento {intentos+1} de consulta de operaciones para Id: {resultado.get('Id')}")
+            logger.info(f"Resultado code: {data.get('code')} - Id: {data.get('id')}")
+            while data.get("code") == "AC00" and intentos < int(r4_config["reintentos"]):
+                logger.info(f"Intento {intentos+1} de consulta de operaciones para Id: {data.get('id')}")
                 intentos += 1
-                resultado = await R4Services.procesar_consulta_operaciones({"id": resultado.get("id")})
+                resultado = await R4Services.procesar_consulta_operaciones({"id": data.get('id')})
             logger.info(f"Resultado final después de {intentos} intentos: {resultado}")
             return {
-                    "code": data.get("code"),
-                    "message": data.get("message"),
-                    "reference": data.get("reference", ""),
-                    "Id": data.get("Id", "")
+                    "code": resultado.get("code"),
+                    "message": resultado.get("message"),
+                    "reference": resultado.get("reference", ""),
+                    "id": resultado.get("id", "")
                 }
                 
         except Exception as e:
@@ -541,7 +541,7 @@ class R4Services:
                     #"respuesta":data.get("message"),
                     #"respuesta":"Operación Aceptada",
                     "endpoint": "C2P",
-                    #"id_dev_cred": data.get("Id"),
+                    #"id_dev_cred": data.get("id"),
                     #"id_dev_cred": "6785d97e-2092-49f0-9f7d-3d5921f0b13f",
                     "Referencia": data.get("reference"),
                     #"Referencia": "REF1234567890",
@@ -732,9 +732,9 @@ class R4Services:
             data = None
             if not verificacion.get("Referencia"):                
             
-                banco_url = f"{Config.R4_BANCO_URL}/ConsultaOperaciones"
+                banco_url = f"{Config.R4_BANCO_URL}/ConsultarOperaciones"
 
-                id = payload.get("id")
+                id = payload.get("Id")
                 
 
                 # Firma según especificación: id
