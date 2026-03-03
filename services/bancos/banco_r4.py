@@ -470,11 +470,12 @@ class R4Services:
                 )
             intentos = 0
             resultado = data
+            logger.info(f"Resultado code: {resultado.get('code')} - Id: {resultado.get('Id')}")
             while resultado.get("code") == "AC00" and intentos < r4_config["reintentos"]:
-                print(f"Intento {intentos+1} de consulta de operaciones para Id: {resultado.get('Id')}")
+                logger.info(f"Intento {intentos+1} de consulta de operaciones para Id: {resultado.get('Id')}")
                 intentos += 1
-                resultado = await R4Services.procesar_consulta_operaciones({"Id": resultado.get("Id")})
-            print(f"Resultado final después de {intentos} intentos: {resultado}")
+                resultado = await R4Services.procesar_consulta_operaciones({"id": resultado.get("id")})
+            logger.info(f"Resultado final después de {intentos} intentos: {resultado}")
             return {
                     "code": data.get("code"),
                     "message": data.get("message"),
@@ -733,7 +734,7 @@ class R4Services:
             
                 banco_url = f"{Config.R4_BANCO_URL}/ConsultaOperaciones"
 
-                id = payload.get("Id")
+                id = payload.get("id")
                 
 
                 # Firma según especificación: id
@@ -747,7 +748,7 @@ class R4Services:
                 }
 
                 body = {
-                    "Id": id
+                    "id": id
                 }
 
                 async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
