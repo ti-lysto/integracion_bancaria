@@ -88,6 +88,10 @@ Thumbs.db
 # Docker (archivos locales opcionales)
 docker-compose.override.yml
 
+# Documentación
+docs/_build/
+docs/
+
 # Nota: mantenemos archivos .sql (no ignorar) como Script_Api_R4Conecta.sql
 
 # R4 CONECTA V3.0.pdf

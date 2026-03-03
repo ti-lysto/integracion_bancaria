@@ -42,6 +42,7 @@ class Config:
     # CONFIGURACIÓN DE SEGURIDAD R4
     # =====================================================
     R4_MERCHANT_ID = os.getenv("R4_MERCHANT_ID")
+    R4_UUID = os.getenv("R4_UUID")
     R4_BANCO_URL = os.getenv("R4_BANCO_URL")
     REQUEST_TIMEOUT = 30
     BANCO_IPS_PERMITIDAS = [ip for ip in os.getenv("BANCO_IPS_PERMITIDAS", "").split(",") if ip]
@@ -114,6 +115,7 @@ def get_r4_config() -> Dict[str, Any]:
     #print(Config.R4_MERCHANT_ID)
     return {
         "merchant_id": Config.R4_MERCHANT_ID,
+        "R4_UUID": Config.R4_UUID,
         "timeout": Config.REQUEST_TIMEOUT,
         "allowed_ips": Config.BANCO_IPS_PERMITIDAS,
         "reintentos": Config.R4_REINTENTOS

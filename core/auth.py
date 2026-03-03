@@ -140,8 +140,8 @@ def verificar_hmac_r4(data_string: str, signature_received: str, secret_key: str
 def validar_uuid(token: str) -> bool:
     """Validar que el token sea un UUID válido (para R4consulta y R4notifica)"""
     try:
-        #if (uuid.UUID(token)) or (token == get_r4_config().get("uuid")):        
-        if (token == get_r4_config().get("uuid")):
+        #if (uuid.UUID(token)) or (token == get_r4_config().get("uuid")):   
+        if (token == get_r4_config().get("R4_UUID")):
             return True
         else:
             return False    
@@ -211,7 +211,7 @@ async def validar_hmac_generico(
     """
     Función genérica para validar HMAC según endpoint
     """
-    
+    logger.info(f"Validando HMAC para endpoint: {endpoint}, con el payload {payload}, autorization: {authorization}")
     if not authorization:
         logger.error(f"Header Authorization faltante para {endpoint}")
         raise HTTPException(status_code=401, detail="Authorization header requerido")
