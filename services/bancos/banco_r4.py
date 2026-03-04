@@ -474,7 +474,7 @@ class R4Services:
             while data.get("code") == "AC00" and intentos < int(r4_config["reintentos"]):
                 logger.info(f"Intento {intentos+1} de consulta de operaciones para Id: {data.get('id')}")
                 intentos += 1
-                resultado = await R4Services.procesar_consulta_operaciones({"id": data.get('id')})
+                resultado = await R4Services.procesar_consulta_operaciones({"Id": data.get('id')})
             logger.info(f"Resultado final después de {intentos} intentos: {resultado}")
             return {
                     "code": resultado.get("code"),
@@ -748,7 +748,7 @@ class R4Services:
                 }
 
                 body = {
-                    "id": id
+                    "Id": id
                 }
 
                 async with httpx.AsyncClient(timeout=Config.REQUEST_TIMEOUT) as client:
@@ -759,7 +759,7 @@ class R4Services:
                 from db import connector as connector
                 resultado = await connector.guardar_transito_sp({
                         "id_dev_cred": id,
-                        "endpoint": "ConsultaOperaciones",
+                        "endpoint": "ConsultarOperaciones",
                         "mensaje": data.get("message"),
                         "CodigoRed": data.get("code", ""),
                         "Referencia": data.get("reference", "")
@@ -767,7 +767,7 @@ class R4Services:
                     }, {            
                         "id_dev_cred": id
                     },                
-                    {"ConsultaOperaciones": {"solicitud": payload, "respuesta": data}}
+                    {"ConsultarOperaciones": {"solicitud": payload, "respuesta": data}}
                     )
                 
                 mesage=data.get("message", "")
