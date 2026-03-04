@@ -793,6 +793,7 @@ async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Di
             parametros_out=()
         )
         print("Resultado SP completo:", resultado)
+        
         return resultado
     except Exception as e:
         logger.error(f"Error en guardar_transito_sp: {str(e)}")
