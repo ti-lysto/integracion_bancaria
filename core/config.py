@@ -33,7 +33,7 @@ class Config:
     # =====================================================
     # CONFIGURACIÓN DE LA API
     # =====================================================
-    API_VERSION = os.getenv("API_VERSION", "0.0.0")
+    API_VERSION = "1.1.0"
     API_PORT = int(os.getenv("API_PORT", 0))
     API_HOST = "0.0.0.0"
     DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes") #True
