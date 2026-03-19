@@ -33,7 +33,7 @@ class Config:
     # =====================================================
     # CONFIGURACIÓN DE LA API
     # =====================================================
-    API_VERSION = os.getenv("API_VERSION", "0.0.0")
+    API_VERSION = "1.1.0"
     API_PORT = int(os.getenv("API_PORT", 0))
     API_HOST = "0.0.0.0"
     DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes") #True
@@ -52,6 +52,14 @@ class Config:
     BANCO_IPS_PERMITIDAS = tuple(BANCO_IPS_PERMITIDAS) # Convertir a tupla para inmutabilidad
     R4_REINTENTOS = int(os.getenv("CONSULTAR_OPERACIONES_REINTENTOS", 0))
     
+    # =====================================================
+    # CONFIGURACIÓN DE SEGURIDAD BANCARIBE
+    # =====================================================
+    BC_CONSUMER_KEY = os.getenv("BC_CONSUMER_KEY")
+    BC_CONSUMER_SECRET = os.getenv("BC_CONSUMER_SECRET")
+    BC_TOKEN_AUTHORIZATION_HEADER_URL = os.getenv("BC_TOKEN_AUTHORIZATION_HEADER_URL")
+    BC_CONSULTA_DE_OPERACIONES_URL = os.getenv("BC_CONSULTA_DE_OPERACIONES_URL")
+
     # =====================================================
     # CONFIGURACIÓN DE LOGGING
     # =====================================================
@@ -119,6 +127,23 @@ def get_r4_config() -> Dict[str, Any]:
         "timeout": Config.REQUEST_TIMEOUT,
         "allowed_ips": Config.BANCO_IPS_PERMITIDAS,
         "reintentos": Config.R4_REINTENTOS
+    }
+
+def get_bancaribe_config() -> Dict[str, Any]:
+    """
+    OBTENER CONFIGURACIÓN ESPECÍFICA DE BANCARIBE
+    
+    ¿Qué incluye?
+    - Consumer Key y Secret para autenticación
+    - URLs para obtener token y consultar operaciones
+    - Timeouts y configuraciones de seguridad
+    """
+    return {
+        "consumer_key": Config.BC_CONSUMER_KEY,
+        "consumer_secret": Config.BC_CONSUMER_SECRET,
+        "token_url": Config.BC_TOKEN_AUTHORIZATION_HEADER_URL,
+        "consulta_url": Config.BC_CONSULTA_DE_OPERACIONES_URL,
+        "timeout": Config.REQUEST_TIMEOUT
     }
 
 def setup_logging():

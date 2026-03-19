@@ -251,7 +251,7 @@ Commerce: [TU_COMMERCE_ID]
 ```
 ├── app
 │   ├── controllers
-│   │   ├── endpoints.py
+│   │   ├── endpoints_r4.py
 │   │   ├── __init__.py
 │   │   └── __pycache__
 │   │       ├── endpoints.cpython-310.pyc
@@ -351,7 +351,7 @@ Commerce: [TU_COMMERCE_ID]
 - **¿Qué hace?**: Configura FastAPI y registra todos los endpoints
 - **¿Cuándo se modifica?**: Raramente, solo para configuración global
 
-#### `app/controllers/endpoints.py`
+#### `app/controllers/endpoints_r4.py`
 - **¿Qué es?**: Define todas las URLs y endpoints de la API
 - **¿Qué hace?**: Recibe peticiones HTTP, valida datos, llama servicios
 - **¿Cuándo se modifica?**: Al agregar nuevos endpoints o cambiar URLs

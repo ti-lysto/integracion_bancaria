@@ -1,33 +1,13 @@
-"""
-AUTENTICACIÓN Y SEGURIDAD R4
-============================
-
-¿QUÉ ES ESTE ARCHIVO?
-- Implementa la autenticación HMAC-SHA256 según especificación R4
-- Valida que las notificaciones realmente vengan del banco
-- Previene ataques de falsificación y manipulación de datos
-
-¿POR QUÉ ES IMPORTANTE?
-- Garantiza que solo el banco pueda enviar notificaciones válidas
-- Protege contra ataques maliciosos
-- Cumple con los estándares de seguridad bancaria
-
-¿CÓMO FUNCIONA?
-- El banco firma cada notificación con HMAC-SHA256
-- Nosotros verificamos la firma usando la misma clave secreta
-- Si la firma no coincide, rechazamos la notificación
-
-Creado por: Alicson Rubio
-Fecha: Noviembre 2025
-"""
 
 import hmac
 import hashlib
 import logging
 import uuid
+import base64
 from fastapi import HTTPException, Header, Request, Depends
 from typing import Optional, Dict, Any, List
 from core.config import get_r4_config
+from core.config import get_bancaribe_config
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +15,7 @@ logger = logging.getLogger(__name__)
 config = get_r4_config()
 SECRET_KEY = config.get("merchant_id") 
 # =====================================================
-# CONFIGURACIÓN DE HMAC POR ENDPOINT
+# CONFIGURACIÓN para bancos que usan HMAC (R4) - parámetros y formato de string a firmar
 # =====================================================
 
 HMAC_CONFIG = {
@@ -112,6 +92,11 @@ HMAC_CONFIG = {
         "params": [],  # No usa HMAC, solo UUID
         "requires_uuid": True
     }
+}
+
+TOKEN_CONGIG_BANCARIBE = {    
+    "params": ["KEY","SECRET"],
+    "separator": ":",  # KEY:SECRET
 }
 
 def calcular_hmac_r4(data_string: str, secret_key: str) -> str:
@@ -493,3 +478,30 @@ async def require_headers(
 #     if not authorization or not commerce:
 #         raise HTTPException(status_code=401, detail="Headers Authorization y Commerce requeridos")
 #     return True
+
+# =====================================================
+# Autenticación específica para Bancaribe 
+# =====================================================
+from services.bancos.banco_bancaribe import BancoBancaribeService
+
+class BancaribeAuth:
+    """Clase de autenticación específica para endpoints de Bancaribe.
+    Aquí podemos implementar validaciones adicionales específicas para este banco,
+    como verificar tokens, claves o formatos que ellos requieran.
+    """
+
+    def __init__(self):
+        self.service = BancoBancaribeService()
+
+    async def verify_bancaribe_token(self, token: str) -> bool:
+        """Ejemplo de método para verificar un token específico de Bancaribe.
+        En este caso, simplemente lo comparamos con un valor esperado desde configuración,
+        pero aquí podríamos hacer llamadas a servicios externos, bases de datos, etc.
+        """
+        expected_token = self.service.calcular_base64_bancaribe()  # O el endpoint específico que corresponda
+        if token == expected_token:
+            return True
+        else:
+            logger.warning(f"Token de Bancaribe inválido: {token}")
+            raise HTTPException(status_code=401, detail="Token de autenticación de Bancaribe inválido")
+

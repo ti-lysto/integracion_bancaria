@@ -5,8 +5,9 @@
 from fastapi import FastAPI
 # FastAPI: El framework web que usamos para crear la API REST
 
-from controllers.endpoints import router, router_r4
-from core.config import validate_config, setup_logging
+from controllers.endpoints_r4 import router, router_r4
+from controllers.endpoints_bancaribe import router_bancaribe
+from core.config import validate_config, setup_logging, get_api_config
 # Importamos controladores y configuraciones
 #from routers.bancos import router as bancos_router
 from db.connector import close_connection_pool
@@ -16,7 +17,7 @@ from db.connector import close_connection_pool
 # ===================================
 app = FastAPI(
     # Título que aparece en la documentación automática
-    title=" API R4 Conecta v1.0 - Integración Bancaria",
+    title=f" API R4 Conecta v{get_api_config()['version']} - Integración Bancaria",
     
     # Descripción detallada de qué hace nuestra API
     description="""
@@ -49,7 +50,7 @@ app = FastAPI(
     """,
     
     # Versión actual de nuestra API
-    version="1.0.0",
+    version=get_api_config()['version'],
     
     # Información de contacto (opcional)
     contact={
@@ -82,6 +83,7 @@ except Exception as e:
 # Registrar todos los endpoints R4
 app.include_router(router, tags=["Integración Bancaria"])
 app.include_router(router_r4, tags=["R4 Conecta"])
+app.include_router(router_bancaribe, tags=["Bancaribe"])
 # Registrar router genérico para múltiples bancos (usa el mismo modelo R4 por ahora)
 #app.include_router(bancos_router, tags=["Bancos"])
 
@@ -89,7 +91,7 @@ app.include_router(router_r4, tags=["R4 Conecta"])
 # ENDPOINTS REGISTRADOS VÍA ROUTER
 # ================================
 # Los endpoints /health, /R4consulta, /R4notifica y / están definidos
-# en app.controllers.endpoints y registrados automáticamente
+# en app.controllers.endpoints_r4 y registrados automáticamente
 
 
 # INFORMACIÓN ADICIONAL SOBRE ESTE ARCHIVO
