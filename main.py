@@ -17,7 +17,7 @@ from db.connector import close_connection_pool
 # ===================================
 app = FastAPI(
     # Título que aparece en la documentación automática
-    title=f" API R4 Conecta v{get_api_config()['version']} - Integración Bancaria",
+    title=f" API integracion-bancaria v{get_api_config()['version']} - Integración Bancaria",
     
     # Descripción detallada de qué hace nuestra API
     description="""

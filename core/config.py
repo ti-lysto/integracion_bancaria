@@ -2,7 +2,7 @@
 
 import logging
 import os
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, Optional
 
 # Cargar variables de entorno desde un archivo .env si existe
 from dotenv import load_dotenv
@@ -30,6 +30,59 @@ class Config:
     DB_POOL_MIN_SIZE = 1
     DB_POOL_MAX_SIZE = 10
     
+    # Matriz de bancos
+    BANCOS_MATRIZ: Tuple[Tuple[str, str], ...] = (
+        ("0001", "Banco Central de Venezuela"),
+        ("0102", "Banco de Venezuela"),
+        ("0104", "Banco Venezolano de Crédito"),
+        ("0105", "Banco Mercantil"),
+        ("0108", "Banco Provincial (BBVA Provincial)"),
+        ("0114", "Bancaribe"),
+        ("0115", "Banco Exterior"),
+        ("0116", "Banco Occidental de Descuento (BOD)"),
+        ("0128", "Banco Caroní"),
+        ("0134", "Banesco"),
+        ("0137", "Banco Sofitasa"),
+        ("0138", "Banco Plaza"),
+        ("0146", "Bangente"),
+        ("0149", "Banco del Pueblo Soberano"),
+        ("0151", "Banco Fondo Común (BFC)"),
+        ("0156", "100% Banco"),
+        ("0157", "Del Sur Banco Universal"),
+        ("0163", "Banco del Tesoro"),
+        ("0166", "Banco Agrícola de Venezuela"),
+        ("0168", "Bancrecer"),
+        ("0169", "R4 Banco Microfinanciero"),
+        ("0171", "Banco Activo"),
+        ("0172", "Bancamiga"),
+        ("0173", "Banco Internacional de Desarrollo"),
+        ("0174", "Banplus"),
+        ("0175", "Banco Bicentenario (Banco Digital de los Trabajadores)"),
+        ("0177", "Banco de la Fuerza Armada Nacional (BANFANB)"),
+        ("0178", "N58 Banco Digital"),
+        ("0190", "Citibank"),
+        ("0191", "Banco Nacional de Crédito (BNC)"),
+        ("0601", "Instituto Municipal de Crédito Popular"),
+    )
+    _BANCOS_DICT: Dict[str, str] = {cod: nombre for cod, nombre in BANCOS_MATRIZ}
+    @classmethod
+    def get_nombre_banco(cls, codigo: str) -> Optional[str]:
+        """Obtiene el nombre del banco por su código"""
+        return cls._BANCOS_DICT.get(codigo)
+
+    @classmethod
+    def get_codigo_banco(cls, nombre: str) -> Optional[str]:
+        """Obtiene el código del banco por su nombre"""
+        if not nombre:
+            return None
+        nombre=nombre.strip().lower()
+        for cod, nom in cls.BANCOS_MATRIZ:
+            if nom.lower() == nombre.lower():
+                return cod
+        for cod, nom in cls.BANCOS_MATRIZ:
+            if nombre in nom.lower():
+                return cod
+        return None
     # =====================================================
     # CONFIGURACIÓN DE LA API
     # =====================================================
@@ -126,7 +179,8 @@ def get_r4_config() -> Dict[str, Any]:
         "R4_UUID": Config.R4_UUID,
         "timeout": Config.REQUEST_TIMEOUT,
         "allowed_ips": Config.BANCO_IPS_PERMITIDAS,
-        "reintentos": Config.R4_REINTENTOS
+        "reintentos": Config.R4_REINTENTOS,
+        "bank_doce": Config.get_codigo_banco("R4 Banco Microfinanciero") 
     }
 
 def get_bancaribe_config() -> Dict[str, Any]:
@@ -143,7 +197,8 @@ def get_bancaribe_config() -> Dict[str, Any]:
         "consumer_secret": Config.BC_CONSUMER_SECRET,
         "token_url": Config.BC_TOKEN_AUTHORIZATION_HEADER_URL,
         "consulta_url": Config.BC_CONSULTA_DE_OPERACIONES_URL,
-        "timeout": Config.REQUEST_TIMEOUT
+        "timeout": Config.REQUEST_TIMEOUT,
+        "bank_doce": Config.get_codigo_banco("Bancaribe")
     }
 
 def setup_logging():

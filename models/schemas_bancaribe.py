@@ -157,63 +157,24 @@ class R4ConsultaResponse(BaseModel):
 # ESQUEMAS PARA NOTIFICACIÓN DE PAGO
 # ==================================
 class BancaribenotificationsRequest(BaseModel):
-    """
-    DATOS QUE RECIBIMOS CUANDO NOS LLEGA UN PAGO MÓVIL
     
-    ¿Qué es esta notificación?
-    - El banco nos informa que alguien nos envió dinero
-    - Incluye todos los detalles de la transacción
-    - Nosotros guardamos en la base de datos
-    
-    ¿Cuándo llega?
-    - Después de que alguien hace un pago móvil mediante la plataforma R4
-    - Antes de que cliente reporte el pago
-    
-    Campos importantes:
-    - IdComercio: Identificador del comercio
-    - TelefonoComercio: Teléfono registrado
-    - TelefonoEmisor: Teléfono de quien envió el pago
-    - Concepto: Descripción del pago
-    - BancoEmisor: Banco de quien envía
-    - Monto: Cantidad enviada
-    - FechaHora: Cuándo se hizo el pago
-    - Referencia: Número único de la transacción
-    - CodigoRed: Código que indica si el pago fue exitoso
-    """
-    #     "amount": 100,
-# "bankName": "BANCO DEL CARIBE",
-# "clientPhone": "00584247776589",
-# "commercePhone": "00584168327199",
-# "creditorAccount": "01140152001520123861",
-# "currencyCode": "VES",
-# "date": "23-10-2024",
-# "debtorAccount": "01140152001520123746",
-# "debtorID": "411823643",
-# "destinyBankReference": "000254151380",
-# "originBankCode": "0114",
-# "originBankReference": "254151380",
-# "paymentType": "TRF",
-# "time": "08:45:00"
-    IdComercio: str  # cédula/RIF
-    TelefonoComercio: str  # Teléfono comercio
-    TelefonoEmisor: str  # Teléfono del que envía
-    Concepto: str  # Descripción del pago
-    BancoEmisor: str  # Código del banco emisor
-    Monto: str  # Cantidad enviada
-    FechaHora: str  # Fecha y hora del pago
-    Referencia: str  # Número de referencia único
-    CodigoRed: str  # Código de resultado
+    amount: str 
+    bankName: str 
+    clientPhone: str 
+    commercePhone: str 
+    creditorAccount: str 
+    currencyCode: str 
+    date: str 
+    debtorAccount: str 
+    debtorID: str 
+    destinyBankReference: str
+    originBankCode: str 
+    originBankReference: str
+    paymentType: str 
+    time: str 
 
 class BancaribenotificationsResponse(BaseModel):
-    """
-    RESPUESTA A LA NOTIFICACIÓN DE PAGO
-    
-    ¿Qué respondemos?
-    - Solo guardamos en la base de datos y agregamos abono: true si todo esta bien , false hubo un error
-    
-    
-    """
-    
+        
     message : str = "Success"# "Success" o mensaje de error
     statusCode: int = 200 # 200 para éxito, otro código para error
 

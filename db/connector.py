@@ -631,7 +631,7 @@ async def guardar_transaccion_sp(datos: Dict[str, Any]) -> Dict[str, Any]:
         parametros_out = ("p_mensaje", "p_codigo")
         
         # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
-        from db.connector import ejecutar_sp_generico
+        #from db.connector import ejecutar_sp_generico
         resultado = await ejecutar_sp_generico(            
             proc_name, 
             parametros_in, 
@@ -807,6 +807,109 @@ async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Di
         # Cerrar el pool de conexiones para liberar recursos
         await close_connection_pool()
 
+async def proceso_notificaciones (filtros: Dict[str, Any], banco: str) -> Dict[str, Any]:
+    """
+    Orquesta el proceso completo de consulta y comprobación de notificación.
+    Primero consulta la notificación por referencia y luego procesa la comprobación.
+    """
+    codigobanco=Config.get_codigo_banco(banco)
+    print(f"Banco: {banco}, Código asignado: {codigobanco}")
+    try:
+        match banco:
+            case "bancaribe":
+                sp_nombre="sp_bancaribe_proceso_notificacion"
+                # IN p_uuid_notificacion CHAR(36),
+                # IN p_id_transaccion VARCHAR(100),
+                # IN p_numero_referencia VARCHAR(50),
+                
+                # -- Datos del comercio y cliente
+                # IN p_id_comercio VARCHAR(50),
+                # IN p_documento_cliente VARCHAR(20),
+                # IN p_nombre_cliente VARCHAR(200),
+                
+                # -- Datos del pago
+                # IN p_monto DECIMAL(15,2),
+                # IN p_moneda CHAR(3),
+                # IN p_metodo_pago VARCHAR(50),
+                # IN p_fecha_pago DATETIME,
+                # IN p_descripcion_pago TEXT,
+                
+                # -- Datos de la notificación
+                # IN p_tipo_notificacion VARCHAR(50),
+                # IN p_estado_notificacion VARCHAR(50),
+                # IN p_datos_raw JSON,
+                
+                # -- Integración
+                # IN p_id_orden_interna VARCHAR(100),
+                
+                # -- Parámetros de salida
+                # OUT p_mensaje VARCHAR(500),
+                # OUT p_procesado BOOL
+
+                # {
+                #     "amount": "100",
+                #     "bankName": "BANCO DEL CARIBE",
+                #     "clientPhone": "00584247776589",
+                #     "commercePhone": "00584168327199",
+                #     "creditorAccount": "01140152001520123861",
+                #     "currencyCode": "VES",
+                #     "date": "23-10-2024",
+                #     "debtorAccount": "01140152001520123746",
+                #     "debtorID": "411823643",
+                #     "destinyBankReference": "000254151380",
+                #     "originBankCode": "0114",
+                #     "originBankReference": "254151380",
+                #     "paymentType": "TRF",
+                #     "time": "08:45:00"
+                # }
+                parametros_in = (
+                    filtros.get("uuid_notificacion", ""), # Identificador único de la notificación
+                    filtros.get("id_transaccion", ""),     # Identificador de la transacción en el sistema del comercio
+                    filtros.get("Referencia", ""),          # Número de referencia proporcionado por el banco
+                    filtros.get("IdComercio", ""),         # Cédula del comercio
+                    filtros.get("documento_cliente", ""),   # Documento de identidad del cliente
+                    filtros.get("nombre_cliente", ""),      # Nombre del cliente
+                    filtros.get("amount", ""),              # Monto del pago
+                    filtros.get("Moneda", ""),             # Moneda del pago
+                    filtros.get("metodo_pago", ""),        # Método de pago (ej: TRF, P2P, etc.)
+                    filtros.get("Fecha_pago", ""),          # Fecha y hora del pago
+                    filtros.get("descripcion_pago", ""),   # Descripción del pago
+                    filtros.get("tipo_notificacion", ""),  # Tipo de notificación (ej: pago recibido, pago fallido, etc.)
+                    filtros.get("estado_notificacion", ""), # Estado de la notificación (ej: nuevo, procesado, error, etc.)
+                    json.dumps(filtros.get("datos_raw", {}) ), # Datos adicionales en formato JSON (puede incluir toda la información recibida del banco)
+                    filtros.get("id_orden_interna", "")    # Identificador de la orden interna en el sistema del comercio
+                    )   
+                parametros_out = ("p_mensaje", "p_procesado")
+                from db.connector import ejecutar_sp_generico
+                resultado = await ejecutar_sp_generico(            
+                    sp_nombre, 
+                    parametros_in, 
+                    parametros_out
+                )
+                print ("Resultado SP completo:", resultado)
+            case "r4":
+                sp_nombre=""
+                filtros["Banco"] = "002"
+            case _:
+                logger.warning(f"Banco no reconocido: {banco}. Se usará el valor proporcionado en filtros.")
+        
+        
+        
+        return {
+            "exito": True,
+            # "consulta_result": consulta_result,
+            # "comprobacion_result": comprobacion_result
+        }
+        
+    except Exception as e:
+        logger.error(f"Error en proceso_notificaciones_orquestado: {str(e)}")
+        return {
+            "exito": False,
+            "error": str(e)
+        }
+    finally:
+        # Cerrar el pool de conexiones para liberar recursos
+        await close_connection_pool()
 
 
 # INFORMACIÓN ADICIONAL SOBRE ESTE ARCHIVO

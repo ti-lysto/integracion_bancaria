@@ -56,7 +56,7 @@ async def bancaribe_token():
 
 @router_bancaribe.post("/notifications", response_model=BancaribenotificationsResponse, summary="Bancaribe - Notificación de Transacciones")
 async def bancaribe_notifications(
-    payload: Dict[str, Any] = Body(...),   #payload: BancaribenotificationsRequest = Body(...),
+    payload: BancaribenotificationsRequest = Body(...),#payload: Dict[str, Any] = Body(...),   #payload: BancaribenotificationsRequest = Body(...),
     #_ip=Depends(auth.ip_whitelist_middleware),
 ):
     try:

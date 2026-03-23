@@ -75,7 +75,9 @@ class BancoBancaribeService:
     @staticmethod
     async def procesar_notificacion(payload: Dict[str, Any]) -> Dict[str, Any]:
         """Wrapper compatible con endpoints existentes."""
-        #return await BancoBancaribeService.procesar_notificacion_pago(payload)
+        from db import connector as repository
+        return await repository.proceso_notificaciones(payload, banco="BanCaribe")
+    
         logger.info(f"Notificacion recibida en BancoBancaribeService: {json.dumps(payload)}")
         return {"message": "Success", "statusCode": 200}
 
