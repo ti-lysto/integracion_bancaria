@@ -90,7 +90,8 @@ class Config:
     API_PORT = int(os.getenv("API_PORT", 0))
     API_HOST = "0.0.0.0"
     DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes") #True
-    
+    RIF = os.getenv("LYSTO_RIF", "")
+
     # =====================================================
     # CONFIGURACIÓN DE SEGURIDAD R4
     # =====================================================
@@ -111,7 +112,12 @@ class Config:
     BC_CONSUMER_KEY = os.getenv("BC_CONSUMER_KEY")
     BC_CONSUMER_SECRET = os.getenv("BC_CONSUMER_SECRET")
     BC_TOKEN_AUTHORIZATION_HEADER_URL = os.getenv("BC_TOKEN_AUTHORIZATION_HEADER_URL")
+    BC_HASH_KEY = os.getenv("BC_HASH_KEY", "")
     BC_CONSULTA_DE_OPERACIONES_URL = os.getenv("BC_CONSULTA_DE_OPERACIONES_URL")
+    BC_BCV_URL = os.getenv("BC_BCV_URL")
+    BC_REINTENTOS = int(os.getenv("BC_REINTENTOS", 0))
+    BC_TELEFONO_PM = os.getenv("BC_TELEFONO_PM", "")
+
 
     # =====================================================
     # CONFIGURACIÓN DE LOGGING
@@ -196,9 +202,12 @@ def get_bancaribe_config() -> Dict[str, Any]:
         "consumer_key": Config.BC_CONSUMER_KEY,
         "consumer_secret": Config.BC_CONSUMER_SECRET,
         "token_url": Config.BC_TOKEN_AUTHORIZATION_HEADER_URL,
+        "hash": Config.BC_HASH_KEY,
         "consulta_url": Config.BC_CONSULTA_DE_OPERACIONES_URL,
+        "bc_bcv_url": Config.BC_BCV_URL,
         "timeout": Config.REQUEST_TIMEOUT,
-        "bank_doce": Config.get_codigo_banco("Bancaribe")
+        "bank_doce": Config.get_codigo_banco("Bancaribe"),
+        "reintentos": Config.BC_REINTENTOS
     }
 
 def setup_logging():

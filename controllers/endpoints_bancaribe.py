@@ -87,4 +87,21 @@ async def bancaribe_consulta_operaciones(
         raise HTTPException(status_code=500, detail=str(exc))
 
 
+@router_bancaribe.post("/BCV", summary="Bancaribe - Consulta de tasa BCV")#response_model=BancaribenotificationsResponse, summary="Bancaribe - Consulta de operaciones")
+async def bancaribe_consulta_bcv(
+    payload: Dict[str, Any] = Body(...),#payload: Dict[str, Any] = Body(...),   #payload: BancaribenotificationsRequest = Body(...),
+    _ip=Depends(auth.ip_whitelist_middleware),
+):
+    try:
+        service = _get_bancaribe_service()
+        #resultado = await service.procesar_notificacion(payload.dict() if isinstance(payload, BancaribenotificationsRequest) else payload)
+        resultado = await service.bcv(payload)
+        #return BancaribenotificationsResponse(**resultado)
+        return (resultado)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error(f"Error en Bancaribe /BCV: {exc}")
+        raise HTTPException(status_code=500, detail=str(exc))
+
 

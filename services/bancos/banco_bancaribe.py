@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 import base64,json,logging
 
 
-from core.config import get_bancaribe_config
+from core.config import get_bancaribe_config,Config
 
 logger = logging.getLogger(__name__)
 
@@ -19,22 +19,21 @@ class BancoBancaribeService:
         return get_bancaribe_config()
     
     @staticmethod
-    async def _build_headers(endpoint: str, token: Optional[str]="") -> Dict[str, str]:        
+    def _build_headers(endpoint: str, token: Optional[str]="") -> Dict[str, str]:        
                 
         match endpoint:
             case "token":
-                token = BancoBancaribeService.calcular_base64_bancaribe()
+                calculo = BancoBancaribeService.calcular_base64_bancaribe()
                 return {
                     "Content-Type": "application/json",
-                    "Authorization": f"Basic {token}"
+                    "Authorization": f"Basic {calculo}"
                 }
             case "consultaoperaciones":
-                tokenresponse=await BancoBancaribeService.solicito_token()
-                token=tokenresponse.get("access_token")
+                
                 return {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Authorization": f"Bearer token {token}"
+                    "Authorization": f"Bearer Token {token}"
                 }
             case _:
                 return {"Content-Type": "application/json"}   
@@ -58,19 +57,25 @@ class BancoBancaribeService:
         try:
             import httpx
             token = BancoBancaribeService.calcular_base64_bancaribe()
-            header=BancoBancaribeService._build_headers("token") 
+            header=BancoBancaribeService._build_headers("token")
             body = {"grant_type":"client_credentials"}
             url=get_bancaribe_config().get("token_url")  
             if not url:
                 logger.error("URL de token no configurada en bancaribe_config")
                 return {"error": "URL de token no configurada"}
-            async with httpx.AsyncClient() as client:
-                response = await client.post(url, json=body, headers=header)
-            respuesta = response.json()
-            if response.status_code >= 400:
+            for intento in range(int(get_bancaribe_config().get("reintentos", 0)) ):
+                try:
+                    async with httpx.AsyncClient() as client:
+                        response = await client.post(url, json=body, headers=header)
+                    respuesta = response.json() 
+                    # print (f"Intento {intento} - token: {respuesta.get('access_token')if respuesta else 'No se obtuvo token'}")   
+                    if respuesta.get("access_token") and response.status_code < 400:
+                        return {**respuesta}
+                except Exception as exc:
+                    logger.error(f"Error en intento {intento} solicitando token a Bancaribe: {exc}")
+                    continue 
                 logger.error(f"Error solicitando token a Bancaribe: {response.status_code} - {response.text}")
-                return {"error": "No se pudo obtener token de Bancaribe"}
-            return {**respuesta} if respuesta else {}
+            return {"error": "No se pudo obtener token de Bancaribe"} 
         except Exception as exc:
             logger.error(f"Error generando token de Bancaribe: {exc}")
             return {"error": "No se pudo generar token"}
@@ -87,11 +92,88 @@ class BancoBancaribeService:
     @staticmethod
     async def consulta_operaciones(payload: Dict[str, Any]) -> Dict[str, Any]:
         """Wrapper compatible con endpoints existentes."""
-        header=BancoBancaribeService._build_headers("consultaoperaciones")
-            
-        logger.info(f"Notificacion recibida en BancoBancaribeService: {json.dumps(payload)}")
-        return {"message": "Success", "statusCode": 200}
+        tokenresponse=await BancoBancaribeService.solicito_token()
+        token=tokenresponse.get("access_token")
+        header=BancoBancaribeService._build_headers("consultaoperaciones", token)
+        url=get_bancaribe_config().get("consulta_url")
+        body={
+            "tipoTrx": "PM",
+            "rif": Config.RIF,
+            "referencia": payload.get("referencia"),
+            "montoTransaccion": payload.get("montoTransaccion"),
+            "identificadorPersona": payload.get("ci", "E82220074"),
+            "telefonoDebito": payload.get("telefono", ""),
+            "factura": "",
+            "fecha": payload.get("fecha", "")
+        }
+        #print (f"URL de consulta operaciones: {url} Header: {header} Payload: {payload}")
+        if not url:
+            logger.error("URL de consulta operaciones no configurada en bancaribe_config")
+            return {"error": "URL de consulta operaciones no configurada"}
+        try:
+            import httpx
+            for intento in range(int(get_bancaribe_config().get("reintentos", 0)) ):
+                try:
+                    # print (f"Intento {intento} - Consultando operaciones a Bancaribe ")
+                    async with httpx.AsyncClient() as client:
+                        response = await client.post(url, json=body, headers=header)
+                    if response.status_code < 400:
+                        return response.json() if response.text else {}
+                except Exception as exc:
+                    logger.error(f"Error en intento {intento} consultando operaciones a Bancaribe: {exc}")
+                    continue
+            # if response.status_code >= 400:
+            #     logger.error(f"Error consultando operaciones a Bancaribe: {response.status_code} - {response.text}")
+            #     return {"error": "No se pudo consultar operaciones en Bancaribe"}
+            return {"error": f"No se pudo consultar operaciones en Bancaribe luego de {get_bancaribe_config().get('reintentos', 0)+1} intentos"}
+        except Exception as exc:
+            logger.error(f"Error consultando operaciones en Bancaribe: {exc}")
+            return {"error": "Error interno al consultar operaciones en Bancaribe"} 
+        
+    @staticmethod
+    async def bcv(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Consulta tasa BCV en Bancaribe, con fallback seguro si falla el banco."""
 
+        # tokenresponse=await BancoBancaribeService.solicito_token()
+        # token=tokenresponse.get("access_token")
+        # header=BancoBancaribeService._build_headers("consultaoperaciones", token)
+        url=get_bancaribe_config().get("bc_bcv_url")
+        body={
+            "hash": get_bancaribe_config().get("hash"),
+            "idTasa": "TACOMPDOLAR" if payload.get("moneda") == "USD" else "TACOMPEURO" if payload.get("moneda") == "EUR" else ""   ,
+            #"idTasa": "",
+            "cedulaRif": Config.RIF.replace("-",""),
+            "fechaInicio": payload.get("fechaInicio", ""),
+            "fechaFin": payload.get("fechaFin", "")
+        }
+        print (f"URL de consulta BCV: {url} Payload: {payload}")
+        return {"payload": payload, "body": body}
+    
+
+
+
+        #print (f"URL de consulta operaciones: {url} Header: {header} Payload: {payload}")
+        # if not url:
+        #     logger.error("URL de consulta operaciones no configurada en bancaribe_config")
+        #     return {"error": "URL de consulta operaciones no configurada"}
+        # try:
+        #     import httpx
+        #     for intento in range(int(get_bancaribe_config().get("reintentos", 0)) ):
+        #         try:
+        #             # print (f"Intento {intento} - Consultando operaciones a Bancaribe ")
+        #             async with httpx.AsyncClient() as client:
+        #                 response = await client.post(url, json=body, headers=header)
+        #             if response.status_code < 400:
+        #                 return response.json() if response.text else {}
+        #         except Exception as exc:
+        #             logger.error(f"Error en intento {intento} consultando operaciones a Bancaribe: {exc}")
+        #             continue
+        #     return {"error": f"No se pudo consultar operaciones en Bancaribe luego de {get_bancaribe_config().get('reintentos', 0)+1} intentos"}
+        # except Exception as exc:
+        #     logger.error(f"Error consultando operaciones en Bancaribe: {exc}")
+        #     return {"error": "Error interno al consultar operaciones en Bancaribe"} 
+        
+    
 
 
 
