@@ -19,19 +19,22 @@ class BancoBancaribeService:
         return get_bancaribe_config()
     
     @staticmethod
-    def _build_headers(endpoint: str) -> Dict[str, str]:
-        token = BancoBancaribeService.calcular_base64_bancaribe()
-        
+    async def _build_headers(endpoint: str, token: Optional[str]="") -> Dict[str, str]:        
+                
         match endpoint:
             case "token":
+                token = BancoBancaribeService.calcular_base64_bancaribe()
                 return {
                     "Content-Type": "application/json",
                     "Authorization": f"Basic {token}"
                 }
-            case "tasa":
+            case "consultaoperaciones":
+                tokenresponse=await BancoBancaribeService.solicito_token()
+                token=tokenresponse.get("access_token")
                 return {
                     "Content-Type": "application/json",
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Authorization": f"Bearer token {token}"
                 }
             case _:
                 return {"Content-Type": "application/json"}   
@@ -50,14 +53,14 @@ class BancoBancaribeService:
         return base64.b64encode(raw.encode("utf-8")).decode("utf-8")
         
     @staticmethod   
-    async def solicito_token (data: Dict[str, Any])->Dict[str, Any]:
+    async def solicito_token ()->Dict[str, Any]:
         """Endpoint para solicitar token de autenticación (si se requiere)."""
         try:
-            import httpx,json
+            import httpx
             token = BancoBancaribeService.calcular_base64_bancaribe()
             header=BancoBancaribeService._build_headers("token") 
             body = {"grant_type":"client_credentials"}
-            url=get_bancaribe_config().get("token_url")  #"https://bcapi42-bancaribe365.msappproxy.net/oauth2/token"
+            url=get_bancaribe_config().get("token_url")  
             if not url:
                 logger.error("URL de token no configurada en bancaribe_config")
                 return {"error": "URL de token no configurada"}
@@ -78,6 +81,14 @@ class BancoBancaribeService:
         from db import connector as repository
         return await repository.proceso_notificaciones(payload, banco="BanCaribe")
     
+        logger.info(f"Notificacion recibida en BancoBancaribeService: {json.dumps(payload)}")
+        return {"message": "Success", "statusCode": 200}
+
+    @staticmethod
+    async def consulta_operaciones(payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Wrapper compatible con endpoints existentes."""
+        header=BancoBancaribeService._build_headers("consultaoperaciones")
+            
         logger.info(f"Notificacion recibida en BancoBancaribeService: {json.dumps(payload)}")
         return {"message": "Success", "statusCode": 200}
 

@@ -46,7 +46,7 @@ def _get_bancaribe_service():
 async def bancaribe_token():
     try:
         service = _get_bancaribe_service()
-        token_result = await service.solicito_token({})
+        token_result = await service.solicito_token()
         return {**token_result} if token_result else {}
     except HTTPException:
         raise
@@ -57,7 +57,7 @@ async def bancaribe_token():
 @router_bancaribe.post("/notifications", response_model=BancaribenotificationsResponse, summary="Bancaribe - Notificación de Transacciones")
 async def bancaribe_notifications(
     payload: BancaribenotificationsRequest = Body(...),#payload: Dict[str, Any] = Body(...),   #payload: BancaribenotificationsRequest = Body(...),
-    #_ip=Depends(auth.ip_whitelist_middleware),
+    _ip=Depends(auth.ip_whitelist_middleware),
 ):
     try:
         service = _get_bancaribe_service()
@@ -66,61 +66,25 @@ async def bancaribe_notifications(
     except HTTPException:
         raise
     except Exception as exc:
-        logger.error(f"Error en Bancaribe MBbcv: {exc}")
+        logger.error(f"Error en Bancaribe /notifications: {exc}")
+        raise HTTPException(status_code=500, detail=str(exc))
+
+@router_bancaribe.post("/consultaoperaciones", summary="Bancaribe - Consulta de operaciones")#response_model=BancaribenotificationsResponse, summary="Bancaribe - Consulta de operaciones")
+async def bancaribe_consulta_operaciones(
+    payload: Dict[str, Any] = Body(...),#payload: Dict[str, Any] = Body(...),   #payload: BancaribenotificationsRequest = Body(...),
+    _ip=Depends(auth.ip_whitelist_middleware),
+):
+    try:
+        service = _get_bancaribe_service()
+        #resultado = await service.procesar_notificacion(payload.dict() if isinstance(payload, BancaribenotificationsRequest) else payload)
+        resultado = await service.consulta_operaciones(payload)
+        #return BancaribenotificationsResponse(**resultado)
+        return (resultado)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error(f"Error en Bancaribe /consultaoperaciones: {exc}")
         raise HTTPException(status_code=500, detail=str(exc))
 
 
-# @router_bancaribe.post("/R4consulta", response_model=R4ConsultaResponse, summary="Bancaribe - Consulta de cliente")
-# async def bancaribe_r4consulta(
-#     payload: R4ConsultaRequest = Body(...),
-#     request: Request = None,
-#     _ip=Depends(auth.ip_whitelist_middleware),
-# ):
-#     try:
-#         service = _get_bancaribe_service()
-#         resultado = await service.consulta_cliente(payload.dict())
 
-#         # Si el servicio no devuelve "status", aplicamos una conversión segura.
-#         if "status" in resultado:
-#             status_value = bool(resultado.get("status"))
-#         else:
-#             code = str(resultado.get("code", ""))
-#             status_value = code == "00"
-
-#         if request is not None:
-#             logger.info(
-#                 "Bancaribe consulta cliente %s en %s -> %s",
-#                 payload.IdCliente,
-#                 request.scope["route"].path,
-#                 status_value,
-#             )
-
-#         return R4ConsultaResponse(status=status_value)
-#     except HTTPException:
-#         raise
-#     except Exception as exc:
-#         logger.error(f"Error en Bancaribe R4consulta: {exc}")
-#         raise HTTPException(status_code=500, detail=str(exc))
-
-
-# @router_bancaribe.post("/R4notifica", response_model=R4NotificaResponse, summary="Bancaribe - Notificacion de pago")
-# async def bancaribe_r4notifica(
-#     payload: R4NotificaRequest = Body(...),
-#     _ip=Depends(auth.ip_whitelist_middleware),
-# ):
-#     try:
-#         service = _get_bancaribe_service()
-#         resultado = await service.procesar_notificacion(payload.dict())
-
-#         if "abono" in resultado:
-#             abono = bool(resultado.get("abono"))
-#         else:
-#             code = str(resultado.get("code", ""))
-#             abono = code == "00"
-
-#         return R4NotificaResponse(abono=abono)
-#     except HTTPException:
-#         raise
-#     except Exception as exc:
-#         logger.error(f"Error en Bancaribe R4notifica: {exc}")
-#         raise HTTPException(status_code=500, detail=str(exc))

@@ -100,8 +100,8 @@ class Config:
     REQUEST_TIMEOUT = 30
     BANCO_IPS_PERMITIDAS = [ip for ip in os.getenv("BANCO_IPS_PERMITIDAS", "").split(",") if ip]
     # Incluimos localhost para pruebas locales cuando no hay lista explícita o cuando DEBUG está activo.
-    if DEBUG or not BANCO_IPS_PERMITIDAS:
-        BANCO_IPS_PERMITIDAS.append("127.0.0.1")
+    # if DEBUG or not BANCO_IPS_PERMITIDAS:
+    #     BANCO_IPS_PERMITIDAS.append("127.0.0.1")
     BANCO_IPS_PERMITIDAS = tuple(BANCO_IPS_PERMITIDAS) # Convertir a tupla para inmutabilidad
     R4_REINTENTOS = int(os.getenv("CONSULTAR_OPERACIONES_REINTENTOS", 0))
     
