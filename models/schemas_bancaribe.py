@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 # BaseModel: Clase base para crear esquemas de datos
 # Field: Para agregar validaciones y descripciones a los campos
 
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any,List
 # Optional: Para campos que pueden ser nulos
 # Dict: Para diccionarios (clave-valor)
 # Any: Para cualquier tipo de dato
@@ -14,6 +14,11 @@ from typing import Optional, Dict, Any
 
 # ESQUEMAS PARA CONSULTA DE TASA BCV
 # ==================================
+class TasaBcv(BaseModel):
+    fechavalor: str
+    tipocambio: str
+    valor: float
+
 class BancaribeBcvRequest(BaseModel):
     """
     DATOS QUE RECIBIMOS PARA CONSULTAR LA TASA DEL BCV
@@ -32,8 +37,9 @@ class BancaribeBcvRequest(BaseModel):
     - Fechavalor: Fecha para la cual queremos la tasa (formato: YYYY-MM-DD)
     """
     
-    Moneda: str  # Código de moneda (obligatorio)
-    Fechavalor: str  # Fecha en formato YYYY-MM-DD (obligatorio)
+    Moneda: str  
+    FechaInicio: str  
+    FechaFin: str  
 
 class RBancaribeBcvResponse(BaseModel):
     """
@@ -53,10 +59,9 @@ class RBancaribeBcvResponse(BaseModel):
     
     Esto significa: El 15 de enero de 2024, 1 USD = 36.5314 VES
     """
-    
-    code: str  # Código de resultado ("00" = exitoso)
-    fechavalor: str  # Fecha consultada
-    tipocambio: float  # Valor de la tasa de cambio
+    listatasa: List  # Lista de tasas (puede ser vacía)
+    # fechavalor: str  # Fecha consultada
+    # tipocambio: float  # Valor de la tasa de cambio
 
 
 # ESQUEMAS PARA CONSULTA DE OPERACONES

@@ -6,6 +6,8 @@ from core import auth
 from models.schemas_bancaribe import (
     BancaribenotificationsRequest,
     BancaribenotificationsResponse,
+    BancaribeBcvRequest,
+    RBancaribeBcvResponse
 )
 
 logger = logging.getLogger(__name__)
@@ -89,13 +91,12 @@ async def bancaribe_consulta_operaciones(
 
 @router_bancaribe.post("/BCV", summary="Bancaribe - Consulta de tasa BCV")#response_model=BancaribenotificationsResponse, summary="Bancaribe - Consulta de operaciones")
 async def bancaribe_consulta_bcv(
-    payload: Dict[str, Any] = Body(...),#payload: Dict[str, Any] = Body(...),   #payload: BancaribenotificationsRequest = Body(...),
+    payload: BancaribeBcvRequest = Body(...),#payload: Dict[str, Any] = Body(...),   #payload: BancaribenotificationsRequest = Body(...),
     _ip=Depends(auth.ip_whitelist_middleware),
 ):
     try:
         service = _get_bancaribe_service()
-        #resultado = await service.procesar_notificacion(payload.dict() if isinstance(payload, BancaribenotificationsRequest) else payload)
-        resultado = await service.bcv(payload)
+        resultado = await service.bcv(payload.dict() if isinstance(payload, BancaribeBcvRequest) else payload)
         #return BancaribenotificationsResponse(**resultado)
         return (resultado)
     except HTTPException:

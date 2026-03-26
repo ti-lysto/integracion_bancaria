@@ -122,9 +122,7 @@ class BancoBancaribeService:
                 except Exception as exc:
                     logger.error(f"Error en intento {intento} consultando operaciones a Bancaribe: {exc}")
                     continue
-            # if response.status_code >= 400:
-            #     logger.error(f"Error consultando operaciones a Bancaribe: {response.status_code} - {response.text}")
-            #     return {"error": "No se pudo consultar operaciones en Bancaribe"}
+            
             return {"error": f"No se pudo consultar operaciones en Bancaribe luego de {get_bancaribe_config().get('reintentos', 0)+1} intentos"}
         except Exception as exc:
             logger.error(f"Error consultando operaciones en Bancaribe: {exc}")
@@ -134,175 +132,38 @@ class BancoBancaribeService:
     async def bcv(payload: Dict[str, Any]) -> Dict[str, Any]:
         """Consulta tasa BCV en Bancaribe, con fallback seguro si falla el banco."""
 
-        # tokenresponse=await BancoBancaribeService.solicito_token()
-        # token=tokenresponse.get("access_token")
-        # header=BancoBancaribeService._build_headers("consultaoperaciones", token)
+        tokenresponse=await BancoBancaribeService.solicito_token()
+        token=tokenresponse.get("access_token")
+        header=BancoBancaribeService._build_headers("consultaoperaciones", token)
         url=get_bancaribe_config().get("bc_bcv_url")
+        if not url:
+            logger.error("URL de consulta BCV no configurada en bancaribe_config")
+            return {"error": "URL de consulta BCV no configurada"}
         body={
             "hash": get_bancaribe_config().get("hash"),
-            "idTasa": "TACOMPDOLAR" if payload.get("moneda") == "USD" else "TACOMPEURO" if payload.get("moneda") == "EUR" else ""   ,
-            #"idTasa": "",
+            "idTasa": "TACOMPDOLAR" if payload.get("Moneda") == "USD" else "TACOMPEURO" if payload.get("Moneda") == "EUR" else ""   ,
             "cedulaRif": Config.RIF.replace("-",""),
-            "fechaInicio": payload.get("fechaInicio", ""),
-            "fechaFin": payload.get("fechaFin", "")
+            "fechaInicio": payload.get("FechaInicio", "").replace("-","/"),
+            "fechaFin": payload.get("FechaFin", "").replace("-","/")
         }
-        print (f"URL de consulta BCV: {url} Payload: {payload}")
-        return {"payload": payload, "body": body}
-    
+        # print (f"URL de consulta BCV: {url} Payload: {body}")
+        import httpx
+        try:
+            for intento in range(int(get_bancaribe_config().get("reintentos", 0)) ):
+                try:
+                    # print (f" Consultando BCV a Bancaribe, url: {url} body: {body} header: {header}")
+                    async with httpx.AsyncClient() as client:
+                        response = await client.post(url, json=body, headers=header)
+                    if response.status_code < 400:
+                        # print (f"Respuesta BCV de Bancaribe: {response}")
+                        return response.json().get("listTasasActuales") if response.json().get("listTasasActuales") else response.json().get("listTasaHistorico", {})
+                except Exception as exc:
+                    logger.error(f"Error en intento {intento} consultando BCV a Bancaribe: {exc}")
+                    continue
+            
+        except Exception as exc:
+            logger.error(f"Error consultando BCV en Bancaribe: {exc}")
+            return {"error": "Error interno al consultar BCV en Bancaribe"}
+        return {"error": "No se pudo obtener tasa BCV de Bancaribe después de todos los intentos"}
 
 
-
-        #print (f"URL de consulta operaciones: {url} Header: {header} Payload: {payload}")
-        # if not url:
-        #     logger.error("URL de consulta operaciones no configurada en bancaribe_config")
-        #     return {"error": "URL de consulta operaciones no configurada"}
-        # try:
-        #     import httpx
-        #     for intento in range(int(get_bancaribe_config().get("reintentos", 0)) ):
-        #         try:
-        #             # print (f"Intento {intento} - Consultando operaciones a Bancaribe ")
-        #             async with httpx.AsyncClient() as client:
-        #                 response = await client.post(url, json=body, headers=header)
-        #             if response.status_code < 400:
-        #                 return response.json() if response.text else {}
-        #         except Exception as exc:
-        #             logger.error(f"Error en intento {intento} consultando operaciones a Bancaribe: {exc}")
-        #             continue
-        #     return {"error": f"No se pudo consultar operaciones en Bancaribe luego de {get_bancaribe_config().get('reintentos', 0)+1} intentos"}
-        # except Exception as exc:
-        #     logger.error(f"Error consultando operaciones en Bancaribe: {exc}")
-        #     return {"error": "Error interno al consultar operaciones en Bancaribe"} 
-        
-    
-
-
-
-
-    # @staticmethod
-    # def _map_bcv_response(data: Dict[str, Any], fecha_valor: str) -> Dict[str, Any]:
-    #     code = str(data.get("code") or data.get("codigo") or "01")
-    #     tipo_cambio_raw = data.get("tipocambio", data.get("tasa", 0.0))
-    #     try:
-    #         tipo_cambio = float(tipo_cambio_raw)
-    #     except (TypeError, ValueError):
-    #         tipo_cambio = 0.0
-
-    #     return {
-    #         "code": code,
-    #         "fechavalor": str(data.get("fechavalor") or fecha_valor),
-    #         "tipocambio": tipo_cambio,
-    #     }
-
-    # @staticmethod
-    # async def procesar_consulta_bcv(moneda: str, fecha_valor: str) -> Dict[str, Any]:
-    #     """Consulta tasa BCV en Bancaribe, con fallback seguro si falla el banco."""
-    #     logger.info("Consultando tasa BCV en Bancaribe para %s - %s", moneda, fecha_valor)
-
-    #     if not moneda or not fecha_valor:
-    #         return {"code": "01", "fechavalor": fecha_valor or "", "tipocambio": 0.0}
-
-    #     config = BancoBancaribeService._get_config()
-    #     consulta_url = config.get("consulta_url")
-
-    #     if not consulta_url:
-    #         logger.warning("BC_CONSULTA_DE_OPERACIONES_URL no configurada, devolviendo fallback")
-    #         return {"code": "01", "fechavalor": fecha_valor, "tipocambio": 0.0}
-
-    #     payload = {
-    #         "Moneda": str(moneda).upper(),
-    #         "Fechavalor": fecha_valor,
-    #     }
-
-    #     try:
-    #         import httpx
-
-    #         headers = BancoBancaribeService._build_headers("")
-    #         async with httpx.AsyncClient(timeout=config.get("timeout", 30)) as client:
-    #             response = await client.post(consulta_url, json=payload, headers=headers)
-
-    #         logger.info(
-    #             "Consulta BCV Bancaribe enviada. URL=%s Status=%s",
-    #             consulta_url,
-    #             response.status_code,
-    #         )
-
-    #         if response.status_code >= 400:
-    #             logger.error("Error HTTP Bancaribe consulta BCV: %s - %s", response.status_code, response.text)
-    #             return {"code": "01", "fechavalor": fecha_valor, "tipocambio": 0.0}
-
-    #         data = response.json() if response.text else {}
-    #         return BancoBancaribeService._map_bcv_response(data, fecha_valor)
-
-    #     except Exception as exc:
-    #         logger.error("Error consultando BCV en Bancaribe: %s", exc)
-    #         return {"code": "01", "fechavalor": fecha_valor, "tipocambio": 0.0}
-
-    # @staticmethod
-    # async def procesar_consulta_cliente(
-    #     id_cliente: str,
-    #     monto: str | None = None,
-    #     telefono: str | None = None,
-    #     endpoint: str = "",
-    # ) -> Dict[str, Any]:
-    #     """Consulta de cliente alineada al contrato R4 (retorna {'status': bool})."""
-    #     try:
-    #         logger.info(
-    #             "Consulta cliente Bancaribe id=%s monto=%s telefono=%s endpoint=%s",
-    #             id_cliente,
-    #             monto,
-    #             telefono,
-    #             endpoint,
-    #         )
-    #         return {"status": bool(id_cliente)}
-    #     except Exception as exc:
-    #         logger.error("Error en consulta cliente Bancaribe: %s", exc)
-    #         return {"status": False}
-
-    # @staticmethod
-    # async def procesar_notificacion_pago(datos: Dict[str, Any]) -> Dict[str, Any]:
-    #     """Procesa notificacion y persiste con el mismo patron usado en R4."""
-    #     try:
-    #         from db import connector as repository
-
-    #         resultado = await repository.guardar_transaccion_sp(datos)
-    #         out_params = resultado.get("out_params", {}) if isinstance(resultado, dict) else {}
-    #         mensaje_sp = out_params.get("p_mensaje", "")
-    #         codigo_sp = out_params.get("p_codigo", 0)
-    #         abono = codigo_sp == 1
-
-    #         logger.info(
-    #             "Notificacion Bancaribe procesada. codigo=%s mensaje=%s",
-    #             codigo_sp,
-    #             mensaje_sp,
-    #         )
-    #         return {"abono": abono, "mensaje": mensaje_sp, "codigo": codigo_sp}
-    #     except Exception as exc:
-    #         logger.error("Error procesando notificacion Bancaribe: %s", exc)
-    #         return {"abono": False, "mensaje": "error interno", "codigo": 0}
-
-    # @staticmethod
-    # async def consultar_tasa(payload: Dict[str, Any]) -> Dict[str, Any]:
-    #     """Wrapper compatible con endpoints existentes."""
-    #     # consultar token
-    #     token= await BancoBancaribeService.solicito_token({})
-    #     access_token = token.get("access_token") if token else None
-    #     if not access_token:
-    #         logger.error("No se pudo obtener access_token para consulta BCV en Bancaribe")
-    #         return {"code": "01", "fechavalor": payload.get("Fechavalor", ""), "tipocambio": 0.0}
-        
-    #     return await BancoBancaribeService.procesar_consulta_bcv(
-    #         payload.get("Moneda", ""),
-    #         payload.get("Fechavalor", ""),
-    #     )
-
-    # @staticmethod
-    # async def consulta_cliente(payload: Dict[str, Any]) -> Dict[str, Any]:
-    #     """Wrapper compatible con endpoints existentes."""
-    #     return await BancoBancaribeService.procesar_consulta_cliente(
-    #         payload.get("IdCliente", ""),
-    #         payload.get("Monto"),
-    #         payload.get("TelefonoComercio"),
-    #         payload.get("endpoint", ""),
-    #     )
-
-    
