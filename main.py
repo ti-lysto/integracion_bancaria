@@ -7,6 +7,7 @@ from fastapi import FastAPI
 
 from controllers.endpoints_r4 import router, router_r4
 from controllers.endpoints_bancaribe import router_bancaribe
+from controllers.endpoints_own import router as router_own
 from core.config import validate_config, setup_logging, get_api_config
 # Importamos controladores y configuraciones
 #from routers.bancos import router as bancos_router
@@ -81,9 +82,10 @@ except Exception as e:
 # REGISTRO DE RUTAS/ENDPOINTS
 # ===========================
 # Registrar todos los endpoints R4
-app.include_router(router, tags=["Integración Bancaria"])
+app.include_router(router_own, tags=["Integración Bancaria"])
 app.include_router(router_r4, tags=["R4 Conecta"])
 app.include_router(router_bancaribe, tags=["Bancaribe"])
+
 # Registrar router genérico para múltiples bancos (usa el mismo modelo R4 por ahora)
 #app.include_router(bancos_router, tags=["Bancos"])
 

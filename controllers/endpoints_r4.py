@@ -914,59 +914,59 @@ async def comprobacion_pago(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ENDPOINTS DE SISTEMA
-# ====================
-@router.get("/health")
-async def health_check():
-    from datetime import datetime
-    """Verificar estado de la API"""
-    try:        
-        db_ok = await test_connection()
-        status = "ok" if db_ok else "fail"
-        if not db_ok:
-            logger.error("Fallo en verificación de conexión a BD (SELECT 1)")
+# # ENDPOINTS DE SISTEMA
+# # ====================
+# @router.get("/health")
+# async def health_check():
+#     from datetime import datetime
+#     """Verificar estado de la API"""
+#     try:        
+#         db_ok = await test_connection()
+#         status = "ok" if db_ok else "fail"
+#         if not db_ok:
+#             logger.error("Fallo en verificación de conexión a BD (SELECT 1)")
         
-        return {
-            "message": "API integracion-bancaria funcionando correctamente",
-            "version": Config.API_VERSION,
-            "status BD": status,
-            "Conectado": db_ok,
-            "endpoints_count": [
-                {"Sistema": len(router.routes)},
-                {"Banco R4": len(router_r4.routes)}
-                ]
-        }
-    except Exception as err:
-        logger.exception(f"Error en health_check: {err}")
-        raise HTTPException(status_code=500, detail="Health check interno falló")
+#         return {
+#             "message": "API integracion-bancaria funcionando correctamente",
+#             "version": Config.API_VERSION,
+#             "status BD": status,
+#             "Conectado": db_ok,
+#             "endpoints_count": [
+#                 {"Sistema": len(router.routes)},
+#                 {"Banco R4": len(router_r4.routes)}
+#                 ]
+#         }
+#     except Exception as err:
+#         logger.exception(f"Error en health_check: {err}")
+#         raise HTTPException(status_code=500, detail="Health check interno falló")
     
-@router.get("/")
-async def root():
-    """Información básica de la API"""
-    return {
-        "name": "API integracion-bancaria",
-        "version": Config.API_VERSION,
-        "bancos_soportados": {
-            "R4 Conecta": {
-                "endpoints": [
-                    "/MBbcv",
-                    "/R4consulta",
-                    "/R4notifica", 
-                    "/R4pagos",
-                    "/MBvuelto",
-                    "/GenerarOtp",
-                    "/DebitoInmediato",
-                    "/CreditoInmediato",
-                    #"/TransferenciaOnline/DomiciliacionCNTA",
-                    #"/TransferenciaOnline/DomiciliacionCELE",
-                    "/ConsultarOperaciones",
-                    #"/CICuentas",
-                    "/MBc2p",
-                    "/MBanulacionC2P",
-                    "/verifico_pago",
-                    "/comprobacion_pago"
-                ]
-            }
-        },
-        "estado": "operativo"
-    }
+# @router.get("/")
+# async def root():
+#     """Información básica de la API"""
+#     return {
+#         "name": "API integracion-bancaria",
+#         "version": Config.API_VERSION,
+#         "bancos_soportados": {
+#             "R4 Conecta": {
+#                 "endpoints": [
+#                     "/MBbcv",
+#                     "/R4consulta",
+#                     "/R4notifica", 
+#                     "/R4pagos",
+#                     "/MBvuelto",
+#                     "/GenerarOtp",
+#                     "/DebitoInmediato",
+#                     "/CreditoInmediato",
+#                     #"/TransferenciaOnline/DomiciliacionCNTA",
+#                     #"/TransferenciaOnline/DomiciliacionCELE",
+#                     "/ConsultarOperaciones",
+#                     #"/CICuentas",
+#                     "/MBc2p",
+#                     "/MBanulacionC2P",
+#                     "/verifico_pago",
+#                     "/comprobacion_pago"
+#                 ]
+#             }
+#         },
+#         "estado": "operativo"
+#     }

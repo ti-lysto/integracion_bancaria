@@ -68,7 +68,7 @@ class BancoBancaribeService:
                     async with httpx.AsyncClient() as client:
                         response = await client.post(url, json=body, headers=header)
                     respuesta = response.json() 
-                    # print (f"Intento {intento} - token: {respuesta.get('access_token')if respuesta else 'No se obtuvo token'}")   
+                    print (f"Intento {intento} - respuesta token de Bancaribe: {respuesta}")   
                     if respuesta.get("access_token") and response.status_code < 400:
                         return {**respuesta}
                 except Exception as exc:
