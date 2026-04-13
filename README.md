@@ -39,11 +39,38 @@ API REST en Python/FastAPI para integrarse con el protocolo bancario R4 Conecta 
 ## Endpoints
 
 ### Consultas y Notificaciones
+
+### Endpoints Generales/Propios
+| Endpoint | Descripción | ¿Qué hace? |
+|----------|-------------|------------|
+| `GET /health` | Healthcheck | Verifica el estado de la API y la conexión a la base de datos |
+| `GET /` | Información básica | Devuelve información general de la API y bancos soportados |
+
+### Endpoints R4 Conecta
 | Endpoint | Descripción | ¿Qué hace? |
 |----------|-------------|------------|
 | `POST /MBbcv` | Consulta tasa BCV | Obtiene el valor oficial del dólar según el BCV |
 | `POST /R4consulta` | Consulta de cliente | Verifica si un cliente puede recibir pagos |
 | `POST /R4notifica` | Notificación de pago | Recibe avisos de pagos móviles que nos llegan |
+| `POST /R4pagos` | Dispersión de pagos | Envía dinero a múltiples personas de una vez |
+| `POST /MBvuelto` | Procesamiento de vuelto | Devuelve dinero a un cliente |
+| `POST /GenerarOtp` | Generar código OTP | Solicita código temporal para autorizar operaciones |
+| `POST /DebitoInmediato` | Débito inmediato | Cobra dinero directamente de la cuenta del cliente |
+| `POST /CreditoInmediato` | Crédito inmediato | Envía dinero directamente a la cuenta del cliente |
+| `POST /CICuentas` | Crédito con cuenta | Envía dinero usando número de cuenta completo |
+| `POST /TransferenciaOnline/DomiciliacionCNTA` | Domiciliación por cuenta | Configura cobros automáticos usando número de cuenta |
+| `POST /TransferenciaOnline/DomiciliacionCELE` | Domiciliación por teléfono | Configura cobros automáticos usando teléfono |
+| `POST /MBc2p` | Cobro C2P | Cobra directamente al cliente en punto de venta |
+| `POST /MBanulacionC2P` | Anulación C2P | Cancela un cobro C2P previamente realizado |
+| `POST /ConsultarOperaciones` | Consultar operaciones | Verifica el estado de operaciones pendientes |
+
+### Endpoints Bancaribe
+| Endpoint | Descripción | ¿Qué hace? |
+|----------|-------------|------------|
+| `POST /bancaribe/token` | Generar token de autenticación | Solicita y obtiene un token JWT válido para operaciones Bancaribe |
+| `POST /bancaribe/notifications` | Notificación de transacciones | Recibe notificaciones de operaciones realizadas en Bancaribe |
+| `POST /bancaribe/consultaoperaciones` | Consulta de operaciones | Consulta el estado de una operación específica en Bancaribe |
+| `POST /bancaribe/BCV` | Consulta de tasa BCV | Obtiene la tasa oficial BCV reportada por Bancaribe |
 
 ### Gestión de Pagos
 | Endpoint | Descripción | ¿Qué hace? |
@@ -422,6 +449,62 @@ print(response.json())
 #     "fechavalor": "2024-01-15",
 #     "tipocambio": 36.5314
 # }
+```
+
+### Ejemplo Bancaribe: Obtener Token
+
+```python
+import requests
+
+base_url = "http://localhost:8000"
+
+# Hacer petición para obtener token
+response = requests.post(f"{base_url}/bancaribe/token")
+print(response.json())
+# Salida esperada:
+# { "access_token": "...", "expires_in": 3600, ... }
+```
+
+### Ejemplo Bancaribe: Consulta de Operaciones
+
+```python
+import requests
+
+base_url = "http://localhost:8000"
+token = "token_obtenido_previamente"
+payload = {
+    "referencia": "REF123456",
+    "montoTransaccion": "1000.00",
+    "ci": "V12345678",
+    "telefono": "04141234567",
+    "fecha": "2024-01-15"
+}
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {token}"
+}
+response = requests.post(f"{base_url}/bancaribe/consultaoperaciones", json=payload, headers=headers)
+print(response.json())
+```
+
+### Ejemplo Bancaribe: Consulta de tasa BCV
+
+```python
+import requests
+
+base_url = "http://localhost:8000"
+token = "token_obtenido_previamente"
+payload = {
+    "Moneda": "USD",
+    "FechaInicio": "2024-01-01",
+    "FechaFin": "2024-01-15"
+}
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {token}"
+}
+response = requests.post(f"{base_url}/bancaribe/BCV", json=payload, headers=headers)
+print(response.json())
 ```
 
 ### Ejemplo 2: Procesar Dispersión de Pagos

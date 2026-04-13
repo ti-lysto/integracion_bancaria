@@ -631,7 +631,7 @@ async def guardar_transaccion_sp(datos: Dict[str, Any]) -> Dict[str, Any]:
         parametros_out = ("p_mensaje", "p_codigo")
         
         # EJECUCIÓN DEL PROCEDIMIENTO ALMACENADO
-        from db.connector import ejecutar_sp_generico
+        #from db.connector import ejecutar_sp_generico
         resultado = await ejecutar_sp_generico(            
             proc_name, 
             parametros_in, 
@@ -807,6 +807,69 @@ async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Di
         # Cerrar el pool de conexiones para liberar recursos
         await close_connection_pool()
 
+async def   proceso_notificaciones (filtros: Dict[str, Any], banco: str) -> Dict[str, Any]:
+    """
+    Orquesta el proceso completo de consulta y comprobación de notificación.
+    Primero consulta la notificación por referencia y luego procesa la comprobación.
+    """
+    codigobanco=Config.get_codigo_banco(banco)
+    print(f"Banco: {banco}, Código asignado: {codigobanco}")
+    try:
+        match banco:
+            case "BanCaribe":
+                sp_nombre="sp_proceso_notificacion_bancaribe"
+                
+                parametros_in = (
+                    filtros.get("destinyBankReference", ""),
+                    filtros.get("originBankReference", ""),
+                    filtros.get("originBankCode", ""),
+                    filtros.get("IdComercio", ""),
+                    filtros.get("documento_destino", ""),
+                    filtros.get("debtorID", ""),
+                    filtros.get("nombre_cliente", ""),
+                    filtros.get("amount", ""),
+                    filtros.get("currencyCode", ""),
+                    datetime.strptime(f"{filtros.get('date', '')} {filtros.get('time', '')}", "%d-%m-%Y %H:%M:%S"),
+                    f"Notificación de {filtros.get('paymentType', '')} recibida de: {filtros.get('bankName', '')}",
+                    filtros.get("debtorAccount", ""),
+                    filtros.get("creditorAccount", ""),
+                    filtros.get("clientPhone", ""),
+                    filtros.get("commercePhone", ""),
+                    filtros.get("paymentType", ""),
+                    json.dumps(filtros)
+                )   
+                parametros_out = ("p_mensaje", "p_procesado")
+                from db.connector import ejecutar_sp_generico
+                print (f"ejscutando sp: {sp_nombre} con parametros in {parametros_in} out {parametros_out}")
+                resultado = await ejecutar_sp_generico(            
+                    sp_nombre, 
+                    parametros_in, 
+                    parametros_out
+                )
+                print ("Resultado SP completo:", resultado)
+            case "r4":
+                sp_nombre=""
+                filtros["Banco"] = "002"
+            case _:
+                logger.warning(f"Banco no reconocido: {banco}. Se usará el valor proporcionado en filtros.")
+        
+        
+        
+        return {
+            "exito": True,
+            # "consulta_result": consulta_result,
+            # "comprobacion_result": comprobacion_result
+        }
+        
+    except Exception as e:
+        logger.error(f"Error en proceso_notificaciones_orquestado: {str(e)}")
+        return {
+            "exito": False,
+            "error": str(e)
+        }
+    finally:
+        # Cerrar el pool de conexiones para liberar recursos
+        await close_connection_pool()
 
 
 # INFORMACIÓN ADICIONAL SOBRE ESTE ARCHIVO
