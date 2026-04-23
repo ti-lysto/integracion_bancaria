@@ -4,10 +4,17 @@ import hashlib
 import logging
 import uuid
 import base64
+import os
+import json
 from fastapi import HTTPException, Header, Request, Depends
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.backends import default_backend
 from typing import Optional, Dict, Any, List
 from core.config import get_r4_config
 from core.config import get_bancaribe_config
+from core.config import get_encryption_config
 
 logger = logging.getLogger(__name__)
 
@@ -504,4 +511,108 @@ class BancaribeAuth:
         else:
             logger.warning(f"Token de Bancaribe inválido: {token}")
             raise HTTPException(status_code=401, detail="Token de autenticación de Bancaribe inválido")
+
+class encryption_bd:
+    """Clase de autenticación específica para encriptación de datos en la base de datos.
+    Aquí podemos implementar métodos para encriptar y desencriptar datos sensibles
+    usando la clave definida en configuración.
+    """
+
+    def __init__(self):
+        try:
+            self.config = get_encryption_config()
+            self.encrypt_method = self.config.get("algorithm", "")
+            self.enc_key = self.config.get("enc_key", "").encode('utf-8')
+            self.iterations = self.config.get("iterations", 0)
+            self.backend = default_backend()
+
+            if not self.enc_key:
+                logger.warning("Clave de encriptación no configurada")
+
+        except Exception as e:
+            logger.error(f"Error inicializando encriptación: {str(e)}")
+            raise
+        
+    def _pad(self, data: bytes, block_size: int = 16) -> bytes:
+        """
+        Aplicar padding PKCS7 (compatible con OpenSSL en PHP)
+        
+        Args:
+            data: Datos a padding
+            block_size: Tamaño del bloque (16 para AES)
+            
+        Returns:
+            Datos con padding aplicado
+        """
+        padding_length = block_size - (len(data) % block_size)
+        return data + bytes([padding_length] * padding_length)
+    
+    def _unpad(self, data: bytes) -> bytes:
+        """
+        Remover padding PKCS7
+        
+        Args:
+            data: Datos con padding
+            
+        Returns:
+            Datos originales sin padding
+        """
+        if not data:
+            raise ValueError("No hay datos para unpadding")
+        
+        padding_length = data[-1]
+        
+        # Validar que el padding sea correcto
+        if padding_length > 16:
+            raise ValueError(f"Padding inválido: {padding_length} > 16")
+        
+        # Verificar que todos los bytes de padding sean iguales
+        for i in range(1, padding_length + 1):
+            if data[-i] != padding_length:
+                raise ValueError("Padding corrupto")
+        
+        return data[:-padding_length]
+    
+    def _derive_key(self, salt: bytes) -> bytes:
+        """
+        Derivar clave usando PBKDF2 (compatible con PHP)
+        
+        Args:
+            salt: Sal aleatoria (256 bytes)
+            
+        Returns:
+            Clave derivada de 32 bytes (256 bits)
+        """
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA512(),
+            length=32,  # 32 bytes = 256 bits para AES-256
+            salt=salt,
+            iterations=self.iterations,
+            backend=self.backend
+        )
+        return kdf.derive(self.enc_key)
+    
+
+    def encrypt(self, plaintext: str) -> str:
+        """Encriptar un texto plano usando la clave de encriptación."""
+        try:
+            # Aquí podríamos implementar un método de encriptación real, por ejemplo AES
+            # Para este ejemplo, simplemente haremos una codificación base64 como placeholder
+            encoded_bytes = base64.b64encode(plaintext.encode('utf-8'))
+            return encoded_bytes.decode('utf-8')
+        except Exception as e:
+            logger.error(f"Error encriptando datos: {str(e)}")
+            raise
+
+    def decrypt(self, ciphertext: str) -> str:
+        """Desencriptar un texto cifrado usando la clave de encriptación."""
+        try:
+            # Aquí podríamos implementar un método de desencriptación real, por ejemplo AES
+            # Para este ejemplo, simplemente haremos una decodificación base64 como placeholder
+            decoded_bytes = base64.b64decode(ciphertext.encode('utf-8'))
+            return decoded_bytes.decode('utf-8')
+        except Exception as e:
+            logger.error(f"Error desencriptando datos: {str(e)}")
+            raise
+
 

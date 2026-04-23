@@ -153,6 +153,21 @@ def get_database_config() -> Dict[str, Any]:
         # "maxsize": Config.DB_POOL_MAX_SIZE
     }
 
+def get_encryption_config() -> Dict[str, Any]:
+    """
+    OBTENER CONFIGURACIÓN DE ENCRIPTACIÓN
+    
+    ¿Qué incluye?
+    - Clave de encriptación para datos sensibles
+    - Algoritmo de encriptación utilizado
+    - Parámetros de seguridad adicionales
+    """
+    return {
+        "enc_key": os.getenv("ENCKEY", ""),
+        "algorithm": os.getenv("ALGORITMO_ENCRYPTACION",""),
+        "iterations": int(os.getenv("ITERACIONES", 0))
+    }
+
 def get_api_config() -> Dict[str, Any]:
     """
     OBTENER CONFIGURACIÓN DE LA API

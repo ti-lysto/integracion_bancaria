@@ -181,7 +181,7 @@ BANCO_IPS_PERMITIDAS = [
 
 ```bash
 # Si estás parado en la carpeta raiz del repo (que contiene la carpeta app/):
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 application:application #Azure
 # gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 app.application:application #Azure
 
