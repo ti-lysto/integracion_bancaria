@@ -594,25 +594,234 @@ class encryption_bd:
     
 
     def encrypt(self, plaintext: str) -> str:
-        """Encriptar un texto plano usando la clave de encriptación."""
+        """
+        Encriptar un texto plano (COMPATIBLE CON PHP)
+        
+        Args:
+            plaintext: Texto plano a encriptar
+            
+        Returns:
+            String encriptado en formato base64(JSON)
+            
+        Ejemplo:
+            encrypted = enc.encrypt("nombre=Juan&email=juan@example.com")
+        """
         try:
-            # Aquí podríamos implementar un método de encriptación real, por ejemplo AES
-            # Para este ejemplo, simplemente haremos una codificación base64 como placeholder
-            encoded_bytes = base64.b64encode(plaintext.encode('utf-8'))
-            return encoded_bytes.decode('utf-8')
+            if not self.enc_key:
+                raise ValueError("Clave de encriptación no configurada en .env")
+            
+            # Generar IV (16 bytes para AES-CBC)
+            iv = os.urandom(16)
+            
+            # Generar salt (256 bytes como en PHP)
+            salt = os.urandom(256)
+            
+            # Derivar clave
+            key = self._derive_key(salt)
+            
+            # Aplicar padding a los datos
+            padded_data = self._pad(plaintext.encode('utf-8'))
+            
+            # Crear cipher y encriptar
+            cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=self.backend)
+            encryptor = cipher.encryptor()
+            encrypted = encryptor.update(padded_data) + encryptor.finalize()
+            
+            # Codificar en base64
+            ciphertext_b64 = base64.b64encode(encrypted).decode('utf-8')
+            
+            # Construir el output (mismo formato que PHP)
+            output = {
+                'ciphertext': ciphertext_b64,
+                'iv': iv.hex(),
+                'salt': salt.hex(),
+                'iterations': self.iterations
+            }
+            
+            # Retornar base64(JSON)
+            result = base64.b64encode(json.dumps(output).encode('utf-8')).decode('utf-8')
+            
+            logger.debug(f"✅ Datos encriptados exitosamente. Longitud: {len(result)}")
+            return result
+            
         except Exception as e:
-            logger.error(f"Error encriptando datos: {str(e)}")
-            raise
+            logger.error(f"❌ Error encriptando datos: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Error de encriptación: {str(e)}")
+    
 
-    def decrypt(self, ciphertext: str) -> str:
-        """Desencriptar un texto cifrado usando la clave de encriptación."""
+    def decrypt(self, encrypted_string: str) -> Dict[str, Any]:
+        """
+        Desencriptar y convertir a diccionario (COMPATIBLE CON PHP)
+        
+        Args:
+            encrypted_string: String encriptado en formato base64(JSON)
+            
+        Returns:
+            Diccionario con los datos desencriptados
+            
+        Ejemplo:
+            data = enc.decrypt(encrypted_string)
+            print(data['nombre'])  # 'Juan'
+        """
         try:
-            # Aquí podríamos implementar un método de desencriptación real, por ejemplo AES
-            # Para este ejemplo, simplemente haremos una decodificación base64 como placeholder
-            decoded_bytes = base64.b64decode(ciphertext.encode('utf-8'))
-            return decoded_bytes.decode('utf-8')
+            if not self.enc_key:
+                raise ValueError("Clave de encriptación no configurada")
+            
+            # Decodificar el string base64 para obtener el JSON
+            json_str = base64.b64decode(encrypted_string).decode('utf-8')
+            data = json.loads(json_str)
+            
+            # Extraer componentes
+            salt = bytes.fromhex(data['salt'])
+            iv = bytes.fromhex(data['iv'])
+            ciphertext = base64.b64decode(data['ciphertext'])
+            iterations = int(data.get('iterations', 999))
+            
+            # Derivar la misma clave
+            kdf = PBKDF2HMAC(
+                algorithm=hashes.SHA512(),
+                length=32,
+                salt=salt,
+                iterations=iterations,
+                backend=self.backend
+            )
+            key = kdf.derive(self.enc_key)
+            
+            # Descifrar
+            cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=self.backend)
+            decryptor = cipher.decryptor()
+            decrypted_padded = decryptor.update(ciphertext) + decryptor.finalize()
+            
+            # Remover padding
+            decrypted = self._unpad(decrypted_padded)
+            
+            # Decodificar a string
+            decrypted_str = decrypted.decode('utf-8')
+            
+            # Convertir a diccionario (como parse_str en PHP)
+            result = self._parse_str(decrypted_str)
+            
+            logger.debug(f"✅ Datos desencriptados exitosamente. Campos: {len(result)}")
+            return result
+            
         except Exception as e:
-            logger.error(f"Error desencriptando datos: {str(e)}")
-            raise
+            logger.error(f"❌ Error desencriptando datos: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Error de desencriptación: {str(e)}")
+    
+    def decrypt_free(self, encrypted_string: str) -> str:
+        """
+        Desencriptar y retornar string puro (COMPATIBLE CON PHP)
+        
+        Args:
+            encrypted_string: String encriptado en formato base64(JSON)
+            
+        Returns:
+            String plano desencriptado
+            
+        Ejemplo:
+            text = enc.decrypt_free(encrypted_string)
+            # "nombre=Juan&email=juan@example.com&edad=30"
+        """
+        try:
+            if not self.enc_key:
+                raise ValueError("Clave de encriptación no configurada")
+            
+            # Decodificar el string base64 para obtener el JSON
+            json_str = base64.b64decode(encrypted_string).decode('utf-8')
+            data = json.loads(json_str)
+            
+            # Extraer componentes
+            salt = bytes.fromhex(data['salt'])
+            iv = bytes.fromhex(data['iv'])
+            ciphertext = base64.b64decode(data['ciphertext'])
+            iterations = int(data.get('iterations', 999))
+            
+            # Derivar la misma clave
+            kdf = PBKDF2HMAC(
+                algorithm=hashes.SHA512(),
+                length=32,
+                salt=salt,
+                iterations=iterations,
+                backend=self.backend
+            )
+            key = kdf.derive(self.enc_key)
+            
+            # Descifrar
+            cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=self.backend)
+            decryptor = cipher.decryptor()
+            decrypted_padded = decryptor.update(ciphertext) + decryptor.finalize()
+            
+            # Remover padding
+            decrypted = self._unpad(decrypted_padded)
+            
+            # Reemplazar + por %2B (compatible con PHP)
+            result = decrypted.decode('utf-8').replace('+', '%2B')
+            
+            logger.debug(f"✅ Datos desencriptados free exitosamente")
+            return result
+            
+        except Exception as e:
+            logger.error(f"❌ Error desencriptando datos (free): {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Error de desencriptación: {str(e)}")
+    
+    def _parse_str(self, query_string: str) -> Dict[str, Any]:
+        """
+        Simular parse_str de PHP
+        
+        Args:
+            query_string: String en formato "clave1=valor1&clave2=valor2"
+            
+        Returns:
+            Diccionario con los pares clave=valor
+        """
+        result = {}
+        
+        if not query_string:
+            return result
+        
+        # Reemplazar + por %2B (compatible con PHP)
+        query_string = query_string.replace('+', '%2B')
+        
+        # Decodificar percent-encoding
+        from urllib.parse import unquote
+        query_string = unquote(query_string)
+        
+        # Parsear cada par
+        for pair in query_string.split('&'):
+            if '=' in pair:
+                key, value = pair.split('=', 1)
+                result[key] = value
+            elif pair:  # Clave sin valor
+                result[pair] = ''
+        
+        return result
+    
+    def encrypt_dict(self, data_dict: Dict[str, Any]) -> str:
+        """
+        Encriptar un diccionario directamente
+        
+        Args:
+            data_dict: Diccionario a encriptar
+            
+        Returns:
+            String encriptado
+            
+        Ejemplo:
+            data = {"nombre": "Juan", "email": "juan@email.com"}
+            encrypted = enc.encrypt_dict(data)
+        """
+        # Convertir diccionario a string formato query
+        query_string = '&'.join([f"{k}={v}" for k, v in data_dict.items()])
+        return self.encrypt(query_string)
+    
+    def decrypt_to_dict(self, encrypted_string: str) -> Dict[str, Any]:
+        """
+        Desencriptar directamente a diccionario (alias de decrypt)
+        """
+        return self.decrypt(encrypted_string)
+
+
+# Instancia global para usar en toda la aplicación
+encryption_service = encryption_bd()
 
 
