@@ -592,7 +592,6 @@ class encryption_bd:
         )
         return kdf.derive(self.enc_key)
     
-
     def encrypt(self, plaintext: str) -> str:
         """
         Encriptar un texto plano (COMPATIBLE CON PHP)
@@ -648,7 +647,6 @@ class encryption_bd:
             logger.error(f"❌ Error encriptando datos: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Error de encriptación: {str(e)}")
     
-
     def decrypt(self, encrypted_string: str) -> Dict[str, Any]:
         """
         Desencriptar y convertir a diccionario (COMPATIBLE CON PHP)

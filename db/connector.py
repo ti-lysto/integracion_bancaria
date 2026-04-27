@@ -1,5 +1,5 @@
 """
-CONECTOR DE BASE DE DATOS PARA LA API R4 CONECTA
+CONECTOR DE BASE DE DATOS PARA LA API \
 ================================================
 
 Este archivo maneja todas las conexiones a la base de datos MySQL.
@@ -807,7 +807,7 @@ async def guardar_transito_sp(filtros: Dict[str, Any], datos_identificadores: Di
         # Cerrar el pool de conexiones para liberar recursos
         await close_connection_pool()
 
-async def   proceso_notificaciones (filtros: Dict[str, Any], banco: str) -> Dict[str, Any]:
+async def proceso_notificaciones (filtros: Dict[str, Any], banco: str) -> Dict[str, Any]:
     """
     Orquesta el proceso completo de consulta y comprobación de notificación.
     Primero consulta la notificación por referencia y luego procesa la comprobación.
@@ -871,6 +871,55 @@ async def   proceso_notificaciones (filtros: Dict[str, Any], banco: str) -> Dict
         # Cerrar el pool de conexiones para liberar recursos
         await close_connection_pool()
 
+async def proceso_reportes_pagos_orquestado(filtros: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Orquesta el proceso completo de generación de reportes de pagos.
+    Primero consulta los pagos por referencia y luego procesa el o los pagos.
+    Todo desde la base de datos usando procedimientos almacenados para máxima eficiencia.
+    """
+    try:
+        proc_name="sp_proceso_reporte_pago"
+        parametros_in = (
+            filtros.get("codigo_banco", ""),
+            filtros.get("purchase_id", ""),
+            filtros.get("referencia", ""),
+            filtros.get("cedula", ""),
+            filtros.get("telefono", ""),
+            filtros.get("monto", ""),
+            filtros.get("fecha", ""),
+            filtros.get("concepto", ""),
+            filtros.get("tipo_pago", ""),
+            # json.dumps(filtros.get("json_data", ""))
+            json.dumps("")
+        )
+        parametros_out = ("p_codigo_resultado", "p_mensaje_resultado","p_payment_checked_id","p_users_id_procesado")
+        
+        from db.connector import ejecutar_sp_generico
+        print("Ejecutando SP:", proc_name, "con parámetros in:", parametros_in, "y parámetros OUT:", parametros_out)
+        resultado = await ejecutar_sp_generico(
+            proc_name,
+            parametros_in,
+            parametros_out
+        )
+        print("Resultado SP completo:", resultado)
+        # Paso 2: Procesar generación de reporte (lógica personalizada)
+        # Aquí puedes agregar la lógica para generar el reporte basado en los resultados de la consulta
+        
+        return {
+            "exito": True,
+            "consulta_result": resultado,
+            # "reporte_result": reporte_result
+        }
+        
+    except Exception as e:
+        logger.error(f"Error en proceso_reportes_pagos_orquestado: {str(e)}")
+        return {
+            "exito": False,
+            "error": str(e)
+        }
+    finally:
+        # Cerrar el pool de conexiones para liberar recursos
+        await close_connection_pool()
 
 # INFORMACIÓN ADICIONAL SOBRE ESTE ARCHIVO
 # ========================================

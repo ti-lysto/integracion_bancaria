@@ -6,8 +6,9 @@ import logging
 from db.connector import test_connection
 from typing import Dict, Any
 from pydantic import BaseModel
-from controllers.endpoints_r4 import router_r4
-from controllers.endpoints_bancaribe import router_bancaribe
+#from controllers.endpoints_r4 import router_r4
+#from controllers.endpoints_bancaribe import router_bancaribe
+from services.api_service import ApiService
 from fastapi.routing import APIRoute
 
 # CONFIGURACIÓN DEL ROUTER
@@ -28,6 +29,18 @@ class reportar_pago_request(BaseModel):
     payment_method: str  # Método de pago (ej: "tarjeta", "transferencia", etc.)
     timestamp: str  # Fecha y hora del pago (formato ISO 8601)
 
+def get_api_service():
+    try:
+        """Función para obtener una instancia del servicio general de la API."""
+        if not ApiService:
+            logger.error("ApiService no disponible")
+            raise Exception("ApiService no disponible")
+        return ApiService()
+    except Exception as exc:
+        logger.error(f"Error al obtener el servicio API: {exc}")
+        raise HTTPException(status_code=500, detail="Error interno al obtener el servicio API")
+
+
 # Reportar Pago - Endpoint para recibir notificaciones de pago desde la app móvil
 @router.post("/ReportarPago", summary="Endpoint para reportar un pago recibido")
 async def reportar_pago(
@@ -35,9 +48,11 @@ async def reportar_pago(
     _ip=Depends(auth.ip_whitelist_middleware)
 ):
     try:
+        servicio = get_api_service()
+        resultado = await servicio.procesar_reporte_pago(payload)
         logger.info(f"Recibido ReportarPago con payload: {payload}")
         # Aquí podríamos agregar lógica para procesar el pago, guardar en BD, etc.
-        return {"message": "Pago reportado exitosamente", "received_data": payload}
+        return resultado
     except Exception as exc:
         logger.error(f"Error procesando ReportarPago: {exc}")
         raise HTTPException(status_code=500, detail="Error interno al procesar el pago") 
